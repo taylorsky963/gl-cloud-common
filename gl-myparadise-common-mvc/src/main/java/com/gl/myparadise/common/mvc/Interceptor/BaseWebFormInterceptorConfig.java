@@ -17,14 +17,26 @@ public class BaseWebFormInterceptorConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         //设置URL全路径参数MYBASEPATH
-        registry.addInterceptor(BaseWebFormInterceptor()).addPathPatterns("/**");
+        registry.addInterceptor(baseWebFormInterceptor()).addPathPatterns("/**");
+        registry.addInterceptor(glWebAPITimeInterceptor()).addPathPatterns("/**").order(1);
 
     }
 
     @Bean
-    public BaseWebFormInterceptor BaseWebFormInterceptor() {
+    public BaseWebFormInterceptor baseWebFormInterceptor() {
 
         return new BaseWebFormInterceptor();
+
+    }
+
+    /**
+     * api 接口访问时间超过30 打印log
+     * @return
+     */
+    @Bean
+    public GLWebAPITimeInterceptor glWebAPITimeInterceptor() {
+
+        return new GLWebAPITimeInterceptor();
 
     }
 
