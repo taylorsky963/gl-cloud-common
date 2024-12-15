@@ -1,5 +1,7 @@
 package com.gl.myparadise.common.bean.model;
 
+import lombok.Data;
+
 import java.io.Serializable;
 
 /**
@@ -9,25 +11,11 @@ import java.io.Serializable;
  * @ProjectName: ly-common
  * @Date 2023-04-27 - 21:50
  */
+@Data
 public class ArgsModel implements Serializable {
 
     private String argName;
 
     private Object argValue;
 
-    public String getArgName() {
-        return argName;
-    }
-
-    public void setArgName(String argName) {
-        this.argName = argName;
-    }
-
-    public Object getArgValue() {
-        return argValue;
-    }
-
-    public void setArgValue(Object argValue) {
-        this.argValue = argValue;
-    }
 }

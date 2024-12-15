@@ -2,6 +2,8 @@ package com.gl.myparadise.common.bean.model;
 
 import com.gl.myparadise.common.bean.constant.BaseExceptionConstants;
 import com.gl.myparadise.common.bean.exception.BaseErrorInfoInterface;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 /**
  * @author Vincent
@@ -10,6 +12,8 @@ import com.gl.myparadise.common.bean.exception.BaseErrorInfoInterface;
  * @ProjectName: myparadise-common
  * @Date 2023-05-07 - 23:57
  */
+@AllArgsConstructor
+@Getter
 public enum ExceptionEnum implements BaseErrorInfoInterface {
 
     // 数据操作错误定义
@@ -31,25 +35,4 @@ public enum ExceptionEnum implements BaseErrorInfoInterface {
      */
     private final String responseMsg;
 
-    ExceptionEnum(String responseCode, String responseMsg) {
-
-        this.responseCode = responseCode;
-
-        this.responseMsg = responseMsg;
-
-    }
-
-    @Override
-    public String getResponseCode() {
-
-        return this.responseCode;
-
-    }
-
-    @Override
-    public String getResponseMsg() {
-
-        return this.responseMsg;
-
-    }
 }

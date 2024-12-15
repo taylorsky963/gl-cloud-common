@@ -1,5 +1,7 @@
 package com.gl.myparadise.common.bean.model;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.springframework.util.StringUtils;
 
 /**
@@ -9,6 +11,8 @@ import org.springframework.util.StringUtils;
  * @ProjectName: gl-common
  * @Date 2023-07-22 - 2:25 p.m.
  */
+@EqualsAndHashCode(callSuper = true)
+@Data
 public class UserLevelModel extends BaseEntity {
 
     private static final long serialVersionUID = 1438724499928393484L;
@@ -165,54 +169,5 @@ public class UserLevelModel extends BaseEntity {
         }
 
     }
-
-    public String getUserLevel1() {
-        return userLevel1;
-    }
-
-    public void setUserLevel1(String userLevel1) {
-        this.userLevel1 = userLevel1;
-    }
-
-    public String getUserLevel2() {
-        return userLevel2;
-    }
-
-    public void setUserLevel2(String userLevel2) {
-        this.userLevel2 = userLevel2;
-    }
-
-    public String getUserLevel3() {
-        return userLevel3;
-    }
-
-    public void setUserLevel3(String userLevel3) {
-        this.userLevel3 = userLevel3;
-    }
-
-    public String getUserLevel4() {
-        return userLevel4;
-    }
-
-    public void setUserLevel4(String userLevel4) {
-        this.userLevel4 = userLevel4;
-    }
-
-    public String getUserLevel5() {
-        return userLevel5;
-    }
-
-    public void setUserLevel5(String userLevel5) {
-        this.userLevel5 = userLevel5;
-    }
-
-    public String getUserLevel6() {
-        return userLevel6;
-    }
-
-    public void setUserLevel6(String userLevel6) {
-        this.userLevel6 = userLevel6;
-    }
-
 
 }
