@@ -1,5 +1,7 @@
 package com.gl.myparadise.common.consumer.rabbitmq.producer.register;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gl.myparadise.common.consumer.rabbitmq.producer.config.RabbitMQProductConfigurationProperties;
 import com.gl.myparadise.common.consumer.rabbitmq.producer.constants.RabbitMqProducerConstants;
 import org.apache.commons.lang3.StringUtils;
@@ -97,10 +99,12 @@ public class RabbitConnectConfigurationRegister{
 
     @Bean(name="rabbitAdmin")
     public RabbitAdmin rabbitAdmin(){
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
 
         RabbitAdmin rabbitAdmin = new RabbitAdmin(connectionFactory());
 
-        rabbitAdmin.getRabbitTemplate().setMessageConverter(new Jackson2JsonMessageConverter());
+        rabbitAdmin.getRabbitTemplate().setMessageConverter(new Jackson2JsonMessageConverter(mapper));
 
         try {
 
