@@ -50,6 +50,7 @@
     <module>gl-myparadise-common-server</module>
     <module>gl-myparadise-common-webclient</module>
     <module>gl-myparadise-common-elasticsearch</module>
+    <module>gl-myparadise-common-mongo</module>
   </modules>
 
   <dependencies>
