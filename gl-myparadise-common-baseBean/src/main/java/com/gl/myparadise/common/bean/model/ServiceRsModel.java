@@ -133,4 +133,17 @@ public class ServiceRsModel<T> implements Serializable {
     public void setVersion(String version) {
         this.version = version;
     }
+
+    public static <T> ServiceRsModel<T> ok(T t) {
+        ServiceRsModel<T> model = new ServiceRsModel<>();
+        model.setRsData(t);
+        return model;
+    }
+    public static <T> ServiceRsModel<T> fail() {
+        ServiceRsModel<T> model = new ServiceRsModel<>();
+        model.setSuccess(false);
+        model.setRsMessages(ExceptionEnum.SERVER_ERROR.getResponseMsg());
+        model.setRsCode(ExceptionEnum.SERVER_ERROR.getResponseCode());
+        return model;
+    }
 }

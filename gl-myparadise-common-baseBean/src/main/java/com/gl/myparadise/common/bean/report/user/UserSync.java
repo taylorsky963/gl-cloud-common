@@ -21,6 +21,7 @@ public class UserSync implements Serializable {
     private Integer sex;
     private String birthday;
     private String country;
+    private String coin;
 
     // ================================ 聯絡信息 ================================
     private String email;
