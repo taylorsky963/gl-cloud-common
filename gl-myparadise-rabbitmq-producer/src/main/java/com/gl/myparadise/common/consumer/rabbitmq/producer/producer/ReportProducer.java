@@ -33,7 +33,7 @@ public class ReportProducer {
         try {
             this.packMessage(event, report);
             log.info("事件上报:{},{}", event, report);
-            sendRabbitMessageService.sendDirectMessageNoAck(exchange, routeKey, report);
+            sendRabbitMessageService.sendDirectMessageNoAck(exchange, routeKey, report.getMsg());
         } catch (Exception ex) {
             log.error("上报事件数据发生异常", ex);
         }
