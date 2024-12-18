@@ -1,23 +1,34 @@
 package com.gl.myparadise.common.mongo.file;
 
-import com.gl.myparadise.common.mongo.fn.Page;
-import com.gl.myparadise.common.mongo.fn.InvokeMethod;
+import com.gl.myparadise.common.mongo.fn.PageResult;
 import com.gl.myparadise.common.mongo.utils.ExportUtils;
 import com.gl.myparadise.common.mongo.utils.RemainingTimeUtils;
 import com.mongodb.client.gridfs.GridFSBucket;
+import com.mongodb.client.gridfs.GridFSDownloadStream;
 import com.mongodb.client.gridfs.GridFSUploadStream;
+import com.mongodb.client.gridfs.model.GridFSFile;
 import com.mongodb.client.gridfs.model.GridFSUploadOptions;
 import lombok.NonNull;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.IOUtils;
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.gridfs.GridFsResource;
+import org.springframework.data.mongodb.gridfs.GridFsTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Nullable;
+import javax.servlet.http.HttpServletResponse;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
+import java.net.URLEncoder;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.Executor;
@@ -27,9 +38,9 @@ import java.util.function.Function;
 @Service
 @Slf4j
 public class MongodbFileService {
-
-
     final Integer limit = 100000;
+    @Autowired
+    private GridFsTemplate gridFsTemplate;
     @Autowired
     private GridFSBucket gridFSBucket;
     @Autowired
@@ -39,9 +50,9 @@ public class MongodbFileService {
     private GlExportService glExportService;
 
     public <T, R> void saveAsync(
-            @NonNull Integer userId,
+            @NonNull Long userId,
             @NonNull String fileName,
-            @NonNull InvokeMethod<T> method,
+            @NonNull Function<R, PageResult<T>> method,
             @NonNull Function<R, R> doNext,
             @NonNull R args
     ) {
@@ -52,7 +63,7 @@ public class MongodbFileService {
     @SneakyThrows
     private <T, R> void save(
             @NonNull String fileName,
-            @NonNull InvokeMethod<T> method,
+            @NonNull Function<R, PageResult<T>> method,
             @NonNull Function<R, R> doNext,
             @NonNull R args,
             @Nullable Consumer<RemainingTimeUtils.ProcessVO> callBacker
@@ -62,10 +73,10 @@ public class MongodbFileService {
         long startTime = System.nanoTime();
         int totalDownloadElementCount = 0;
         invokeNotify(startTime, 100, totalDownloadElementCount, objectId, callBacker, false);
-        Page<T> currentPage;
+        PageResult<T> currentPage;
 
         while (true) {
-            currentPage = method.invoke(args);
+            currentPage = method.apply(args);
             if (isEmpty(currentPage)) {
                 log.info("导出结束:无数据");
                 break;
@@ -73,6 +84,10 @@ public class MongodbFileService {
             //安全限制不要拿掉
             if (totalDownloadElementCount > limit) {
                 log.info("导出结束:最大限制");
+                break;
+            }
+            if (currentPage.getTotal() <= totalDownloadElementCount) {
+                log.info("导出结束:到達total");
                 break;
             }
             write(gridFSUploadStream, currentPage.getResult(), totalDownloadElementCount == 0);
@@ -86,7 +101,7 @@ public class MongodbFileService {
         gridFSUploadStream.close();
     }
 
-    private <T> boolean isEmpty(Page<T> currentPage) {
+    private <T> boolean isEmpty(PageResult<T> currentPage) {
         return Objects.isNull(currentPage) || CollectionUtils.isEmpty(currentPage.getResult());
     }
 
@@ -121,5 +136,32 @@ public class MongodbFileService {
                 glExportService.updateTitle(id, format, Objects.toString(data.getRemainingTime()));
             }
         };
+    }
+
+    private GridFsResource get(String id) {
+        GridFSFile gridFSFile = gridFsTemplate.findOne(Query.query(Criteria.where("_id").is(id)));
+        GridFSDownloadStream downloadStream = gridFSBucket.openDownloadStream(Objects.requireNonNull(gridFSFile).getObjectId());
+        return new GridFsResource(gridFSFile, downloadStream);
+    }
+
+    public void download(String id, HttpServletResponse response) {
+        GridFsResource gridFsResource = get(id);
+        try {
+            String filename = gridFsResource.getFilename();
+            log.info("文件名称是{}", filename);
+            response.setHeader("content-disposition", "attachment;filename=" + URLEncoder.encode(filename, "UTF-8"));
+        } catch (UnsupportedEncodingException e) {
+            log.error("download", e);
+            return;
+        }
+
+        try (InputStream inputStream = gridFsResource.getInputStream(); OutputStream outputStream = response.getOutputStream()) {
+            response.setContentType(gridFsResource.getContentType());
+            IOUtils.copy(inputStream, outputStream);
+            outputStream.flush();
+        } catch (Exception ex) {
+            log.error("download", ex);
+            return;
+        }
     }
 }

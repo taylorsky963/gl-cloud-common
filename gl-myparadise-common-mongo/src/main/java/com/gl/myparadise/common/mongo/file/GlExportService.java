@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
 import java.util.Date;
+import java.util.List;
 
 @Service
 @Slf4j
@@ -42,7 +43,7 @@ public class GlExportService {
     }
 
     public void insert(GlExport glExport) {
-        glExport.setCreateDate(new Date());
+        glExport.setCreateDate(new Date().getTime());
         glExportRepository.save(glExport);
     }
 
@@ -52,7 +53,7 @@ public class GlExportService {
         }
         GlExport export = new GlExport();
         export.setId(id);
-        export.setCompleteDate(new Date());
+        export.setCompleteDate(new Date().getTime());
         export.setFileId(mongoFileId);
         export.setFilePath(getFilePath(export.getFileId()) + ".csv");
         export.setStatus(1);
@@ -77,9 +78,9 @@ public class GlExportService {
         updateById(export);
     }
 
-    public String startExport(Integer userId, String title) {
+    public String startExport(Long userId, String title) {
         GlExport export = new GlExport();
-        export.setCreateDate(new Date());
+        export.setCreateDate(new Date().getTime());
         export.setTitle(title);
         export.setUserId(userId);
         export.setStatus(0);
@@ -88,6 +89,18 @@ public class GlExportService {
     }
 
     public String getFilePath(final String fileId) {
-        return "/bg/system/file/get/" + fileId;
+        return "/bg/system/export/mgmt/download/" + fileId;
+    }
+
+    public List<GlExport> queryByUserId(Long userId) {
+        return glExportRepository.findByUserIdOrderByCreateDateDesc(userId);
+    }
+
+    public void deleteByUserId(Long userId) {
+        glExportRepository.deleteAllByUserId(userId);
+    }
+
+    public void deleteById(String id) {
+        glExportRepository.deleteById(id);
     }
 }

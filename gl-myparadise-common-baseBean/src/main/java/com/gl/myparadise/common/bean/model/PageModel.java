@@ -23,4 +23,8 @@ public class PageModel implements Serializable {
 
     private boolean isSqlCount = true;
 
+    public PageModel addPage() {
+        setPageNum(getPageNum() + 1);
+        return this;
+    }
 }

@@ -4,8 +4,6 @@ import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.Date;
-
 @Getter
 @Setter
 @NoArgsConstructor
@@ -19,14 +17,14 @@ public class GlExport {
     private String isDelete = "0"; // 是否删除 (0: 未删除, 1: 已删除)
     private String createUserName;
     private Long createUserId;
-    private Date createDate;
+    private Long createDate;
     private String updateUserName;
     private Long updateUserId;
-    private Date updateTime;
+    private Long updateTime;
     private String title;
-    private Integer userId;
+    private Long userId;
     private String queryParamData;
-    private Date completeDate;
+    private Long completeDate;
     private String filePath;
     private String fileId;
     private Integer status; // 文件下载状态 (0: 下载中, 1: 下载成功, 2: 下载失败)
