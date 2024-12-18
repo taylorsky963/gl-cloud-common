@@ -1,10 +1,12 @@
 package com.gl.myparadise.common.bean.model;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
 @Data
+@NoArgsConstructor
 public class PageModel implements Serializable {
 
     private static final long serialVersionUID = 6798005976764102519L;
@@ -23,4 +25,10 @@ public class PageModel implements Serializable {
 
     private boolean isSqlCount = true;
 
+    public Integer getLimitIndex(){
+        if(this.pageNum != null && this.pageNum > 0){
+            return (this.pageNum - 1) * pageSize;
+        }
+        return 0;
+    }
 }
