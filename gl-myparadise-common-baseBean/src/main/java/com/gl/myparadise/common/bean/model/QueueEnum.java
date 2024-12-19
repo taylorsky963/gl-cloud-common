@@ -15,6 +15,7 @@ public enum QueueEnum {
 
     global_user_other_save_to_elasticsearch(ExchangeEnum.globalUser, RoutingKeyEnum.global_user_other_routing_key, QueueConstant.GLOBAL_USER_OTHER_SAVE_TO_ELASTICSEARCH, "全局上报的用户其他资料消费保存到ES"),
 
+    global_system_operation_save_to_elasticsearch(ExchangeEnum.globalSystem, RoutingKeyEnum.global_system_operation_log_routing_key, QueueConstant.GLOBAL_SYSTEM_OPERATION_LOG_SAVE_TO_ELASTICSEARCH, "全局系统操作日志消费保存到ES"),
     ;
 
     private final ExchangeEnum exchange;
@@ -22,11 +23,11 @@ public enum QueueEnum {
     private final String queueName;
     private final String desc;
 
-    public String exchangeName() {
+    public String exchange() {
         return this.exchange.getExchangeName();
     }
 
-    public String routingKeyName() {
+    public String routing() {
         return this.routingKey.getRoutingKeyName();
     }
 }

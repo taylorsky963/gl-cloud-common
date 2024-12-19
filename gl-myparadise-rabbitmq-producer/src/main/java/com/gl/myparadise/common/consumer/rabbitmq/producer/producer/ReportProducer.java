@@ -1,12 +1,12 @@
 package com.gl.myparadise.common.consumer.rabbitmq.producer.producer;
 
+import com.gl.myparadise.common.bean.model.QueueEnum;
 import com.gl.myparadise.common.bean.model.ReportEvent;
 import com.gl.myparadise.common.bean.rabbitmq.SendRabbitMessageService;
 import com.gl.myparadise.common.bean.report.BaseReport;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Field;
@@ -19,21 +19,16 @@ import java.util.UUID;
 @Component
 public class ReportProducer {
 
-    @Value("${report.project}")
-    private String project;
-    @Value("${global.event.exchange}")
-    private String exchange;
-    @Value("${global.event.route.key}")
-    private String routeKey;
-
     @Autowired
     private SendRabbitMessageService sendRabbitMessageService;
+
+    private final QueueEnum queue = QueueEnum.global_event_save_to_elasticsearch;
 
     public void sendMessage(ReportEvent event, BaseReport report) {
         try {
             this.packMessage(event, report);
             log.info("事件上报:{},{}", event, report);
-            sendRabbitMessageService.sendDirectMessageNoAck(exchange, routeKey, report.getMsg());
+            sendRabbitMessageService.sendDirectMessageNoAck(queue.exchange(), queue.routing(), report.getMsg());
         } catch (Exception ex) {
             log.error("上报事件数据发生异常", ex);
         }
@@ -45,7 +40,7 @@ public class ReportProducer {
     private void packMessage(ReportEvent event, BaseReport report) throws IllegalAccessException {
         int eventId = event.value();
         report.set("event", eventId);
-        report.set("project", project);
+        report.set("project", "gl-cloud");
         if (null == report.get("timestamp")) {
             report.set("timestamp", new Date());
         }
