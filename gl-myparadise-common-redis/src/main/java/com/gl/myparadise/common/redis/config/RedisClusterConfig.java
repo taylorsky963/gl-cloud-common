@@ -266,9 +266,9 @@ public class RedisClusterConfig extends CachingConfigurerSupport {
 
         jedisPoolConfig.setMaxWaitMillis(redisClusterProperties.getPool().getMaxWaitMillis());
 
-        jedisPoolConfig.setTestOnBorrow(redisClusterProperties.getPool().isTestOnBorrow());
-
-        jedisPoolConfig.setTestOnReturn(redisClusterProperties.getPool().isTestOnReturn());
+//        jedisPoolConfig.setTestOnBorrow(redisClusterProperties.getPool().isTestOnBorrow());
+//
+//        jedisPoolConfig.setTestOnReturn(redisClusterProperties.getPool().isTestOnReturn());
 
         jedisPoolConfig.setTestWhileIdle(redisClusterProperties.getPool().isTestWhileIdle());
 
