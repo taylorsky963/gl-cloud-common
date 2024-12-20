@@ -5,6 +5,7 @@ import com.gl.myparadise.common.redis.client.service.RedisclientService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -25,6 +26,9 @@ public class RedisclientServiceImpl implements RedisclientService {
 
     @Autowired
     private RedisTemplate redisTemplate;
+
+    @Autowired
+    private JedisConnectionFactory jedisConnectionFactory;
 
     private static final Logger logger = LoggerFactory.getLogger(RedisclientServiceImpl.class);
 
@@ -156,8 +160,16 @@ public class RedisclientServiceImpl implements RedisclientService {
      */
     @Override
     public Object getCache(String key) {
+        // 获取开始时间（精确到毫秒）
+        long startTime = System.currentTimeMillis();
 
-        return key==null?null:redisTemplate.opsForValue().get(key);
+        Object o = key == null ? null : redisTemplate.opsForValue().get(key);
+        // 获取结束时间
+        long endTime = System.currentTimeMillis();
+
+        // 打印运行时间
+        System.out.println("Redis Get execution time: " + (endTime - startTime) + " ms");
+        return o;
 
     }
 
