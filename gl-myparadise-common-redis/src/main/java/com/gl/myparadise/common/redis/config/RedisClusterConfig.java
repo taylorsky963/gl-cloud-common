@@ -159,15 +159,10 @@ public class RedisClusterConfig extends CachingConfigurerSupport {
 
         List<RedisProperties> nodeList = redisClusterProperties.getCluster();
 
-        //获得默认的连接池构造器(怎么设计的，为什么不抽象出单独类，供用户使用呢) 有毒
-//        JedisClientConfiguration.JedisPoolingClientConfigurationBuilder jpcb =
-//                (JedisClientConfiguration.JedisPoolingClientConfigurationBuilder) JedisClientConfiguration.builder();
-
         JedisClientConfiguration.JedisPoolingClientConfigurationBuilder jpcb = JedisClientConfiguration.builder()
                 .usePooling()
                 .poolConfig(jedisPoolConfig);
 
-        //指定jedisPoolConifig来修改默认的连接池构造器（真麻烦，滥用设计模式！） ！！！！
         //通过构造器来构造jedis客户端配置
         JedisClientConfiguration jedisClientConfiguration = jpcb.build();
 
