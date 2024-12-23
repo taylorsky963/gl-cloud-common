@@ -160,16 +160,8 @@ public class RedisclientServiceImpl implements RedisclientService {
      */
     @Override
     public Object getCache(String key) {
-        // 获取开始时间（精确到毫秒）
-        long startTime = System.currentTimeMillis();
 
-        Object o = key == null ? null : redisTemplate.opsForValue().get(key);
-        // 获取结束时间
-        long endTime = System.currentTimeMillis();
-
-        // 打印运行时间
-        System.out.println("Redis Get execution time: " + (endTime - startTime) + " ms");
-        return o;
+        return key == null ? null : redisTemplate.opsForValue().get(key);
 
     }
 
