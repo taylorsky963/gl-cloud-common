@@ -81,7 +81,7 @@ public class SystemOperationLogAspect {
         }
 
 
-        return pjp.proceed();
+        return result;
     }
 
     private String getParamStr(String[] parameterNamesArgs, Object[] args) {
