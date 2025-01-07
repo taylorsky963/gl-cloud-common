@@ -1,5 +1,7 @@
 package com.gl.myparadise.common.bean.model;
 
+import com.gl.myparadise.common.bean.exception.BaseErrorInfoInterface;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -15,7 +17,7 @@ public class ServiceRsModel<T> implements Serializable {
     private static final long serialVersionUID = -5614231774598972404L;
 
     /**
-     *操作是否成功
+     * 操作是否成功
      */
     private boolean success = true;
 
@@ -65,7 +67,7 @@ public class ServiceRsModel<T> implements Serializable {
         return this;
     }
 
-    public ServiceRsModel<T> error(){
+    public ServiceRsModel<T> error() {
 
         error(ExceptionEnum.SERVER_ERROR.getResponseMsg());
 
@@ -73,7 +75,7 @@ public class ServiceRsModel<T> implements Serializable {
 
     }
 
-    public ServiceRsModel<T> error(String rsMessages){
+    public ServiceRsModel<T> error(String rsMessages) {
 
         error(ExceptionEnum.SERVER_ERROR.getResponseCode(), rsMessages);
 
@@ -81,7 +83,7 @@ public class ServiceRsModel<T> implements Serializable {
 
     }
 
-    public ServiceRsModel<T> error(String rsCode, String rsMessages){
+    public ServiceRsModel<T> error(String rsCode, String rsMessages) {
 
         setSuccess(false);
 
@@ -139,11 +141,20 @@ public class ServiceRsModel<T> implements Serializable {
         model.setRsData(t);
         return model;
     }
+
     public static <T> ServiceRsModel<T> fail() {
         ServiceRsModel<T> model = new ServiceRsModel<>();
         model.setSuccess(false);
         model.setRsMessages(ExceptionEnum.SERVER_ERROR.getResponseMsg());
         model.setRsCode(ExceptionEnum.SERVER_ERROR.getResponseCode());
+        return model;
+    }
+
+    public static ServiceRsModel<?> genFailResult(BaseErrorInfoInterface baseErrorInfoInterface) {
+        ServiceRsModel<?> model = new ServiceRsModel<>();
+        model.setSuccess(false);
+        model.setRsMessages(baseErrorInfoInterface.getResponseMsg());
+        model.setRsCode(baseErrorInfoInterface.getResponseCode());
         return model;
     }
 }
