@@ -13,6 +13,7 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 import org.bson.Document;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -21,6 +22,7 @@ import org.springframework.data.mongodb.gridfs.GridFsResource;
 import org.springframework.data.mongodb.gridfs.GridFsTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Nullable;
 import javax.servlet.http.HttpServletResponse;
@@ -31,6 +33,7 @@ import java.math.BigDecimal;
 import java.net.URLEncoder;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 import java.util.concurrent.Executor;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -138,14 +141,20 @@ public class MongodbFileService {
         };
     }
 
-    private GridFsResource get(String id) {
+    private GridFsResource getById(String id) {
         GridFSFile gridFSFile = gridFsTemplate.findOne(Query.query(Criteria.where("_id").is(id)));
+        if (Objects.isNull(gridFSFile)) {
+            return null;
+        }
         GridFSDownloadStream downloadStream = gridFSBucket.openDownloadStream(Objects.requireNonNull(gridFSFile).getObjectId());
         return new GridFsResource(gridFSFile, downloadStream);
     }
 
     public void download(String id, HttpServletResponse response) {
-        GridFsResource gridFsResource = get(id);
+        GridFsResource gridFsResource = getById(id);
+        if (Objects.isNull(gridFsResource)) {
+            return;
+        }
         try {
             String filename = gridFsResource.getFilename();
             log.info("文件名称是{}", filename);
@@ -162,6 +171,40 @@ public class MongodbFileService {
         } catch (Exception ex) {
             log.error("download", ex);
             return;
+        }
+    }
+
+    @SneakyThrows
+    public String uploadFile(MultipartFile file, final boolean isBackend) {
+        String contentType = file.getContentType();
+        ObjectId objectId = gridFsTemplate.store(
+                file.getInputStream(),
+                UUID.randomUUID().toString(),
+                contentType
+        );
+        return getFilePath(objectId.toHexString(), isBackend);
+    }
+
+    public void loadFile(String id, HttpServletResponse response) {
+        GridFsResource gridFsResource = getById(id);
+        if (Objects.isNull(gridFsResource)) {
+            return;
+        }
+        try (InputStream inputStream = gridFsResource.getInputStream(); OutputStream outputStream = response.getOutputStream()) {
+            response.setContentType(gridFsResource.getContentType());
+            IOUtils.copy(inputStream, outputStream);
+            outputStream.flush();
+        } catch (Exception ex) {
+            log.error("loadFile", ex);
+            return;
+        }
+    }
+
+    public String getFilePath(final String fileId, final boolean isBackend) {
+        if (isBackend) {
+            return "/api/bg/system/file/mgmt/get" + fileId;
+        } else {
+            return "/api/bg/system/file/mgmt/get" + fileId;
         }
     }
 }
