@@ -39,4 +39,8 @@ public class BaseVariableConstantsConstants {
 
     public final static String SSO_LOGIN_RETURN_DATA_DEVICE_ID = "imDeviceId";
 
+    public final static String SSO_LOGIN_RETURN_GOOGLE_AUTH_KEY = "googleAuthUrl";
+
+    public final static String SSO_LOGIN_RETURN_GOOGLE_AUTH_CODE = "googleAuthCode";
+
 }

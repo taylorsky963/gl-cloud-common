@@ -97,6 +97,11 @@
             <artifactId>spring-cloud-starter-openfeign</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.warrenstrange</groupId>
+            <artifactId>googleauth</artifactId>
+            <version>0.6.0</version>
+        </dependency>
     </dependencies>
 
     <build>
