@@ -12,7 +12,6 @@ import java.util.Date;
 @NoArgsConstructor
 @ToString(callSuper = true)
 public class BettingReport extends BaseReport {
-    private String id;
     private String flowId;
     private String requestId;
     private String pushId;
