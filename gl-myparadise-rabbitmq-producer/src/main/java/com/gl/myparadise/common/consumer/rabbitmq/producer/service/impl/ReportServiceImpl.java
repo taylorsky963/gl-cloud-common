@@ -2,6 +2,7 @@ package com.gl.myparadise.common.consumer.rabbitmq.producer.service.impl;
 
 import com.gl.myparadise.common.bean.model.ReportEvent;
 import com.gl.myparadise.common.bean.report.system.SystemOperationLogReport;
+import com.gl.myparadise.common.bean.report.user.BettingReport;
 import com.gl.myparadise.common.bean.report.user.LoginReport;
 import com.gl.myparadise.common.bean.report.user.RegisterReport;
 import com.gl.myparadise.common.bean.report.user.UserSync;
@@ -45,5 +46,10 @@ public class ReportServiceImpl implements ReportService {
     @Override
     public void systemOperationReport(SystemOperationLogReport logReport) {
         defaultProducer.systemOperationReport(logReport);
+    }
+
+    @Override
+    public void bettingReport(BettingReport report) {
+        reportProducer.sendMessage(ReportEvent.Betting, report);
     }
 }
