@@ -16,6 +16,8 @@ public class LoginReport extends BaseReport {
 
     private Integer appType;
 
+    private String deviceId;
+
     public static LoginReport parseObject(final JsonNode jsonNode) {
         LoginReport report = new LoginReport();
         if (jsonNode == null) {
@@ -37,6 +39,10 @@ public class LoginReport extends BaseReport {
         }
         if (eventObj.has("userAgent")) {
             report.setUserAgent(eventObj.get("userAgent").asText());
+        }
+
+        if (eventObj.has("deviceId")) {
+            report.setUserAgent(eventObj.get("deviceId").asText());
         }
 
         return report;
