@@ -13,6 +13,10 @@ public class BaseVariableConstantsConstants {
 
     public static final String ISDELETE_NO = "0";
 
+    public static final String ISDEFUALT_YES = "1";
+
+    public static final String ISDEFUALT_NO = "0";
+
     public static final String ISAPPEAR_YES = "1";
 
     public static final String ISAPPEAR_NO = "0";
