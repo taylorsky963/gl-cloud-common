@@ -15,6 +15,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Objects;
+
 @Slf4j
 @Component
 public class ReportServiceImpl implements ReportService {
@@ -50,6 +52,7 @@ public class ReportServiceImpl implements ReportService {
 
     @Override
     public void bettingReport(BettingReport report) {
+        report.set("uuid", Objects.requireNonNull(report.getFlowId()));
         reportProducer.sendMessage(ReportEvent.Betting, report);
     }
 }
