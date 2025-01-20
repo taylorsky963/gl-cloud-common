@@ -2,6 +2,7 @@ package com.gl.myparadise.common.consumer.rabbitmq.producer.service.impl;
 
 import com.gl.myparadise.common.bean.model.ReportEvent;
 import com.gl.myparadise.common.bean.report.system.SystemOperationLogReport;
+import com.gl.myparadise.common.bean.report.user.BettingReport;
 import com.gl.myparadise.common.bean.report.user.LoginReport;
 import com.gl.myparadise.common.bean.report.user.RegisterReport;
 import com.gl.myparadise.common.bean.report.user.UserSync;
@@ -13,6 +14,8 @@ import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.Objects;
 
 @Slf4j
 @Component
@@ -45,5 +48,11 @@ public class ReportServiceImpl implements ReportService {
     @Override
     public void systemOperationReport(SystemOperationLogReport logReport) {
         defaultProducer.systemOperationReport(logReport);
+    }
+
+    @Override
+    public void bettingReport(BettingReport report) {
+        report.set("uuid", Objects.requireNonNull(report.getFlowId()));
+        reportProducer.sendMessage(ReportEvent.Betting, report);
     }
 }

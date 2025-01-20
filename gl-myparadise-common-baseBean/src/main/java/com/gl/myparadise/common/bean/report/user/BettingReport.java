@@ -1,0 +1,34 @@
+package com.gl.myparadise.common.bean.report.user;
+
+import com.gl.myparadise.common.bean.report.BaseReport;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
+import java.math.BigDecimal;
+import java.util.Date;
+
+@Data
+@NoArgsConstructor
+@ToString(callSuper = true)
+public class BettingReport extends BaseReport {
+    private String flowId;
+    private String requestId;
+    private String pushId;
+    private String client;
+    private String username;
+    private String betId;
+    private String platformCode;
+    private String gameType;
+    private String gameCode;
+    private String gameName;
+    private BigDecimal betAmount;
+    private Integer result;
+    private BigDecimal settleAmount;
+    private Date betTime;
+    private String status;
+    private BigDecimal betFlow;
+    private Date createTime;
+    private String detail;
+    private String itemData;
+}

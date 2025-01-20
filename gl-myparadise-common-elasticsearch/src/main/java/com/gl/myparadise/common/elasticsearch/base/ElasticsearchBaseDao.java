@@ -17,6 +17,7 @@ import java.util.Map;
 public abstract class ElasticsearchBaseDao {
 
     public final static String USER = "gl_user";
+    public final static String BETTING = "report-betting-2*";
 
     public ZoneOffset timeZone = ZoneOffset.ofHours(8);
 
