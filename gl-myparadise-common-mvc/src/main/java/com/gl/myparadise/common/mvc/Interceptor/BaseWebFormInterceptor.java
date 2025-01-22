@@ -1,12 +1,16 @@
 package com.gl.myparadise.common.mvc.Interceptor;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.UUID;
 
 /**
  * @author Vincent
@@ -71,8 +75,13 @@ public class BaseWebFormInterceptor extends HandlerInterceptorAdapter {
         logger.debug("BaseWebFormInterceptor myServerName : " + myServerName);
 
         logger.debug("BaseWebFormInterceptor resourcePath : " + resourcePath);
-
+        MDC.put("traceId", UUID.randomUUID().toString());
         return true;
     }
 
+    @Override
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+        super.postHandle(request, response, handler, modelAndView);
+        MDC.clear();
+    }
 }
