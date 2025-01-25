@@ -496,13 +496,36 @@ public class RedisclientServiceImpl implements RedisclientService {
      * @return
      */
     @Override
-    public boolean putHashMap(String key, Map valueMap, Long timeout){
+    public boolean putHashAllMap(String key, Map valueMap, Long timeout){
 
         if(valueMap != null){
 
             redisTemplate.opsForHash().putAll(key, valueMap);
 
             setCacheExpireTime(key, timeout);
+
+            return Boolean.TRUE;
+
+        }
+
+        return Boolean.FALSE;
+
+    }
+
+    /**
+     * //put one方法
+     * @param key
+     * @param key
+     * @param hashKey
+     * @param hashValue
+     * @return
+     */
+    @Override
+    public boolean putHashMap(String key, String hashKey, Object hashValue){
+
+        if(hashValue != null && hashKey != null){
+
+            redisTemplate.opsForHash().put(key, hashKey, hashValue);
 
             return Boolean.TRUE;
 
