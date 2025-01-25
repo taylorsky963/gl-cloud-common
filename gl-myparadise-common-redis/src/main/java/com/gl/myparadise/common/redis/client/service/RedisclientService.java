@@ -59,7 +59,9 @@ public interface RedisclientService {
 
     public void removeAllListByValue(String key, String baseValue, List<String> values);
 
-    boolean putHashMap(String key, Map valueMap, Long timeout);
+    boolean putHashMap(String key, String hashKey, Object hashValue);
+
+    boolean putHashAllMap(String key, Map valueMap, Long timeout);
 
     boolean removeHashMap(String key, String hashKey);
 

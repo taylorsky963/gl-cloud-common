@@ -51,7 +51,7 @@ public class SendRabbitMessageServiceImpl implements SendRabbitMessageService {
     @Override
     public void sendFanoutMessageNoAck(String exchangeDirectName, Object content) {
 
-        rabbitAdmin.getRabbitTemplate().convertAndSend(exchangeDirectName, content);
+        rabbitAdmin.getRabbitTemplate().convertAndSend(exchangeDirectName, "", content);
 
     }
 }
