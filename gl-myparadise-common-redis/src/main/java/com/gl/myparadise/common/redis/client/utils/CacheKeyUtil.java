@@ -383,7 +383,7 @@ public class CacheKeyUtil {
      */
     public static String getCacheBaseKey(String baseKey) {
 
-        return LGRedisConstants.BASE_CACHE_SPRINGBOOT_REDIS_SERVICE + baseKey + LGRedisConstants.BASE_CACHE_SEPARATOR;
+        return LGRedisConstants.BASE_CACHE_SPRINGBOOT_REDIS_SERVICE + baseKey;
 
     }
 
