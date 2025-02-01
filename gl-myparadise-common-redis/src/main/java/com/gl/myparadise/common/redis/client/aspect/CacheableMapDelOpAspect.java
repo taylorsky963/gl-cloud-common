@@ -1,7 +1,6 @@
 package com.gl.myparadise.common.redis.client.aspect;
 
 
-import com.gl.myparadise.common.redis.client.annotation.CacheableMapPutOp;
 import com.gl.myparadise.common.redis.client.service.RedisclientService;
 import com.gl.myparadise.common.redis.client.utils.AspertUtil;
 import com.gl.myparadise.common.redis.client.utils.CacheKeyUtil;
@@ -10,6 +9,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import com.gl.myparadise.common.redis.client.annotation.CacheableMapDelOp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -31,12 +31,12 @@ public class CacheableMapDelOpAspect {
     @Autowired
     private RedisclientService redisclientService;
 
-    @Around(value = "@annotation(cacheableMapPutOp)")
-    public void cacheablePutOp(ProceedingJoinPoint joinPoint, CacheableMapPutOp cacheableMapPutOp) throws Throwable {
+    @Around(value = "@annotation(cacheableMapDelOp)")
+    public void cacheableDelOp(ProceedingJoinPoint joinPoint, CacheableMapDelOp cacheableMapDelOp) throws Throwable {
 
-        if (!StringUtils.isEmpty(cacheableMapPutOp.baseKey())) {
+        if (!StringUtils.isEmpty(cacheableMapDelOp.baseKey())) {
 
-            String cacheKey = CacheKeyUtil.getCacheBaseKey(cacheableMapPutOp.baseKey());
+            String cacheKey = CacheKeyUtil.getCacheBaseKey(cacheableMapDelOp.baseKey());
 
             log.debug("cacheablePutOp cacheKey : " + cacheKey);
 
@@ -44,19 +44,17 @@ public class CacheableMapDelOpAspect {
 
             if (methodMap != null && !methodMap.isEmpty()) {
 
-                String hashKey = (String) methodMap.get(cacheableMapPutOp.HashKey());
-
-                Object hashValue = methodMap.get(cacheableMapPutOp.HashValue());
+                String hashKey = (String) methodMap.get(cacheableMapDelOp.HashKey());
 
                 log.debug("cacheablePutOp hashKey : " + hashKey);
 
-                if(StringUtils.isNotEmpty(hashKey)) {
+                if (StringUtils.isNotEmpty(hashKey)) {
 
-                    redisclientService.putHashMap(cacheKey, hashKey, hashValue);
+                    redisclientService.removeHashMap(cacheKey, hashKey);
 
                 }else{
 
-                    redisclientService.removeCache(cacheKey);
+                    redisclientService.deleteByPrex(cacheKey);
 
                 }
 
