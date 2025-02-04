@@ -21,6 +21,8 @@ public enum ReportEvent {
 
     Login(1005, "用户登录"),
 
+    GameTransfer(1016, "用戶遊戲轉帳紀錄"),
+
     SystemOperationLogReport(6002, "系统操作日志"),
     ;
 

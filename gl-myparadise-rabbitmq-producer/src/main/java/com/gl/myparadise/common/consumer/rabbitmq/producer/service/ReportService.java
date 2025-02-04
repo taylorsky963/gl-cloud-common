@@ -1,10 +1,7 @@
 package com.gl.myparadise.common.consumer.rabbitmq.producer.service;
 
 import com.gl.myparadise.common.bean.report.system.SystemOperationLogReport;
-import com.gl.myparadise.common.bean.report.user.BettingReport;
-import com.gl.myparadise.common.bean.report.user.LoginReport;
-import com.gl.myparadise.common.bean.report.user.RegisterReport;
-import com.gl.myparadise.common.bean.report.user.UserSync;
+import com.gl.myparadise.common.bean.report.user.*;
 
 public interface ReportService {
 
@@ -32,4 +29,9 @@ public interface ReportService {
      * 游戏注单成功上报
      */
     void bettingReport(BettingReport report);
+
+    /**
+     * 游戏轉帳紀錄
+     */
+    void gameTransferReport(GameTransferReport report);
 }
