@@ -2,10 +2,7 @@ package com.gl.myparadise.common.consumer.rabbitmq.producer.service.impl;
 
 import com.gl.myparadise.common.bean.model.ReportEvent;
 import com.gl.myparadise.common.bean.report.system.SystemOperationLogReport;
-import com.gl.myparadise.common.bean.report.user.BettingReport;
-import com.gl.myparadise.common.bean.report.user.LoginReport;
-import com.gl.myparadise.common.bean.report.user.RegisterReport;
-import com.gl.myparadise.common.bean.report.user.UserSync;
+import com.gl.myparadise.common.bean.report.user.*;
 import com.gl.myparadise.common.consumer.rabbitmq.producer.producer.DefaultProducer;
 import com.gl.myparadise.common.consumer.rabbitmq.producer.producer.ReportProducer;
 import com.gl.myparadise.common.consumer.rabbitmq.producer.producer.UserProducer;
@@ -54,5 +51,10 @@ public class ReportServiceImpl implements ReportService {
     public void bettingReport(BettingReport report) {
         report.set("uuid", Objects.requireNonNull(report.getFlowId()));
         reportProducer.sendMessage(ReportEvent.Betting, report);
+    }
+
+    @Override
+    public void gameTransferReport(GameTransferReport report){
+        reportProducer.sendMessage(ReportEvent.GameTransfer, report);
     }
 }
