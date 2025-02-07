@@ -47,4 +47,9 @@ public class BaseVariableConstantsConstants {
 
     public final static String SSO_LOGIN_RETURN_GOOGLE_AUTH_CODE = "googleAuthCode";
 
+    public final static String MQ_SEND_TYPE_DIRECT = "DIRECT";
+
+    public final static String MQ_SEND_TYPE_TOPIC = "TOPIC";
+
+    public final static String MQ_SEND_TYPE_FANOUT = "FANOUT";
 }
