@@ -12,6 +12,7 @@ import java.util.Date;
 @NoArgsConstructor
 @ToString(callSuper = true)
 public class GameTransferReport extends BaseReport {
+    private Long userId;
     private String username;//游戏平台账号
     private String userAccount;//会员账号
     private String gamePlatform;//平台编号code

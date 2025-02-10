@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Objects;
+import java.util.UUID;
 
 @Slf4j
 @Component
@@ -55,6 +56,7 @@ public class ReportServiceImpl implements ReportService {
 
     @Override
     public void gameTransferReport(GameTransferReport report){
+        report.set("uuid", UUID.randomUUID().toString());
         reportProducer.sendMessage(ReportEvent.GameTransfer, report);
     }
 }
