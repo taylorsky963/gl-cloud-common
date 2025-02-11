@@ -175,14 +175,14 @@ public class MongodbFileService {
     }
 
     @SneakyThrows
-    public String uploadFile(MultipartFile file, final boolean isBackend) {
+    public String uploadFile(MultipartFile file) {
         String contentType = file.getContentType();
         ObjectId objectId = gridFsTemplate.store(
                 file.getInputStream(),
                 UUID.randomUUID().toString(),
                 contentType
         );
-        return getFilePath(objectId.toHexString(), isBackend);
+        return objectId.toHexString();
     }
 
     public void loadFile(String id, HttpServletResponse response) {
@@ -202,9 +202,9 @@ public class MongodbFileService {
 
     public String getFilePath(final String fileId, final boolean isBackend) {
         if (isBackend) {
-            return "/api/bg/system/file/mgmt/get" + fileId;
+            return "/bg/system/file/mgmt/get" + fileId;
         } else {
-            return "/api/bg/system/file/mgmt/get" + fileId;
+            return "/bg/system/file/mgmt/get" + fileId;
         }
     }
 }
