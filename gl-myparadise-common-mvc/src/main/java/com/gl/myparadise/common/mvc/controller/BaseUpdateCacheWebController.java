@@ -19,7 +19,7 @@ public abstract class BaseUpdateCacheWebController extends BaseWebController {
 
     public ServiceRsModel<Integer> updateClearRedisKeyEncapsulateResults(ServiceRsModel<Integer> serviceRsModel, WebCacheMqModel webCacheMqModel){
 
-        if(serviceRsModel.isSuccess()){
+        if(serviceRsModel.isSuccess() && webCacheMqModel != null){
 
             clearRedisKey(webCacheMqModel);
 
