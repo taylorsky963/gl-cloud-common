@@ -41,7 +41,7 @@ public abstract class BaseReport implements Serializable {
         this.msg.put("coin", coin);
     }
 
-    public void setUid(Integer uid) {
+    public void setUid(Long uid) {
         this.msg.put("uid", uid);
     }
 
@@ -50,7 +50,7 @@ public abstract class BaseReport implements Serializable {
             report.setIp(jsonNode.get("ip").asText());
         }
         if (jsonNode.has("uid")) {
-            report.setUid(jsonNode.get("uid").asInt());
+            report.setUid(jsonNode.get("uid").asLong());
         }
         if (jsonNode.has("coin")) {
             report.setCoin(jsonNode.get("coin").asText());

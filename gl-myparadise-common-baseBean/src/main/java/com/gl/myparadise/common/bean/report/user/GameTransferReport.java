@@ -12,13 +12,14 @@ import java.util.Date;
 @NoArgsConstructor
 @ToString(callSuper = true)
 public class GameTransferReport extends BaseReport {
+    private Long userId;
     private String username;//游戏平台账号
     private String userAccount;//会员账号
     private String gamePlatform;//平台编号code
     private String gameType;//游戏类型
-    private String currency;//游戏币种
-    private BigDecimal transferamount;//转账金额
-    private String transferstatus;//转账状态: 1=Deposit;2=Withdraw
+    private String coin;//游戏币种
+    private BigDecimal transferAmount;//转账金额
+    private String transferStatus;//转账状态: 1=Deposit;2=Withdraw
     private Date createTime;//转账时间
 }
 
