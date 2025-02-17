@@ -1,5 +1,6 @@
 package com.gl.myparadise.common.bean.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.util.StringUtils;
@@ -16,22 +17,32 @@ import org.springframework.util.StringUtils;
 public class UserLevelModel extends BaseEntity {
 
     private static final long serialVersionUID = 1438724499928393484L;
+
+    @JsonIgnore
     private String userLevel1;
 
+    @JsonIgnore
     private String userLevel2;
 
+    @JsonIgnore
     private String userLevel3;
 
+    @JsonIgnore
     private String userLevel4;
 
+    @JsonIgnore
     private String userLevel5;
 
+    @JsonIgnore
     private String userLevel6;
 
+    @JsonIgnore
     private transient String[] userLevelArray = new String[6];
 
+    @JsonIgnore
     private transient int userLevel = 0;
 
+    @JsonIgnore
     public int getUserLevel() {
 
         if(!StringUtils.isEmpty(userLevel6)){
@@ -83,6 +94,7 @@ public class UserLevelModel extends BaseEntity {
 
     }
 
+    @JsonIgnore
     public String[] getUserLevelArray() {
 
         if(!StringUtils.isEmpty(userLevel1)){
