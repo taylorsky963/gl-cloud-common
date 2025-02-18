@@ -21,7 +21,7 @@ import javax.validation.constraints.NotNull;
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @ToString(callSuper = true)
-public class MemberRequestModel extends BaseEntity {
+public class MemberRequestModel extends BaseWebsiteRequestModel {
 
     private static final long serialVersionUID = 7060506800918962677L;
 
