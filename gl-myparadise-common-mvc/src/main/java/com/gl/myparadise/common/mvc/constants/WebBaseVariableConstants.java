@@ -13,6 +13,8 @@ public class WebBaseVariableConstants extends BaseVariableConstantsConstants {
 
     public static String WEB_LANGUAGE_COOKIES_NAME = "system_lang";
 
+    public static String WEB_LANGUAGE_HEADER_NAME = "system-lang";
+
     public static int WEB_LANGUAGE_COOKIES_VALID_PERIOD = 300*24*60*60;
 
     public static String WEB_SERVER_TYPE_SERVICE = "BACKSERVER";
