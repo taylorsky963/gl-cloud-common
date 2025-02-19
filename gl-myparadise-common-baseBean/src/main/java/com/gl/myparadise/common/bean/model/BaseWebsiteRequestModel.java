@@ -36,4 +36,9 @@ public class BaseWebsiteRequestModel extends BaseEntity {
      */
     private String langSign;
 
+    /**
+     * 设备类型
+     */
+    private String deviceType;
+
 }
