@@ -42,8 +42,13 @@ public class BaseWebsiteRequestModel extends BaseEntity {
     private String deviceType;
 
     /**
-     *
+     * 平台id
      */
     private Long platformInfoId;
+
+    /**
+     * 设备id
+     */
+    private String deviceId;
 
 }
