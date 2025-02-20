@@ -1,5 +1,6 @@
 package com.gl.myparadise.common.bean.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -24,6 +25,9 @@ public class PageModel implements Serializable {
     private int pages;
 
     private boolean isSqlCount = true;
+
+    @JsonIgnore
+    private BaseWebsiteRequestModel baseWebsiteRequestModel;
 
     public Integer getLimitIndex(){
         if(this.pageNum != null && this.pageNum > 0){
