@@ -41,4 +41,9 @@ public class BaseWebsiteRequestModel extends BaseEntity {
      */
     private String deviceType;
 
+    /**
+     *
+     */
+    private Long platformInfoId;
+
 }
