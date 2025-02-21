@@ -2,6 +2,7 @@ package com.gl.myparadise.common.bean.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -31,14 +32,14 @@ public class MemberRequestModel extends BaseWebsiteRequestModel {
      * @ignore
      * 用户id系统自动设置
      */
-    @JsonIgnoreProperties(ignoreUnknown = true)
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Long memberInfoId;
 
     /**
      * @ignore
      * 用户登录账户 系统自动设置
      */
-    @JsonIgnoreProperties(ignoreUnknown = true)
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String memberAccount;
 
 }
