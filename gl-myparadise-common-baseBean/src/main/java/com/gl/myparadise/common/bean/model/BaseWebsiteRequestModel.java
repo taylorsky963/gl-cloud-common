@@ -2,6 +2,7 @@ package com.gl.myparadise.common.bean.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -26,37 +27,37 @@ public class BaseWebsiteRequestModel extends BaseEntity {
     /**
      * 游戏线路code
      */
-    @JsonIgnoreProperties(ignoreUnknown = true)
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String platformDataPkCode;
 
     /**
      * 货币code
      */
-    @JsonIgnoreProperties(ignoreUnknown = true)
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String curDataPkCode;
 
     /**
      * 语言参数code
      */
-    @JsonIgnoreProperties(ignoreUnknown = true)
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String langSign;
 
     /**
      * 设备类型
      */
-    @JsonIgnoreProperties(ignoreUnknown = true)
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String deviceType;
 
     /**
      * 平台id
      */
-    @JsonIgnoreProperties(ignoreUnknown = true)
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Long platformInfoId;
 
     /**
      * 设备id
      */
-    @JsonIgnoreProperties(ignoreUnknown = true)
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String deviceId;
 
 }
