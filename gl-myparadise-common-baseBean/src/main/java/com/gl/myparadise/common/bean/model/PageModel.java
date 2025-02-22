@@ -1,13 +1,18 @@
 package com.gl.myparadise.common.bean.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.io.Serializable;
 
 @Data
+@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
-public class PageModel implements Serializable {
+@ToString(callSuper = true)
+public class PageModel extends MemberRequestModel {
 
     private static final long serialVersionUID = 6798005976764102519L;
     /**

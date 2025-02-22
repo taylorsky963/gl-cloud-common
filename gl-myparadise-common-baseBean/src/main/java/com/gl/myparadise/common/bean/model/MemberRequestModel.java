@@ -1,5 +1,8 @@
 package com.gl.myparadise.common.bean.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -21,7 +24,7 @@ import javax.validation.constraints.NotNull;
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @ToString(callSuper = true)
-public class MemberRequestModel extends BaseEntity {
+public class MemberRequestModel extends BaseWebsiteRequestModel {
 
     private static final long serialVersionUID = 7060506800918962677L;
 
@@ -29,15 +32,14 @@ public class MemberRequestModel extends BaseEntity {
      * @ignore
      * 用户id系统自动设置
      */
-    @NotNull
-    @Min(1)
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Long memberInfoId;
 
     /**
      * @ignore
      * 用户登录账户 系统自动设置
      */
-    @NotBlank
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String memberAccount;
 
 }

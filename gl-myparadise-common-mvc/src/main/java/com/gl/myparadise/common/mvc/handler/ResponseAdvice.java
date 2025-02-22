@@ -2,6 +2,7 @@ package com.gl.myparadise.common.mvc.handler;
 
 import com.gl.myparadise.common.bean.model.ExceptionEnum;
 import com.gl.myparadise.common.bean.model.ServiceRsModel;
+import com.gl.myparadise.common.mvc.language.I18nUtils;
 import com.gl.myparadise.common.mvc.model.ModelJson;
 import com.gl.myparadise.common.tools.util.ListUtil;
 import org.apache.commons.lang3.StringUtils;
@@ -101,6 +102,13 @@ public class ResponseAdvice implements ResponseBodyAdvice<Object> {
                     if(StringUtils.isEmpty(rsCode)){
 
                         rsCode = ExceptionEnum.SERVER_ERROR.getResponseCode();
+
+                    }
+
+                    if(serviceRsModel.getRsData() != null)
+                    {
+
+                        rsMessages = I18nUtils.get(rsMessages, serviceRsModel.getRsData());
 
                     }
 
