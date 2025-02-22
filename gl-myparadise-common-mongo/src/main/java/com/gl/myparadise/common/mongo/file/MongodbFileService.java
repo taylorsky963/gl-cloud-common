@@ -12,6 +12,7 @@ import lombok.NonNull;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,7 @@ import java.math.BigDecimal;
 import java.net.URLEncoder;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.Executor;
 import java.util.function.Consumer;
@@ -182,10 +184,19 @@ public class MongodbFileService {
                 UUID.randomUUID().toString(),
                 contentType
         );
-        return objectId.toHexString();
+        return Optional.ofNullable(contentType)
+                .map(data -> data.split("/"))
+                .map(data -> data[1])
+                .map(StringUtils::trimToNull)
+                .map("."::concat)
+                .map(objectId.toHexString()::concat)
+                .orElse(objectId.toHexString());
     }
 
     public void loadFile(String id, HttpServletResponse response) {
+        if (id.contains(".")) {
+            id = id.split("\\.")[0];
+        }
         GridFsResource gridFsResource = getById(id);
         if (Objects.isNull(gridFsResource)) {
             return;
