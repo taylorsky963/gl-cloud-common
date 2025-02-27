@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.ToNumberPolicy;
 import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Map;
 
@@ -132,9 +133,9 @@ public class GJonUtil {
 
         if (gson != null) {
 
+            Type type = TypeToken.getParameterized(List.class, cls).getType();
             // 根据泛型返回解析指定的类型,TypeToken<List<T>>{}.getType()获取返回类型
-            list = gson.fromJson(json, new TypeToken<List<T>>() {
-            }.getType());
+            list = gson.fromJson(json, type);
 
         }
 
