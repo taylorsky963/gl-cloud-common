@@ -18,8 +18,8 @@ public class DictModel implements Serializable {
     private static final long serialVersionUID = 6231290164795695534L;
 
     private String groupCode;
-    private String id;
     private String itemCode;
+    private String itemCodeCustom;
     private String itemName;
     private String itemOrderIndex;
     private String parentCode;
