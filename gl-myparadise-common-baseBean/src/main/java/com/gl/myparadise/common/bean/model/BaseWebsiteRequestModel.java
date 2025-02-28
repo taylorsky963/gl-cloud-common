@@ -60,4 +60,10 @@ public class BaseWebsiteRequestModel extends BaseEntity {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private String deviceId;
 
+    /**
+     * 语言id
+     */
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private Long langInfoId;
+
 }
