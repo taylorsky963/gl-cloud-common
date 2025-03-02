@@ -26,4 +26,12 @@ public class JsonUtil {
         TypeFactory typeFactory = objectMapper.getTypeFactory();
         return objectMapper.readValue(content, typeFactory.constructCollectionType(List.class, clz));
     }
+
+    @SneakyThrows
+    public static String toJson(Object obj) {
+        if (obj == null) {
+            return null;
+        }
+        return objectMapper.writeValueAsString(obj);
+    }
 }
