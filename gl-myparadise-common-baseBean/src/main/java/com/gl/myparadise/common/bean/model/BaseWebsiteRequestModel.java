@@ -70,6 +70,6 @@ public class BaseWebsiteRequestModel extends BaseEntity {
      * 语言code
      */
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    private Long langDataPkCode;
+    private String langDataPkCode;
 
 }
