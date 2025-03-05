@@ -52,4 +52,14 @@ public class BaseVariableConstantsConstants {
     public final static String MQ_SEND_TYPE_TOPIC = "TOPIC";
 
     public final static String MQ_SEND_TYPE_FANOUT = "FANOUT";
+
+    public final static String HEADER_CUR_KEY = "cur-code";
+
+    public final static String HEADER_LANG_KEY = "system-lang";
+
+    public final static String HEADER_PLATFORM_KEY = "platform-code";
+
+    public final static String HEADER_DEVICE_TYPE = "device-type";
+
+    public final static String HEADER_DEVICE_ID = "device-id";
 }
