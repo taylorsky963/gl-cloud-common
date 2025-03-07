@@ -1,6 +1,7 @@
 package com.gl.myparadise.common.consumer.rabbitmq.producer.service.impl;
 
 import com.gl.myparadise.common.bean.model.ReportEvent;
+import com.gl.myparadise.common.bean.report.fund.FundBaseReport;
 import com.gl.myparadise.common.bean.report.system.SystemOperationLogReport;
 import com.gl.myparadise.common.bean.report.user.*;
 import com.gl.myparadise.common.consumer.rabbitmq.producer.producer.DefaultProducer;
@@ -55,8 +56,14 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
-    public void gameTransferReport(GameTransferReport report){
+    public void gameTransferReport(GameTransferReport report) {
         report.set("uuid", UUID.randomUUID().toString());
         reportProducer.sendMessage(ReportEvent.GameTransfer, report);
+    }
+
+    @Override
+    public void fundReport(FundBaseReport report) {
+        report.setTimestamp(System.currentTimeMillis());
+        defaultProducer.sendFundReport(report);
     }
 }
