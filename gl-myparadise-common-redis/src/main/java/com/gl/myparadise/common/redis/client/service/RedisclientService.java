@@ -75,4 +75,5 @@ public interface RedisclientService {
 
     Long getHashMapSize(String key);
 
+    String getTradeNo(String prefix);
 }

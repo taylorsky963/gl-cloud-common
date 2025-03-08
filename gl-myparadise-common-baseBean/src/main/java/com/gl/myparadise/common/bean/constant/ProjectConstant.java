@@ -1,0 +1,149 @@
+package com.gl.myparadise.common.bean.constant;
+
+/**
+ * 项目相关常量定义类。
+ */
+public final class ProjectConstant {
+
+    /**
+     * 流水号前缀相关常量
+     */
+    public static final class TradeNo {
+
+        /**
+         * 活动奖励流水号前缀
+         */
+        public final static String ACTIVITY_AWARD_PREFIX = "AA";
+    }
+
+    /**
+     * 活动相关常量
+     */
+    public static final class Activity {
+
+
+        public static final class AwardType {
+            /**
+             * 活动奖励类型：现金奖励
+             */
+            public final static int ACTIVITY_CASH = -9;
+
+            /**
+             * 活动奖励类型：积分奖励
+             */
+            public final static int ACTIVITY_POINT = 15;
+        }
+
+        public static final class AwardStatus {
+            /**
+             * 状态：不可用
+             */
+            public final static int UN_AVAILABLE = -1;
+            /**
+             * 状态：可用
+             */
+            public final static int AVAILABLE = 0;
+            /**
+             * 状态：已领取
+             */
+            public final static int RECEIVED = 1;
+            /**
+             * 状态：已过期
+             */
+            public final static int EXPIRED = 2;
+            /**
+             * 状态：已发送
+             */
+            public final static int ALREADY_SEND = 3;
+            /**
+             * 状态：已拒绝
+             */
+            public final static int ALREADY_REFUSAL = 4;
+            /**
+             * 状态：已删除
+             */
+            public final static int DELETE = 5;
+            /**
+             * 状态：未使用
+             */
+            public final static int UN_USE = 6;
+        }
+
+        public static final class ProcessStatus {
+
+            /**
+             * 未开始: 表示此流程尚未开始处理
+             */
+            public final static int NOT_STARTED = 0;
+
+            /**
+             * 进行中: 表示此流程正在进行处理
+             */
+            public final static int IN_PROGRESS = 1;
+
+            /**
+             * 已完成: 表示此流程已完成处理
+             */
+            public final static int COMPLETED = 2;
+        }
+
+        public static final class TemplateType {
+
+            /**
+             * 空模板
+             */
+            public final static String EMPTY_TEMPLATE = "emptyTemplate";
+            /**
+             * 自定义模板
+             */
+            public final static String CUSTOM_TEMPLATE = "customTemplate";
+            /**
+             * 投注返水模板
+             */
+            public final static String REBATE_TEMPLATE = "rebateTemplate";
+            /**
+             * 时时返水模板
+             */
+            public final static String REBATE_REALTIME_TEMPLATE = "rebateRealtimeTemplate";
+        }
+
+        /**
+         * MQ 任务处理相关常量
+         */
+        public static final class MQHandler {
+            /**
+             * 手动发送 MQ
+             */
+            public final static String MANUAL_SEND = "MANUAL_SEND";
+        }
+    }
+
+
+    /**
+     * 资金相关常量
+     */
+    public static final class Fund {
+        public static final class BalanceType {
+            /**
+             * 帐变资金类型：充值
+             */
+            public final static int RECHARGE = 1;
+            /**
+             * 帐变资金类型：提现
+             */
+            public final static int WITHDRAW = 2;
+            /**
+             * 帐变资金类型：转账
+             */
+            public final static int TRANSFER = 3;
+            /**
+             * 帐变资金类型：红利
+             */
+            public final static int BONUS = 4;
+            /**
+             * 帐变资金类型：返水
+             */
+            public final static int REBATE = 5;
+        }
+    }
+}

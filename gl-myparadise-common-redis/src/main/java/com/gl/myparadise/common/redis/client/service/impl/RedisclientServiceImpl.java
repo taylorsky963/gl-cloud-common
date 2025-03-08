@@ -2,6 +2,8 @@ package com.gl.myparadise.common.redis.client.service.impl;
 
 import com.gl.myparadise.common.redis.client.properties.RedisClusterProperties;
 import com.gl.myparadise.common.redis.client.service.RedisclientService;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.time.DateFormatUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -22,6 +25,7 @@ import java.util.concurrent.TimeUnit;
  * @Date 2023-05-08 - 16:40
  */
 @Service
+@Slf4j
 public class RedisclientServiceImpl implements RedisclientService {
 
     @Autowired
@@ -638,4 +642,32 @@ public class RedisclientServiceImpl implements RedisclientService {
 
     }
 
+    @Override
+    public String getTradeNo(String prefix) {
+        StringBuilder tradeNo = new StringBuilder(prefix);
+        tradeNo.append(DateFormatUtils.format(new Date(), "yyyyMMddHHmm"));
+        long sequence = redisTemplate.opsForHash().increment("trade_sequence", "count", 1L);
+        tradeNo.append(numToUpperString(sequence, 6));
+        // Reset sequence when it reaches 8 billion
+        if (sequence >= 800000000L) {
+            redisTemplate.opsForHash().put("trade_sequence", "count", 1L);
+        }
+        String orderId = tradeNo.toString();
+        log.info("Generated order number: {}", orderId);
+        return orderId;
+    }
+
+    private final String UPPERCASE_CHAR = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+    private String numToUpperString(long num, int len) {
+        StringBuilder sb = new StringBuilder();
+        while (num > 0) {
+            sb.insert(0, UPPERCASE_CHAR.charAt((int) (num % UPPERCASE_CHAR.length())));
+            num /= UPPERCASE_CHAR.length();
+        }
+        while (sb.length() < len) {
+            sb.insert(0, "0");
+        }
+        return sb.toString();
+    }
 }
