@@ -5,6 +5,26 @@ package com.gl.myparadise.common.bean.constant;
  */
 public final class ProjectConstant {
 
+    public static final class DatabaseLogicPk {
+        public final static String GL_ACTIVITY_MANUAL_SEND_RECORD = "100";
+        public final static String GL_ACTIVITY_MANUAL_SEND_USER = "101";
+        public final static String GL_ACTIVITY = "102";
+        public final static String GL_ACTIVITY_TYPE = "103";
+        public final static String GL_ACTIVITY_TRANSACTION_LOG = "104";
+    }
+
+    public static final class Common {
+        /**
+         * 否 (FALSE)
+         */
+        public final static String FALSE = "0";
+
+        /**
+         * 是 (TRUE)
+         */
+        public final static String TRUE = "1";
+    }
+
     /**
      * 流水号前缀相关常量
      */
