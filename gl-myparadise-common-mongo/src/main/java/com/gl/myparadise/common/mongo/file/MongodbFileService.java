@@ -17,6 +17,7 @@ import org.bson.Document;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.gridfs.GridFsResource;
@@ -42,6 +43,7 @@ import java.util.function.Function;
 
 @Service
 @Slf4j
+@ConditionalOnBean(name = "taskExecutor")
 public class MongodbFileService {
     final Integer limit = 100000;
     @Autowired

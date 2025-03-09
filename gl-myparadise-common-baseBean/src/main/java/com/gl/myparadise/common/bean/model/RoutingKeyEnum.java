@@ -13,6 +13,7 @@ public enum RoutingKeyEnum {
     global_user_other_routing_key(ExchangeEnum.globalUser, "global-user-other-route-key", "全局用户其他资料上报默认路由"),
     global_system_operation_log_routing_key(ExchangeEnum.globalSystem, "global-system-operation-log-route-key", "全局系统操作日志上报默认路由"),
     global_fund_routing_key(ExchangeEnum.globalFund, "global-fund-routing-key", "全局财务上报"),
+    global_activity_routing_key(ExchangeEnum.globalActivity, "global-activity-routing-key", "全局活动上报"),
     ;
 
     private final ExchangeEnum exchange;

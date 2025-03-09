@@ -76,4 +76,10 @@ public interface RedisclientService {
     Long getHashMapSize(String key);
 
     String getTradeNo(String prefix);
+
+    boolean tryLock(String lockKey, long timeoutSeconds);
+
+    void extendLockExpiration(String lockKey, long timeoutSeconds);
+
+    boolean releaseLock(String lockKey);
 }

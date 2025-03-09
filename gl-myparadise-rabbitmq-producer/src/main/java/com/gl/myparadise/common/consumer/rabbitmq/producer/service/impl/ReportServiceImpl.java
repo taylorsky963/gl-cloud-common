@@ -1,6 +1,7 @@
 package com.gl.myparadise.common.consumer.rabbitmq.producer.service.impl;
 
 import com.gl.myparadise.common.bean.model.ReportEvent;
+import com.gl.myparadise.common.bean.report.activity.ActivityBaseReport;
 import com.gl.myparadise.common.bean.report.fund.FundBaseReport;
 import com.gl.myparadise.common.bean.report.system.SystemOperationLogReport;
 import com.gl.myparadise.common.bean.report.user.*;
@@ -65,5 +66,10 @@ public class ReportServiceImpl implements ReportService {
     public void fundReport(FundBaseReport report) {
         report.setTimestamp(System.currentTimeMillis());
         defaultProducer.sendFundReport(report);
+    }
+
+    @Override
+    public void activityReport(ActivityBaseReport report) {
+        defaultProducer.sendActivity(report);
     }
 }

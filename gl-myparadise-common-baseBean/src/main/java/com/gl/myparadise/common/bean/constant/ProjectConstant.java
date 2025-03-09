@@ -136,6 +136,11 @@ public final class ProjectConstant {
              */
             public final static String MANUAL_SEND = "MANUAL_SEND";
         }
+
+        public static final class LockKey {
+
+            public final static String ACTIVITY_MANUAL_SEND_LOCK_KEY = "ACTIVITY_MANUAL_SEND_LOCK_KEY";
+        }
     }
 
 

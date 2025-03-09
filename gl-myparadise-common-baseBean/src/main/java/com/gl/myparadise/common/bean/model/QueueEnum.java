@@ -17,9 +17,9 @@ public enum QueueEnum {
 
     global_system_operation_save_to_elasticsearch(ExchangeEnum.globalSystem, RoutingKeyEnum.global_system_operation_log_routing_key, QueueConstant.GLOBAL_SYSTEM_OPERATION_LOG_SAVE_TO_ELASTICSEARCH, "全局系统操作日志消费保存到ES"),
 
-    global_game_data_collection_save(ExchangeEnum.globalReport, RoutingKeyEnum.global_report_routing_key, QueueConstant.GLOBAL_GAME_DATA_COLLECTION_SAVE, "全局上报的投注紀錄保存到數據庫"),
-
     global_fund(ExchangeEnum.globalFund, RoutingKeyEnum.global_fund_routing_key, QueueConstant.GLOBAL_FUND, "全局财务相关上报"),
+
+    global_activity(ExchangeEnum.globalActivity, RoutingKeyEnum.global_activity_routing_key, QueueConstant.GLOBAL_ACTIVITY, "全局财务相关上报"),
     ;
 
     private final ExchangeEnum exchange;

@@ -34,4 +34,12 @@ public class JsonUtil {
         }
         return objectMapper.writeValueAsString(obj);
     }
+
+    @SneakyThrows
+    public static <T> T toBean(String content, Class<T> clz) {
+        if (StringUtils.isBlank(content) || clz == null) {
+            return null;
+        }
+        return objectMapper.readValue(content, clz);
+    }
 }

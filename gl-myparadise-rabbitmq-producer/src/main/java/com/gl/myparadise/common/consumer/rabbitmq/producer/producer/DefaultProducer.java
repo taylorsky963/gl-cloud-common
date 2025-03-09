@@ -2,6 +2,7 @@ package com.gl.myparadise.common.consumer.rabbitmq.producer.producer;
 
 import com.gl.myparadise.common.bean.model.QueueEnum;
 import com.gl.myparadise.common.bean.rabbitmq.SendRabbitMessageService;
+import com.gl.myparadise.common.bean.report.activity.ActivityBaseReport;
 import com.gl.myparadise.common.bean.report.fund.FundBaseReport;
 import com.gl.myparadise.common.bean.report.system.SystemOperationLogReport;
 import lombok.extern.slf4j.Slf4j;
@@ -19,16 +20,21 @@ public class DefaultProducer {
 
     private final QueueEnum logQueue = QueueEnum.global_system_operation_save_to_elasticsearch;
     private final QueueEnum fundQueue = QueueEnum.global_fund;
+    private final QueueEnum activityQueue = QueueEnum.global_activity;
 
-    public void systemOperationReport(SystemOperationLogReport logReport) {
+    public void systemOperationReport(SystemOperationLogReport report) {
         try {
-            sendRabbitMessageService.sendDirectMessageNoAck(logQueue.exchange(), logQueue.routing(), logReport);
+            sendRabbitMessageService.sendDirectMessageNoAck(logQueue.exchange(), logQueue.routing(), report);
         } catch (Exception e) {
             log.error("DefaultProducer.systemOperationReport: ", e);
         }
     }
 
-    public void sendFundReport(FundBaseReport obj) throws AmqpException {
-        sendRabbitMessageService.sendDirectMessageNoAck(fundQueue.exchange(), fundQueue.routing(), obj);
+    public void sendFundReport(FundBaseReport report) throws AmqpException {
+        sendRabbitMessageService.sendDirectMessageNoAck(fundQueue.exchange(), fundQueue.routing(), report);
+    }
+
+    public void sendActivity(ActivityBaseReport report) {
+        sendRabbitMessageService.sendDirectMessageNoAck(activityQueue.exchange(), activityQueue.routing(), report);
     }
 }

@@ -1,5 +1,6 @@
 package com.gl.myparadise.common.consumer.rabbitmq.producer.service;
 
+import com.gl.myparadise.common.bean.report.activity.ActivityBaseReport;
 import com.gl.myparadise.common.bean.report.fund.ActivityBonusReport;
 import com.gl.myparadise.common.bean.report.fund.FundBaseReport;
 import com.gl.myparadise.common.bean.report.system.SystemOperationLogReport;
@@ -41,4 +42,9 @@ public interface ReportService {
      * 财务相关上报
      */
     void fundReport(FundBaseReport report);
+
+    /**
+     * 活动上报
+     */
+    void activityReport(ActivityBaseReport report);
 }
