@@ -198,5 +198,13 @@ public final class ProjectConstant {
              */
             public final static int REBATE = 5;
         }
+
+
+        public static final class ServiceType {
+            /**
+             *  遊戲轉帳
+             */
+            public final static String GAME = "7001";
+        }
     }
 }
