@@ -23,6 +23,8 @@ public enum ReportEvent {
 
     GameTransfer(1016, "用戶遊戲轉帳紀錄"),
 
+    GameFreeze(1017, "游戏转入冻结"),
+
     SystemOperationLogReport(6002, "系统操作日志"),
     ;
 
