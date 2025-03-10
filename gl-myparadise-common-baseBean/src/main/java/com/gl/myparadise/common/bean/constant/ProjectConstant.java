@@ -23,6 +23,34 @@ public final class ProjectConstant {
          * 是 (TRUE)
          */
         public final static String TRUE = "1";
+
+        public static class SECOND {
+
+            /**
+             * 一分钟的秒数
+             */
+            public static final long MINUTE = 60;
+
+            /**
+             * 一小时的秒数
+             */
+            public static final long HOUR = 3600;
+
+            /**
+             * 一天的秒数
+             */
+            public static final long DAY = 86400;
+
+            /**
+             * 一周的秒数
+             */
+            public static final long WEEK = 604800;
+
+            /**
+             * 一年的秒数 (按365天计算)
+             */
+            public static final long YEAR = 31536000;
+        }
     }
 
     /**
