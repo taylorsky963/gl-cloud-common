@@ -25,6 +25,8 @@ public enum ReportEvent {
 
     GameFreeze(1017, "游戏转入冻结"),
 
+    UserWallet(1019, "用户钱包建立上报"),
+
     SystemOperationLogReport(6002, "系统操作日志"),
     ;
 

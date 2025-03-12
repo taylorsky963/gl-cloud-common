@@ -72,4 +72,9 @@ public class ReportServiceImpl implements ReportService {
     public void activityReport(ActivityBaseReport report) {
         defaultProducer.sendActivity(report);
     }
+
+    @Override
+    public void userWalletReport(UserWalletReport report) {
+        reportProducer.sendMessage(ReportEvent.UserWallet, report);
+    }
 }
