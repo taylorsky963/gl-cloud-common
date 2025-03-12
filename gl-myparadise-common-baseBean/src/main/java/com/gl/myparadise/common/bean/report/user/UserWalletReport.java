@@ -8,9 +8,9 @@ import java.util.Date;
 @Data
 public class UserWalletReport extends BaseReport {
 
-    private String userAccount;
     private String curDataPkCode;
     private String curSign;
+    private String memberAccount;
     private Long memberInfoId;
     private Date createTime;
 

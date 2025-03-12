@@ -10,22 +10,22 @@ public interface ReportService {
     /**
      * 登录上报
      */
-    void loginReport(LoginReport loginReport);
+    void loginReport(LoginReport report);
 
     /**
      * 注册上报
      */
-    void registerReport(RegisterReport registerReport);
+    void registerReport(RegisterReport report);
 
     /**
      * 用户信息同步上报
      */
-    void userSync(UserSync userSync);
+    void userSync(UserSync report);
 
     /**
      * 后台操作日志上报
      */
-    void systemOperationReport(SystemOperationLogReport logReport);
+    void systemOperationReport(SystemOperationLogReport report);
 
     /**
      * 游戏注单成功上报
@@ -50,6 +50,6 @@ public interface ReportService {
     /**
      * 用户钱包建立上报
      */
-    void userWalletReport(UserWalletReport loginReport);
+    void userWalletReport(UserWalletReport report);
 
 }
