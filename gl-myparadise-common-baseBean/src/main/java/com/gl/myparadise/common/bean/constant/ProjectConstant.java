@@ -133,6 +133,10 @@ public final class ProjectConstant {
              * 已完成: 表示此流程已完成处理
              */
             public final static int COMPLETED = 2;
+            /**
+             * 失敗
+             */
+            public final static int FAIL = 3;
         }
 
         public static final class TemplateType {
