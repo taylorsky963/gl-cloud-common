@@ -46,6 +46,10 @@ public enum ReportEvent {
         return this.value;
     }
 
+    public String string() {
+        return String.valueOf(this.value);
+    }
+
     public String desc() {
         return this.desc;
     }
