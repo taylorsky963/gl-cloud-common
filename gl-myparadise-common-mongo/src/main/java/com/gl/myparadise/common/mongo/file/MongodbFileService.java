@@ -43,7 +43,7 @@ import java.util.function.Function;
 
 @Service
 @Slf4j
-@ConditionalOnBean(name = "taskExecutor")
+@ConditionalOnBean(name = "asyncExecutor")
 public class MongodbFileService {
     final Integer limit = 100000;
     @Autowired
@@ -51,7 +51,7 @@ public class MongodbFileService {
     @Autowired
     private GridFSBucket gridFSBucket;
     @Autowired
-    @Qualifier("taskExecutor")
+    @Qualifier("asyncExecutor")
     private Executor executor;
     @Autowired
     private GlExportService glExportService;
