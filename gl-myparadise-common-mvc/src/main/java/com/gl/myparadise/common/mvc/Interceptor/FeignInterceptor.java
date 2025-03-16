@@ -15,7 +15,7 @@ public class FeignInterceptor implements RequestInterceptor {
 
     @Override
     public void apply(RequestTemplate requestTemplate) {
-        String language = LocaleContextHolder.getLocale().getLanguage();
+        String language = LocaleContextHolder.getLocale().toLanguageTag();
         String traceId = MDC.get("traceId");
 
         if (StringUtils.isEmpty(traceId)) {
