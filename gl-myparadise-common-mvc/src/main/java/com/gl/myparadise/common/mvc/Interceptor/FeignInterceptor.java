@@ -23,7 +23,7 @@ public class FeignInterceptor implements RequestInterceptor {
             MDC.put("traceId", traceId);
         }
 
-        requestTemplate.header(TRACE_ID_HEADER, language);
-        requestTemplate.header(LANG_HEADER, traceId);
+        requestTemplate.header(TRACE_ID_HEADER, traceId);
+        requestTemplate.header(LANG_HEADER, language);
     }
 }
