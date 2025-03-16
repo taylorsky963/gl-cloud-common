@@ -117,6 +117,23 @@ public final class ProjectConstant {
             public final static int UN_USE = 6;
         }
 
+        public static final class SubType {
+            public final static int SUB_TYPE_1 = 1;
+            public final static int SUB_TYPE_2 = 2;
+            public final static int SUB_TYPE_3 = 3;
+            public final static int SUB_TYPE_4 = 4;
+            public final static int SUB_TYPE_5 = 5;
+            public final static int SUB_TYPE_6 = 6;
+            public final static int SUB_TYPE_7 = 7;
+            public final static int SUB_TYPE_8 = 8;
+            public final static int SUB_TYPE_9 = 9;
+            public final static int SUB_TYPE_10 = 10;
+            public final static int SUB_TYPE_11 = 11;
+            public final static int SUB_TYPE_12 = 12;
+            public final static int SUB_TYPE_13 = 13; // VIP升级礼金
+            public final static int SUB_TYPE_14 = 14;
+        }
+
         public static final class ProcessStatus {
 
             /**
@@ -207,7 +224,7 @@ public final class ProjectConstant {
 
         public static final class ServiceType {
             /**
-             *  遊戲轉帳
+             * 遊戲轉帳
              */
             public final static String GAME = "7001";
         }
