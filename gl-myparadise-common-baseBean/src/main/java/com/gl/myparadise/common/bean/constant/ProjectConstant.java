@@ -217,17 +217,13 @@ public final class ProjectConstant {
              */
             public final static int WITHDRAW = 2;
             /**
-             * 帐变资金类型：转账
-             */
-            public final static int TRANSFER = 3;
-            /**
              * 帐变资金类型：红利
              */
-            public final static int BONUS = 4;
+            public final static int BONUS = 3;
             /**
              * 帐变资金类型：返水
              */
-            public final static int REBATE = 5;
+            public final static int REBATE = 4;
         }
 
 
