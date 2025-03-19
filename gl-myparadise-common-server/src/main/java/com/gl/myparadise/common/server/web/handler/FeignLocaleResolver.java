@@ -17,7 +17,7 @@ public class FeignLocaleResolver extends AcceptHeaderLocaleResolver {
         if (StringUtils.isEmpty(lang)) {
             return FeignConfiguration.DEFAULT_LANG;
         } else {
-            return Locale.forLanguageTag(lang);
+            return Locale.forLanguageTag(lang.replace("_", "-"));
         }
     }
 }
