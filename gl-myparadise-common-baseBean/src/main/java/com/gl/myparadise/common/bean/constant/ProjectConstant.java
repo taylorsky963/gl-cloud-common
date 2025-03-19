@@ -13,6 +13,11 @@ public final class ProjectConstant {
         public final static String GL_ACTIVITY_TRANSACTION_LOG = "104";
     }
 
+    public static final class WebsiteConfigKey {
+        public final static String POINTS_EXPIRATION_DAYS = "pointsExpirationDays";
+
+    }
+
     public static final class Common {
         /**
          * 否 (FALSE)
@@ -117,6 +122,23 @@ public final class ProjectConstant {
             public final static int UN_USE = 6;
         }
 
+        public static final class SubType {
+            public final static int SUB_TYPE_1 = 1;
+            public final static int SUB_TYPE_2 = 2;
+            public final static int SUB_TYPE_3 = 3;
+            public final static int SUB_TYPE_4 = 4;
+            public final static int SUB_TYPE_5 = 5;
+            public final static int SUB_TYPE_6 = 6;
+            public final static int SUB_TYPE_7 = 7;
+            public final static int SUB_TYPE_8 = 8;
+            public final static int SUB_TYPE_9 = 9;
+            public final static int SUB_TYPE_10 = 10;
+            public final static int SUB_TYPE_11 = 11;
+            public final static int SUB_TYPE_12 = 12;
+            public final static int SUB_TYPE_13 = 13; // VIP升级礼金
+            public final static int SUB_TYPE_14 = 14;
+        }
+
         public static final class ProcessStatus {
 
             /**
@@ -133,6 +155,10 @@ public final class ProjectConstant {
              * 已完成: 表示此流程已完成处理
              */
             public final static int COMPLETED = 2;
+            /**
+             * 失敗
+             */
+            public final static int FAIL = 3;
         }
 
         public static final class TemplateType {
@@ -167,10 +193,21 @@ public final class ProjectConstant {
 
         public static final class LockKey {
 
-            public final static String ACTIVITY_MANUAL_SEND_LOCK_KEY = "ACTIVITY_MANUAL_SEND_LOCK_KEY";
+            public final static String ACTIVITY_MANUAL_SEND_MQ_LOCK_KEY = "ACTIVITY_MANUAL_SEND_MQ_LOCK_KEY_";
+            public final static String ACTIVITY_MANUAL_SEND_LOCK_KEY = "ACTIVITY_MANUAL_SEND_LOCK_KEY_";
+            public final static String ACTIVITY_WEBSITE_CONFIG_KEY = "ACTIVITY_WEBSITE_CONFIG_KEY_";
         }
     }
 
+
+    /**
+     * 游戏相关常量
+     */
+    public static final class Game {
+        public static final class BetflowStatus {
+
+        }
+    }
 
     /**
      * 资金相关常量
@@ -186,23 +223,19 @@ public final class ProjectConstant {
              */
             public final static int WITHDRAW = 2;
             /**
-             * 帐变资金类型：转账
-             */
-            public final static int TRANSFER = 3;
-            /**
              * 帐变资金类型：红利
              */
-            public final static int BONUS = 4;
+            public final static int BONUS = 3;
             /**
              * 帐变资金类型：返水
              */
-            public final static int REBATE = 5;
+            public final static int REBATE = 4;
         }
 
 
         public static final class ServiceType {
             /**
-             *  遊戲轉帳
+             * 遊戲轉帳
              */
             public final static String GAME = "7001";
         }

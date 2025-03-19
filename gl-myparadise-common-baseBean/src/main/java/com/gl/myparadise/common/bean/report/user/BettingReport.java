@@ -31,4 +31,7 @@ public class BettingReport extends BaseReport {
     private Date createTime;
     private String detail;
     private String itemData;
+    private String curDataPkCode;
+    private String memberAccount;
+    private Long memberInfoId;
 }

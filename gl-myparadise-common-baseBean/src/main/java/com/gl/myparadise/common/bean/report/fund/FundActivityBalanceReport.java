@@ -8,7 +8,9 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 public class FundActivityBalanceReport extends FundBaseReport {
-    private String userAccount;
+    private String memberAccount;
+
+    private Long memberInfoId;
 
     private String activityDataPkCode;
 
@@ -23,4 +25,8 @@ public class FundActivityBalanceReport extends FundBaseReport {
     private String coinCode;
 
     private String coinDataPkCode;
+
+    private Integer awardType;
+
+    private BigDecimal betFlowAmount;
 }
