@@ -13,6 +13,11 @@ public final class ProjectConstant {
         public final static String GL_ACTIVITY_TRANSACTION_LOG = "104";
     }
 
+    public static final class WebsiteConfigKey {
+        public final static String POINTS_EXPIRATION_DAYS = "pointsExpirationDays";
+
+    }
+
     public static final class Common {
         /**
          * 否 (FALSE)
@@ -190,6 +195,7 @@ public final class ProjectConstant {
 
             public final static String ACTIVITY_MANUAL_SEND_MQ_LOCK_KEY = "ACTIVITY_MANUAL_SEND_MQ_LOCK_KEY_";
             public final static String ACTIVITY_MANUAL_SEND_LOCK_KEY = "ACTIVITY_MANUAL_SEND_LOCK_KEY_";
+            public final static String ACTIVITY_WEBSITE_CONFIG_KEY = "ACTIVITY_WEBSITE_CONFIG_KEY_";
         }
     }
 
