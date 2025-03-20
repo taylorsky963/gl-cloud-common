@@ -17,15 +17,13 @@ public enum DigitalCoinScaleEnum {
 
     USDT("USDT", DigitalCoinEnum.USDT, 4, new MathContext(4, RoundingMode.HALF_UP), BigDecimal.valueOf(0.01d)),
 
-    BRL("BRL", DigitalCoinEnum.BRL, 5, new MathContext(5, RoundingMode.HALF_UP), BigDecimal.valueOf(0.001d)),
-
-    ETH("ETH", DigitalCoinEnum.ETH, 6, new MathContext(6, RoundingMode.HALF_UP), BigDecimal.valueOf(0.0001d)),
+    BRL("BRL", DigitalCoinEnum.BRL, 2, new MathContext(2, RoundingMode.HALF_UP), BigDecimal.valueOf(0.01d)),
 
     BTC("BTC", DigitalCoinEnum.BTC, 8, new MathContext(8, RoundingMode.HALF_UP), BigDecimal.valueOf(0.0001d)),
 
     CNY("CNY", DigitalCoinEnum.CNY, 2, new MathContext(2, RoundingMode.HALF_UP), BigDecimal.valueOf(0.01d)),
 
-    VND("VND", DigitalCoinEnum.VND, 2, new MathContext(0, RoundingMode.HALF_UP), BigDecimal.valueOf(0.01d)),
+    VND("VND", DigitalCoinEnum.VND, 0, new MathContext(0, RoundingMode.HALF_UP), BigDecimal.valueOf(0d)),
 
     MYR("MYR", DigitalCoinEnum.MYR, 2, new MathContext(2, RoundingMode.HALF_UP), BigDecimal.valueOf(0.01d)),
 
@@ -38,6 +36,8 @@ public enum DigitalCoinScaleEnum {
     USD("USD", DigitalCoinEnum.USD, 2, new MathContext(2, RoundingMode.HALF_UP), BigDecimal.valueOf(0.01d)),
 
     EGP("EGP", DigitalCoinEnum.EGP, 2, new MathContext(2, RoundingMode.HALF_UP), BigDecimal.valueOf(0.01d)),
+
+    PHP("PHP", DigitalCoinEnum.PHP, 2, new MathContext(2, RoundingMode.HALF_UP), BigDecimal.valueOf(0.01d)),
 
     ;
 

@@ -42,7 +42,9 @@ public enum DigitalCoinEnum {
 
     EGP("EGP", "E£", true, "NGN"),
 
-    NGN("NGN", "₦", true, "USDT"),
+    NGN("NGN", "₦", true, "PHP"),
+
+    PHP("PHP", "₱", true, "USDT"),
     ;
 
     /**

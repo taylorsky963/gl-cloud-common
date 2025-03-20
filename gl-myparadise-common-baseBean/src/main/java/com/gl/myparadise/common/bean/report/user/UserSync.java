@@ -91,33 +91,4 @@ public class UserSync implements Serializable {
      */
     private String currCurDataPkCode;
 
-    // ================================ 聯絡信息 ================================
-
-    private String telephone;
-    private String telArea;
-
-    // ================================ 賬戶狀態 ================================
-    private Integer status;
-    private String remark;
-    private Integer clientType;
-    private BigDecimal balance;
-    private Integer levelStatus;
-    private Long lastUpdate;
-    private Long logoutTime;
-
-    // ================================= VIP =================================
-    private Integer vipLevel;
-    private Long vipLevelTime;
-    private Integer preVipLevel;
-
-    // ================================ 註冊 ================================
-    private String registerIp;
-    private Long registerDate;
-    private String registerDomain;
-    private String registerDeviceId;
-
-    // ================================ 登入 ================================
-    private Long loginTime;
-    private String loginIp;
-    private Integer loginClientType;
 }
