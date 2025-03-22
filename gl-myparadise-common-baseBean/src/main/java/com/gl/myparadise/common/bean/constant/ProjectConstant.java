@@ -196,6 +196,7 @@ public final class ProjectConstant {
             public final static String ACTIVITY_MANUAL_SEND_MQ_LOCK_KEY = "ACTIVITY_MANUAL_SEND_MQ_LOCK_KEY_";
             public final static String ACTIVITY_MANUAL_SEND_LOCK_KEY = "ACTIVITY_MANUAL_SEND_LOCK_KEY_";
             public final static String ACTIVITY_WEBSITE_CONFIG_KEY = "ACTIVITY_WEBSITE_CONFIG_KEY_";
+            public final static String ACTIVITY_CURRENCY_CONFIG_KEY = "ACTIVITY_CURRENCY_CONFIG_KEY_";
         }
     }
 
