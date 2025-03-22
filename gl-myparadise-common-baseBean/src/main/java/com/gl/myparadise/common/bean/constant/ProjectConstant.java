@@ -239,5 +239,29 @@ public final class ProjectConstant {
              */
             public final static String GAME = "7001";
         }
+
+        public static final class PayOrder{
+            //会员支付订单状态：创建订单
+            public final static String PAYMENT_ORDER_STATUS_CREATE = "70008001";
+            //会员支付订单状态：订单回调成功，订单状态修改
+            public final static String PAYMENT_ORDER_STATUS_SUCCESS = "70008002";
+            //会员支付订单状态：订单超时过期
+            public final static String PAYMENT_ORDER_STATUS_EXPIRED = "70008003";
+            //会员支付订单状态：无效订单
+            public final static String PAYMENT_ORDER_STATUS_INVALID = "70008004";
+        }
+
+        public static final class WithdrawOrder{
+            //提款订单创建状态
+            public final static String WITHDRAW_ORDER_STATUS_CREATE = "70015001";
+            //提款订单风控拒绝
+            public final static String WITHDRAW_ORDER_STATUS_RISK = "70015004";
+            //提款订单等待财务出款
+            public final static String WITHDRAW_ORDER_STATUS_FINANCIAL = "70015002";
+            //提款订单出款成功
+            public final static String WITHDRAW_ORDER_STATUS_SUCCESS = "70015003";
+            //提款订单发起代付请求后的等待三方回调
+            public final static String WITHDRAW_ORDER_STATUS_DFWAITING = "70015005";
+        }
     }
 }
