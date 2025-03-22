@@ -91,4 +91,10 @@ public class ReportServiceImpl implements ReportService {
         report.set("uuid", report.getOrderNumber());
         reportProducer.sendMessage(ReportEvent.Withdraw, report);
     }
+
+    @Override
+    public void memberVipReport(MemberVipReport report) {
+        report.set("uuid", report.getDataPkCode());
+        reportProducer.sendMessage(ReportEvent.Withdraw, report);
+    }
 }

@@ -63,4 +63,9 @@ public interface ReportService {
      * 提現紀錄上報
      */
     void withdrawReport(WithdrawReport report);
+
+    /**
+     * 用戶VIP上報
+     */
+    void memberVipReport(MemberVipReport report);
 }
