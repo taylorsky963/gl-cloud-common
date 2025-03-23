@@ -239,6 +239,11 @@ public final class ProjectConstant {
              * 遊戲轉帳
              */
             public final static String GAME = "7001";
+
+            /**
+             * 财务转帐
+             */
+            public final static String FINANCIAL = "6001";
         }
 
         public static final class PayOrder{
