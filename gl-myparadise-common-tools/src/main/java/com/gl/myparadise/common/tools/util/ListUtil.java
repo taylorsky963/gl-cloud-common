@@ -24,7 +24,7 @@ public class ListUtil {
     }
 
 
-    public static <T> List<List<T>> splitList(List<T> list, int splitSize) {
+    public static <T> List<List<T>> splitList(Collection<T> list, int splitSize) {
         //判断集合是否为空
         if (CollectionUtils.isEmpty(list))
             return Collections.emptyList();
