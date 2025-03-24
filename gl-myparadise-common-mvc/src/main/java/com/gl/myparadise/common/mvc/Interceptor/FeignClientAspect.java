@@ -7,7 +7,6 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
 
 /**
@@ -24,7 +23,10 @@ public class FeignClientAspect {
     private static final Logger logger = LoggerFactory.getLogger(FeignClientAspect.class);
 
 
-    @Around("execution(* com.gl.myparadise..api..*.*(..)) && @within(org.springframework.cloud.openfeign.FeignClient)")
+    @Around("execution(* com.gl.myparadise..api..*.*(..)) && " +
+            "@within(org.springframework.cloud.openfeign.FeignClient) && " +
+            "(@annotation(com.gl.myparadise.common.mvc.annotation.GLFeignRequestAspectRequired) || " +
+            "@within(com.gl.myparadise.common.mvc.annotation.GLFeignRequestAspectRequired))")
     public Object handleFeignClientException(ProceedingJoinPoint joinPoint){
 
         try {
