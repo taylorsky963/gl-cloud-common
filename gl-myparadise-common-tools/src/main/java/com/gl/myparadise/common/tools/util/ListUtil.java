@@ -25,18 +25,28 @@ public class ListUtil {
 
 
     public static <T> List<List<T>> splitList(Collection<T> list, int splitSize) {
-        //判断集合是否为空
-        if (CollectionUtils.isEmpty(list))
-            return Collections.emptyList();
-        //计算分割后的大小
-        int maxSize = (list.size() + splitSize - 1) / splitSize;
-        //开始分割
-        return Stream.iterate(0, n -> n + 1)
-                .limit(maxSize)
-                .parallel()
-                .map(a -> list.parallelStream().skip(a * splitSize).limit(splitSize).collect(Collectors.toList()))
-                .filter(b -> !b.isEmpty())
-                .collect(Collectors.toList());
+        // 檢查輸入參數
+        if (list == null || list.isEmpty()) {
+            return new ArrayList<>(); // 如果輸入為空，返回空列表
+        }
+        if (splitSize <= 0) {
+            throw new IllegalArgumentException("splitSize 必須大於 0");
+        }
+
+        // 將集合轉為列表以便操作
+        List<T> sourceList = new ArrayList<>(list);
+        List<List<T>> result = new ArrayList<>();
+
+        // 計算需要分割的子列表數量
+        int size = sourceList.size();
+        for (int i = 0; i < size; i += splitSize) {
+            // 計算子列表的結束索引
+            int end = Math.min(i + splitSize, size);
+            // 截取子列表並加入結果
+            result.add(new ArrayList<>(sourceList.subList(i, end)));
+        }
+
+        return result;
     }
 
     public static boolean isNotEmpty(List list) {
