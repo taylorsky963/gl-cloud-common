@@ -8,10 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
+import java.math.BigDecimal;
 import java.time.ZoneOffset;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 
 public abstract class ElasticsearchBaseDao {
@@ -20,6 +22,7 @@ public abstract class ElasticsearchBaseDao {
     public final static String BETTING = "report-betting-";
     public final static String GAME_TRANSFER = "report-game-transfer-";
     public final static String MEMBER_VIP = "report-member-vip-";
+    public final static String DAILY_USER_BETTING = "report-daily-user-betting-";
 
     public ZoneOffset timeZone = ZoneOffset.ofHours(8);
 
@@ -44,14 +47,18 @@ public abstract class ElasticsearchBaseDao {
         return hits.getTotalHits().value != 0;
     }
 
+    @SuppressWarnings("unchecked")
     public <V> V getValFromSearchHit(SearchHit hitField, String fieldName, V defaultVal) {
+        return getValFromSearchHit(hitField, fieldName, defaultVal, defaultVal != null ? (Class<V>) Objects.requireNonNull(defaultVal).getClass() : null);
+    }
+
+    public <V> V getValFromSearchHit(SearchHit hitField, String fieldName, V defaultVal, Class<V> type) {
         if (!StringUtils.hasText(fieldName) || hitField == null || !hitField.hasSource()) {
             return defaultVal;
         }
         Map<String, Object> sourceAsMap = hitField.getSourceAsMap();
         Object value = getValueFromNestedMap(sourceAsMap, fieldName, defaultVal);
-
-        return convertValue(value, defaultVal);
+        return convertValue(value, defaultVal, type);
     }
 
     private Object getValueFromNestedMap(Map<String, Object> sourceMap, String fieldName, Object defaultVal) {
@@ -72,15 +79,19 @@ public abstract class ElasticsearchBaseDao {
     }
 
     @SuppressWarnings("unchecked")
-    private <V> V convertValue(Object value, V defaultVal) {
+    private <V> V convertValue(Object value, V defaultVal, Class<V> type) {
         if (value == null) return defaultVal;
-        if (defaultVal == null) return (V) value;
+
+        Class<?> targetClass = (type != null) ? type : (defaultVal != null ? defaultVal.getClass() : null);
+        if (targetClass == null) return (V) value;
 
         try {
-            if (defaultVal instanceof String) {
+            if (targetClass == String.class) {
                 return (V) value.toString();
-            } else if (defaultVal instanceof Number && value instanceof Number) {
-                return (V) convertNumber((Number) value, defaultVal.getClass());
+            } else if (targetClass == BigDecimal.class && value instanceof Number) { // 新增 BigDecimal 支持
+                return (V) new BigDecimal(value.toString());
+            } else if (Number.class.isAssignableFrom(targetClass) && value instanceof Number) {
+                return (V) convertNumber((Number) value, targetClass);
             }
             return (V) value;
         } catch (ClassCastException e) {
