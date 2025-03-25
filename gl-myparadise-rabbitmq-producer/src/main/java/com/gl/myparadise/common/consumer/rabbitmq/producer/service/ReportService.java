@@ -68,4 +68,9 @@ public interface ReportService {
      * 用戶VIP上報
      */
     void memberVipReport(MemberVipReport report);
+
+    /**
+     * 每日用户投注数据
+     */
+    void dailyUserBettingReport(DailyUserBettingReport report);
 }

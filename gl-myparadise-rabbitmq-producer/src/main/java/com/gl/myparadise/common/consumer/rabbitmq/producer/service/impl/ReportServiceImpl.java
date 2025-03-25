@@ -97,4 +97,9 @@ public class ReportServiceImpl implements ReportService {
         report.set("uuid", report.getDataPkCode());
         reportProducer.sendMessage(ReportEvent.MemberVip, report);
     }
+
+    @Override
+    public void dailyUserBettingReport(DailyUserBettingReport report) {
+        reportProducer.sendMessage(ReportEvent.DailyUserBetting, report);
+    }
 }

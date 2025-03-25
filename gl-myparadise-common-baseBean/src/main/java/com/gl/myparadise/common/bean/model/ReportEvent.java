@@ -25,6 +25,8 @@ public enum ReportEvent {
 
     MemberVip(1017, "用戶VIP上報"),
 
+    DailyUserBetting(7000, "每日用户投注数据上報"),
+
     SystemOperationLogReport(6002, "系统操作日志"),
     ;
 
