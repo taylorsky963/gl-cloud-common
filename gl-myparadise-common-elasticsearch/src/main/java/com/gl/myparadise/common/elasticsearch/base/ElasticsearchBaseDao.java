@@ -4,6 +4,10 @@ import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
+import org.elasticsearch.search.aggregations.Aggregation;
+import org.elasticsearch.search.aggregations.Aggregations;
+import org.elasticsearch.search.aggregations.metrics.Sum;
+import org.elasticsearch.search.aggregations.metrics.ValueCount;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
@@ -23,6 +27,7 @@ public abstract class ElasticsearchBaseDao {
     public final static String GAME_TRANSFER = "report-game-transfer-";
     public final static String MEMBER_VIP = "report-member-vip-";
     public final static String DAILY_USER_BETTING = "report-daily-user-betting-";
+    public final static String Recharge = "report-recharge-";
 
     public ZoneOffset timeZone = ZoneOffset.ofHours(8);
 
@@ -107,5 +112,53 @@ public abstract class ElasticsearchBaseDao {
         if (targetClass == Short.class) return value.shortValue();
         if (targetClass == Byte.class) return value.byteValue();
         return value;
+    }
+
+    @SuppressWarnings("unchecked")
+    public <V> V getValFromAggregation(Aggregations aggregations, String aggName, V defaultVal, Class<V> type) {
+        if (aggregations == null || !StringUtils.hasText(aggName)) {
+            return defaultVal;
+        }
+
+        Aggregation aggregation = aggregations.get(aggName);
+        if (aggregation == null) {
+            return defaultVal;
+        }
+
+        try {
+            if (type == null && defaultVal != null) {
+                type = (Class<V>) defaultVal.getClass();
+            }
+
+            if (type == null) {
+                return defaultVal; // 無法確定類型，返回預設值
+            }
+
+            if (aggregation instanceof Sum) {
+                double value = ((Sum) aggregation).getValue();
+                if (type == BigDecimal.class) {
+                    return (V) new BigDecimal(String.valueOf(value));
+                } else if (type == Double.class) {
+                    return (V) Double.valueOf(value);
+                } else if (type == Integer.class) {
+                    return (V) Integer.valueOf((int) value);
+                } else if (type == Long.class) {
+                    return (V) Long.valueOf((long) value);
+                }
+            } else if (aggregation instanceof ValueCount) {
+                long value = ((ValueCount) aggregation).getValue();
+                if (type == Integer.class) {
+                    return (V) Integer.valueOf((int) value);
+                } else if (type == Long.class) {
+                    return (V) Long.valueOf(value);
+                } else if (type == BigDecimal.class) {
+                    return (V) new BigDecimal(String.valueOf(value));
+                }
+            }
+
+            return defaultVal;
+        } catch (Exception e) {
+            return defaultVal;
+        }
     }
 }

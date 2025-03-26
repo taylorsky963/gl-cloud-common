@@ -27,6 +27,8 @@ public enum ReportEvent {
 
     DailyUserBetting(7000, "每日用户投注数据上報"),
 
+    DailyUserRecharge(7001, "每日用户充值数据上報"),
+
     SystemOperationLogReport(6002, "系统操作日志"),
     ;
 

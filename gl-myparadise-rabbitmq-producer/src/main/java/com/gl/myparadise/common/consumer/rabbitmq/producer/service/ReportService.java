@@ -73,4 +73,9 @@ public interface ReportService {
      * 每日用户投注数据
      */
     void dailyUserBettingReport(DailyUserBettingReport report);
+
+    /**
+     * 每日用户充值数据
+     */
+    void dailyUserRechargeReport(DailyUserRechargeReport report);
 }

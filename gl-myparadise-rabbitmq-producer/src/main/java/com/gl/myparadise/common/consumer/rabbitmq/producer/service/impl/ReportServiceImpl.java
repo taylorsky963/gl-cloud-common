@@ -102,4 +102,9 @@ public class ReportServiceImpl implements ReportService {
     public void dailyUserBettingReport(DailyUserBettingReport report) {
         reportProducer.sendMessage(ReportEvent.DailyUserBetting, report);
     }
+
+    @Override
+    public void dailyUserRechargeReport(DailyUserRechargeReport report) {
+        reportProducer.sendMessage(ReportEvent.DailyUserRecharge, report);
+    }
 }
