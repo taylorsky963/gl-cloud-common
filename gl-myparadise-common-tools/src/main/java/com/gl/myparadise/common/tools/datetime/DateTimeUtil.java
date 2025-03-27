@@ -1,7 +1,10 @@
 package com.gl.myparadise.common.tools.datetime;
 
+import org.apache.commons.lang3.time.DateUtils;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 import java.util.Vector;
@@ -211,5 +214,29 @@ public class DateTimeUtil {
 
 		System.out.println(formatDateToString(now, "hh:mm:ss aa","Asia/Taipei"));
 
+	}
+
+	public static Date getStartOfDay(Date date) {
+		if (date == null) {
+			return null;
+		}
+		return DateUtils.truncate(date, Calendar.DAY_OF_MONTH);
+	}
+
+	public static Date getEndOfDay(Date date) {
+		if (date == null) {
+			return null;
+		}
+		Date startOfDay = DateUtils.truncate(date, Calendar.DAY_OF_MONTH);
+		return DateUtils.addMilliseconds(DateUtils.addDays(startOfDay, 1), -1);
+	}
+
+	public static Date getStartOfDay() {
+		return DateUtils.truncate(new Date(), Calendar.DAY_OF_MONTH);
+	}
+
+	public static Date getEndOfDay() {
+		Date startOfDay = DateUtils.truncate(new Date(), Calendar.DAY_OF_MONTH);
+		return DateUtils.addMilliseconds(DateUtils.addDays(startOfDay, 1), -1);
 	}
 }

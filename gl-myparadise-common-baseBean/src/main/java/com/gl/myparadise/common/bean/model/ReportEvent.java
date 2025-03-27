@@ -13,8 +13,6 @@ public enum ReportEvent {
 
     Withdraw(1001, "提现"),
 
-    Transfer(1002, "转账"),
-
     Betting(1003, "投注"),
 
     Register(1004, "用户注册"),
@@ -23,9 +21,13 @@ public enum ReportEvent {
 
     GameTransfer(1016, "用戶遊戲轉帳紀錄"),
 
-    GameFreeze(1017, "游戏转入冻结"),
-
     UserWallet(1019, "用户钱包建立上报"),
+
+    MemberVip(1017, "用戶VIP上報"),
+
+    DailyUserBetting(7000, "每日用户投注数据上報"),
+
+    DailyUserRecharge(7001, "每日用户充值数据上報"),
 
     SystemOperationLogReport(6002, "系统操作日志"),
     ;

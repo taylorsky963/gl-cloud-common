@@ -11,6 +11,8 @@ public final class ProjectConstant {
         public final static String GL_ACTIVITY = "102";
         public final static String GL_ACTIVITY_TYPE = "103";
         public final static String GL_ACTIVITY_TRANSACTION_LOG = "104";
+        public final static String GL_ACTIVITY_REALTIME_REBATE_RECORD = "105";
+        public final static String GL_ACTIVITY_REBATE_RECORD = "106";
     }
 
     public static final class WebsiteConfigKey {
@@ -55,6 +57,33 @@ public final class ProjectConstant {
              * 一年的秒数 (按365天计算)
              */
             public static final long YEAR = 31536000;
+        }
+
+        public static class MILLISECOND {
+            /**
+             * 一分钟的毫秒数 (60,000 ms)
+             */
+            public static final long MINUTE = SECOND.MINUTE * 1000;
+
+            /**
+             * 一小时的毫秒数 (3,600,000 ms)
+             */
+            public static final long HOUR = SECOND.HOUR * 1000;
+
+            /**
+             * 一天的毫秒数 (86,400,000 ms)
+             */
+            public static final long DAY = SECOND.DAY * 1000;
+
+            /**
+             * 一周的毫秒数 (604,800,000 ms)
+             */
+            public static final long WEEK = SECOND.WEEK * 1000;
+
+            /**
+             * 一年的毫秒数 (31,536,000,000 ms，按365天计算)
+             */
+            public static final long YEAR = SECOND.YEAR * 1000;
         }
     }
 
@@ -200,6 +229,14 @@ public final class ProjectConstant {
         }
     }
 
+    /**
+     * 活动相关常量
+     */
+    public static final class Data {
+        public static final class LockKey {
+            public final static String DATA_CURRENCY_CONFIG_KEY = "DATA_CURRENCY_CONFIG_KEY_";
+        }
+    }
 
     /**
      * 游戏相关常量
@@ -246,7 +283,7 @@ public final class ProjectConstant {
             public final static String FINANCIAL = "6001";
         }
 
-        public static final class PayOrder{
+        public static final class PayOrder {
             //会员支付订单状态：创建订单
             public final static String PAYMENT_ORDER_STATUS_CREATE = "70008001";
             //会员支付订单状态：订单回调成功，订单状态修改
@@ -257,7 +294,7 @@ public final class ProjectConstant {
             public final static String PAYMENT_ORDER_STATUS_INVALID = "70008004";
         }
 
-        public static final class WithdrawOrder{
+        public static final class WithdrawOrder {
             //提款订单创建状态
             public final static String WITHDRAW_ORDER_STATUS_CREATE = "70015001";
             //提款订单风控拒绝

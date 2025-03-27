@@ -21,6 +21,8 @@ public enum QueueEnum {
 
     global_activity(ExchangeEnum.globalActivity, RoutingKeyEnum.global_activity_routing_key, QueueConstant.GLOBAL_ACTIVITY, "全局财务相关上报"),
     global_calculation_betflow(ExchangeEnum.globalReport, RoutingKeyEnum.global_report_routing_key, QueueConstant.GLOBAL_CALCULATION_BETFLOW, "流水计算相关上报"),
+
+    global_activity_event(ExchangeEnum.globalReport, RoutingKeyEnum.global_report_routing_key, QueueConstant.GLOBAL_ACTIVITY_EVENT, "活动全局事件接收"),
     ;
 
     private final ExchangeEnum exchange;
