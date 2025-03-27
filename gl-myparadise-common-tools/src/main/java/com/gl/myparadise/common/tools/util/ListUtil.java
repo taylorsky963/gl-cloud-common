@@ -4,10 +4,7 @@ import lombok.SneakyThrows;
 import org.springframework.beans.BeanUtils;
 import org.springframework.util.CollectionUtils;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -44,6 +41,31 @@ public class ListUtil {
             int end = Math.min(i + splitSize, size);
             // 截取子列表並加入結果
             result.add(new ArrayList<>(sourceList.subList(i, end)));
+        }
+
+        return result;
+    }
+
+    public static <T> List<Set<T>> splitListToSet(Collection<T> list, int splitSize) {
+        // 檢查輸入參數
+        if (list == null || list.isEmpty()) {
+            return new ArrayList<>(); // 如果輸入為空，返回空列表
+        }
+        if (splitSize <= 0) {
+            throw new IllegalArgumentException("splitSize 必須大於 0");
+        }
+
+        // 將集合轉為列表以便操作
+        List<T> sourceList = new ArrayList<>(list);
+        List<Set<T>> result = new ArrayList<>();
+
+        // 計算需要分割的子列表數量
+        int size = sourceList.size();
+        for (int i = 0; i < size; i += splitSize) {
+            // 計算子列表的結束索引
+            int end = Math.min(i + splitSize, size);
+            // 截取子列表並加入結果
+            result.add(new HashSet<>(sourceList.subList(i, end)));
         }
 
         return result;

@@ -27,6 +27,7 @@ public abstract class ElasticsearchBaseDao {
     public final static String GAME_TRANSFER = "report-game-transfer-";
     public final static String MEMBER_VIP = "report-member-vip-";
     public final static String DAILY_USER_BETTING = "report-daily-user-betting-";
+    public final static String DAILY_USER_RECHARGE = "report-daily-user-recharge-";
     public final static String Recharge = "report-recharge-";
 
     public ZoneOffset timeZone = ZoneOffset.ofHours(8);
