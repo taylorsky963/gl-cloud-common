@@ -12,6 +12,7 @@ public final class ProjectConstant {
         public final static String GL_ACTIVITY_TYPE = "103";
         public final static String GL_ACTIVITY_TRANSACTION_LOG = "104";
         public final static String GL_ACTIVITY_REALTIME_REBATE_RECORD = "105";
+        public final static String GL_ACTIVITY_REBATE_RECORD = "106";
     }
 
     public static final class WebsiteConfigKey {
