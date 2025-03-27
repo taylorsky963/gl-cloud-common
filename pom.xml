@@ -51,7 +51,7 @@
     <module>gl-myparadise-common-webclient</module>
     <module>gl-myparadise-common-elasticsearch</module>
     <module>gl-myparadise-common-mongo</module>
-      <module>gl-myparadise-common-objectpool</module>
+    <module>gl-myparadise-common-objectpool</module>
   </modules>
 
   <dependencies>
