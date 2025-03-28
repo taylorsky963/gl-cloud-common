@@ -285,6 +285,10 @@ public final class ProjectConstant {
              * 财务转帐
              */
             public final static String FINANCIAL = "6001";
+            /**
+             * 启台会员人工轉帳
+             */
+            public final static String ADMIN_MEMBER = "8001";
         }
 
         public static final class PayOrder {
