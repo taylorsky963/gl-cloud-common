@@ -268,6 +268,10 @@ public final class ProjectConstant {
              * 帐变资金类型：返水
              */
             public final static int REBATE = 4;
+            /**
+             * 帐变资金类型：人工
+             */
+            public final static int MANUAL = 5;
         }
 
 
