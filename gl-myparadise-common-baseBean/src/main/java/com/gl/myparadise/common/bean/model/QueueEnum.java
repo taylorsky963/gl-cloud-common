@@ -9,8 +9,6 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum QueueEnum {
 
-    global_event_save_to_elasticsearch(ExchangeEnum.globalReport, RoutingKeyEnum.global_report_routing_key, QueueConstant.GLOBAL_EVENT_SAVE_TO_ELASTICSEARCH, "全局上报的事件消费保存到ES"),
-
     global_user_data_save_to_elasticsearch(ExchangeEnum.globalUser, RoutingKeyEnum.global_user_routing_key, QueueConstant.GLOBAL_USER_SAVE_TO_ELASTICSEARCH, "全局上报的用户资料消费保存到ES"),
 
     global_user_other_save_to_elasticsearch(ExchangeEnum.globalUser, RoutingKeyEnum.global_user_other_routing_key, QueueConstant.GLOBAL_USER_OTHER_SAVE_TO_ELASTICSEARCH, "全局上报的用户其他资料消费保存到ES"),
@@ -20,9 +18,7 @@ public enum QueueEnum {
     global_fund(ExchangeEnum.globalFund, RoutingKeyEnum.global_fund_routing_key, QueueConstant.GLOBAL_FUND, "全局财务相关上报"),
 
     global_activity(ExchangeEnum.globalActivity, RoutingKeyEnum.global_activity_routing_key, QueueConstant.GLOBAL_ACTIVITY, "全局财务相关上报"),
-    global_calculation_betflow(ExchangeEnum.globalReport, RoutingKeyEnum.global_report_routing_key, QueueConstant.GLOBAL_CALCULATION_BETFLOW, "流水计算相关上报"),
 
-    global_activity_event(ExchangeEnum.globalReport, RoutingKeyEnum.global_report_routing_key, QueueConstant.GLOBAL_ACTIVITY_EVENT, "活动全局事件接收"),
     ;
 
     private final ExchangeEnum exchange;

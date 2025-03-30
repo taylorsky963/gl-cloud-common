@@ -7,6 +7,5 @@ public class QueueConstant {
     public final static String GLOBAL_SYSTEM_OPERATION_LOG_SAVE_TO_ELASTICSEARCH = "global-system-operation-log-save-to-elasticsearch";
     public final static String GLOBAL_FUND = "global-fund";
     public final static String GLOBAL_ACTIVITY = "global-activity";
-    public final static String GLOBAL_CALCULATION_BETFLOW = "global-calculation-betflow";
     public final static String GLOBAL_ACTIVITY_EVENT = "global-activity-event";
 }
