@@ -139,4 +139,6 @@ public class WithdrawReport extends BaseReport {
      * 系统返回的数据唯一id
      */
     private String dataPkCode;
+
+    private String curDataPkCode;
 }
