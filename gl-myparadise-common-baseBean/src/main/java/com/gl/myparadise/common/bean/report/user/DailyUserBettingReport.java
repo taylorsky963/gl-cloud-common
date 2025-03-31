@@ -17,7 +17,7 @@ public class DailyUserBettingReport extends BaseReport {
     private BigDecimal totalSettleAmount;
 
     private Long memberInfoId;
-    private Integer gameType;
+    private String gameType;
     private String gamePlatformCode;
     private String curDataPkCode;
     private String day;
