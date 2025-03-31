@@ -62,4 +62,8 @@ public class BaseVariableConstantsConstants {
     public final static String HEADER_DEVICE_TYPE = "device-type";
 
     public final static String HEADER_DEVICE_ID = "device-id";
+
+    public final static String DEFAULT_STATUS_RUNNING = "10001001";
+
+    public final static String DEFAULT_STATUS_BLOCK = "10001002";
 }
