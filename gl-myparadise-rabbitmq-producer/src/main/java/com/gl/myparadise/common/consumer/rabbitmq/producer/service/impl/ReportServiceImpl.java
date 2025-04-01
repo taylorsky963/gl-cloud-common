@@ -11,6 +11,7 @@ import com.gl.myparadise.common.consumer.rabbitmq.producer.producer.DefaultProdu
 import com.gl.myparadise.common.consumer.rabbitmq.producer.producer.ReportProducer;
 import com.gl.myparadise.common.consumer.rabbitmq.producer.producer.UserProducer;
 import com.gl.myparadise.common.consumer.rabbitmq.producer.service.ReportService;
+import com.gl.myparadise.common.tools.bean.JsonUtil;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +45,7 @@ public class ReportServiceImpl implements ReportService {
 
     @Override
     public void userSync(@NonNull UserSync userSync) {
+        log.info("用户上报 {}", JsonUtil.toJson(userSync));
         userProducer.sendMessage(userSync);
     }
 
