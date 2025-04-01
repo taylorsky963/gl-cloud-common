@@ -73,7 +73,7 @@ public class RechargeReport extends BaseReport {
     /**
      *  货币DataPkCode
      */
-    private String curDatapkCode;
+    private String curDataPkCode;
     /**
      *  订单金额
      */
@@ -148,6 +148,4 @@ public class RechargeReport extends BaseReport {
      * 修改时间
      */
     private Timestamp updateTime;
-
-    private String curDataPkCode;
 }
