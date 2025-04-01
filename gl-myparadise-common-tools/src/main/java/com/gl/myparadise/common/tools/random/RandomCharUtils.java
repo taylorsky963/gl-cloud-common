@@ -110,6 +110,20 @@ public class RandomCharUtils {
         return new String(randBuffer);
     }
 
+    public static final String randomNum(int length) {
+        char[] numbersAndLetters = null;
+        if (length < 1) {
+            return null;
+        }
+        numbersAndLetters = ("0123456789")
+                .toCharArray();
+        char[] randBuffer = new char[length];
+        for (int i = 0; i < randBuffer.length; i++) {
+            randBuffer[i] = numbersAndLetters[ThreadLocalRandom.current().nextInt(0,59)];
+        }
+        return new String(randBuffer);
+    }
+
     public static int getHashCode() {
         return randomString(10).hashCode();
     }
