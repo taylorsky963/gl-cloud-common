@@ -14,10 +14,7 @@ import org.springframework.util.StringUtils;
 
 import java.math.BigDecimal;
 import java.time.ZoneOffset;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 
 public abstract class ElasticsearchBaseDao {
@@ -98,6 +95,8 @@ public abstract class ElasticsearchBaseDao {
                 return (V) new BigDecimal(value.toString());
             } else if (Number.class.isAssignableFrom(targetClass) && value instanceof Number) {
                 return (V) convertNumber((Number) value, targetClass);
+            } else if (Date.class.isAssignableFrom(targetClass) && value instanceof Long) {
+                return (V) new Date((long) value);
             }
             return (V) value;
         } catch (ClassCastException e) {
