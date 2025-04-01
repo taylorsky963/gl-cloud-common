@@ -8,4 +8,6 @@ public class QueueConstant {
     public final static String GLOBAL_FUND = "global-fund";
     public final static String GLOBAL_ACTIVITY = "global-activity";
     public final static String GLOBAL_ACTIVITY_EVENT = "global-activity-event";
+
+    public final static String EVENT_DATE_COLLECTION = "global-event-date-collection";
 }
