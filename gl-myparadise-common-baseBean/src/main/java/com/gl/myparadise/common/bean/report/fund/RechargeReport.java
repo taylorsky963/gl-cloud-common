@@ -71,6 +71,10 @@ public class RechargeReport extends BaseReport {
      */
     private String curSign;
     /**
+     *  货币DataPkCode
+     */
+    private String curDatapkCode;
+    /**
      *  订单金额
      */
     private java.math.BigDecimal orderAmount;

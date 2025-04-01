@@ -31,6 +31,10 @@ public class WithdrawReport extends BaseReport {
      */
     private String curSign;
     /**
+     *  货币dataPkcode
+     */
+    private String curDataPkCode;
+    /**
      *  提款金额
      */
     private java.math.BigDecimal amount;
