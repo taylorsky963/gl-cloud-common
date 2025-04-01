@@ -119,7 +119,7 @@ public class RandomCharUtils {
                 .toCharArray();
         char[] randBuffer = new char[length];
         for (int i = 0; i < randBuffer.length; i++) {
-            randBuffer[i] = numbersAndLetters[ThreadLocalRandom.current().nextInt(0,59)];
+            randBuffer[i] = numbersAndLetters[ThreadLocalRandom.current().nextInt(numbersAndLetters.length)];
         }
         return new String(randBuffer);
     }
