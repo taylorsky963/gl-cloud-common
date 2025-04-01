@@ -210,6 +210,15 @@ public final class ProjectConstant {
             public final static String REBATE_REALTIME_TEMPLATE = "rebateRealtimeTemplate";
         }
 
+        public static final class ActivityDataPkCode {
+
+            /**
+             * VIP
+             */
+            public final static String VIP = "102ACTIVITYVIPCODE99999";
+
+        }
+
         /**
          * MQ 任务处理相关常量
          */
