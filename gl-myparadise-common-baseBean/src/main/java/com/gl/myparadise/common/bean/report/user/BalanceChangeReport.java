@@ -1,0 +1,14 @@
+package com.gl.myparadise.common.bean.report.user;
+
+import com.gl.myparadise.common.bean.report.BaseReport;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
+@Data
+@NoArgsConstructor
+@ToString(callSuper = true)
+public class BalanceChangeReport extends BaseReport {
+    // 唯一主键
+    private String dataPkCode;
+} 

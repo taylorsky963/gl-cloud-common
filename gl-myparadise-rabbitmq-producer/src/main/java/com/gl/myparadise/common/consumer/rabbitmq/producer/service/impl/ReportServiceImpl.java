@@ -109,4 +109,16 @@ public class ReportServiceImpl implements ReportService {
     public void dailyUserRechargeReport(DailyUserRechargeReport report) {
         reportProducer.sendMessage(ReportEvent.DailyUserRecharge, report);
     }
+
+    @Override
+    public void balanceChangeReport(BalanceChangeReport report) {
+        report.set("uuid", report.getDataPkCode());
+        reportProducer.sendMessage(ReportEvent.BalanceChange, report);
+    }
+
+    @Override
+    public void pointChangeReport(PointChangeReport report) {
+        report.set("uuid", report.getDataPkCode());
+        reportProducer.sendMessage(ReportEvent.PointChange, report);
+    }
 }

@@ -59,6 +59,10 @@ public class ReportProducer {
                 return RoutingKeyEnum.global_report_daily_betting;
             case DailyUserRecharge:
                 return RoutingKeyEnum.global_report_daily_recharge;
+            case BalanceChange:
+                return RoutingKeyEnum.global_report_fund_balance_change;
+            case PointChange:
+                return RoutingKeyEnum.global_report_fund_point_change;
             default:
                 throw new IllegalArgumentException("未知的事件类型: " + event);
         }

@@ -21,9 +21,13 @@ public enum ReportEvent {
 
     GameTransfer(1016, "用戶遊戲轉帳紀錄"),
 
+    MemberVip(1017, "用戶VIP上報"),
+
+    BalanceChange(1018, "用户余额变动上报"),
+
     UserWallet(1019, "用户钱包建立上报"),
 
-    MemberVip(1017, "用戶VIP上報"),
+    PointChange(1020, "用户积分变动上报"),
 
     DailyUserBetting(7000, "每日用户投注数据上報"),
 

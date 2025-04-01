@@ -78,4 +78,14 @@ public interface ReportService {
      * 每日用户充值数据
      */
     void dailyUserRechargeReport(DailyUserRechargeReport report);
+
+    /**
+     * 用户余额变动上报
+     */
+    void balanceChangeReport(BalanceChangeReport report);
+
+    /**
+     * 用户积分变动上报
+     */
+    void pointChangeReport(PointChangeReport report);
 }
