@@ -144,4 +144,6 @@ public class RechargeReport extends BaseReport {
      * 修改时间
      */
     private Timestamp updateTime;
+
+    private String curDataPkCode;
 }
