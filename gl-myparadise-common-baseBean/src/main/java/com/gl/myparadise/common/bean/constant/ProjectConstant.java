@@ -251,8 +251,9 @@ public final class ProjectConstant {
      * 游戏相关常量
      */
     public static final class Game {
-        public static final class BetflowStatus {
+        public static final class LockKey {
 
+            public final static String GAME_BETTING_JOB_LOCK_KEY = "GAME_BETTING_JOB_LOCK_KEY_";
         }
     }
 
