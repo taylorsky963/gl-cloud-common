@@ -281,6 +281,10 @@ public final class ProjectConstant {
              * 帐变资金类型：人工
              */
             public final static int MANUAL = 5;
+            /**
+             * 帐变资金类型： 游戏帐变
+             */
+            public final static int GAME = 6;
         }
 
 
