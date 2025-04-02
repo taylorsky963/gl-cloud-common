@@ -286,6 +286,10 @@ public final class ProjectConstant {
              * 帐变资金类型： 游戏帐变
              */
             public final static int GAME = 6;
+            /**
+             * 帐变资金类型： 积分兑换
+             */
+            public final static int POINT = 7;
         }
 
         public static final class TransIo { // transactionType
