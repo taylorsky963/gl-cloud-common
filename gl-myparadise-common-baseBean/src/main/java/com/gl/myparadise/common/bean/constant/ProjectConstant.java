@@ -251,8 +251,9 @@ public final class ProjectConstant {
      * 游戏相关常量
      */
     public static final class Game {
-        public static final class BetflowStatus {
+        public static final class LockKey {
 
+            public final static String GAME_BETTING_JOB_LOCK_KEY = "GAME_BETTING_JOB_LOCK_KEY_";
         }
     }
 
@@ -260,7 +261,7 @@ public final class ProjectConstant {
      * 资金相关常量
      */
     public static final class Fund {
-        public static final class BalanceType {
+        public static final class BalanceType { // transactionType
             /**
              * 帐变资金类型：充值
              */
@@ -281,6 +282,10 @@ public final class ProjectConstant {
              * 帐变资金类型：人工
              */
             public final static int MANUAL = 5;
+            /**
+             * 帐变资金类型： 游戏帐变
+             */
+            public final static int GAME = 6;
         }
 
 
