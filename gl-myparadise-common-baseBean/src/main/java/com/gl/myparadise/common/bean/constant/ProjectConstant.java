@@ -317,6 +317,10 @@ public final class ProjectConstant {
              * 启台会员人工轉帳
              */
             public final static String ADMIN_MEMBER = "8001";
+            /**
+             * 活動
+             */
+            public final static String ACTIVITY = "3001";
         }
 
         public static final class PayOrder {
