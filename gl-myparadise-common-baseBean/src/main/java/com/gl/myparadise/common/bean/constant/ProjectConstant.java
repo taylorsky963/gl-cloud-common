@@ -260,7 +260,7 @@ public final class ProjectConstant {
      * 资金相关常量
      */
     public static final class Fund {
-        public static final class BalanceType {
+        public static final class BalanceType { // transactionType
             /**
              * 帐变资金类型：充值
              */
