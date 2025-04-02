@@ -288,6 +288,16 @@ public final class ProjectConstant {
             public final static int GAME = 6;
         }
 
+        public static final class TransIo { // transactionType
+            /**
+             * 增加
+             */
+            public final static int Add = 1;
+            /**
+             * 減少
+             */
+            public final static int SUB = -1;
+        }
 
         public static final class ServiceType {
             /**

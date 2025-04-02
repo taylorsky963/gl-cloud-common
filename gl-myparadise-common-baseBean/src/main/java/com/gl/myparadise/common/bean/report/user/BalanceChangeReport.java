@@ -1,15 +1,11 @@
 package com.gl.myparadise.common.bean.report.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.gl.myparadise.common.bean.report.BaseReport;
-import com.gl.myparadise.common.bean.validation.group.UpdateDataValiPKCode;
-import com.gl.myparadise.common.bean.validation.group.UpdateDataValiUser;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 
 @Data
