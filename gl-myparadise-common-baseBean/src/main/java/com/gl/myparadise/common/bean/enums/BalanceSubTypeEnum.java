@@ -15,6 +15,7 @@ public enum BalanceSubTypeEnum {
     WITHDRAW(ProjectConstant.Fund.BalanceType.WITHDRAW, 1001, "提现"),
 
     // 红利
+    ACT_MANUAL_BONUS(ProjectConstant.Fund.BalanceType.BONUS, 3999, "人工发放"),
     VIP_UPGRADE_BONUS(ProjectConstant.Fund.BalanceType.BONUS, 3001, "升级礼金"),
     VIP_RETENTION_BONUS(ProjectConstant.Fund.BalanceType.BONUS, 3002, "保级礼金"),
     VIP_WEEKLY_SALARY(ProjectConstant.Fund.BalanceType.BONUS, 3003, "周俸禄"),
