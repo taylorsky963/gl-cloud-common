@@ -9,7 +9,6 @@ import org.elasticsearch.search.aggregations.Aggregations;
 import org.elasticsearch.search.aggregations.metrics.Sum;
 import org.elasticsearch.search.aggregations.metrics.ValueCount;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
 import java.math.BigDecimal;
@@ -25,7 +24,9 @@ public abstract class ElasticsearchBaseDao {
     public final static String MEMBER_VIP = "report-member-vip-";
     public final static String DAILY_USER_BETTING = "report-daily-user-betting-";
     public final static String DAILY_USER_RECHARGE = "report-daily-user-recharge-";
-    public final static String Recharge = "report-recharge-";
+    public final static String RECHARGE = "report-recharge-";
+    public final static String POINT_CHANGE = "report-point-change-";
+    public final static String BALANCE_CHANGE = "report-balance-change-";
 
     public ZoneOffset timeZone = ZoneOffset.ofHours(8);
 
