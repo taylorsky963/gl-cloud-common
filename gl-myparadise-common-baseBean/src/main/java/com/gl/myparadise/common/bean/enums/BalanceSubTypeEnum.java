@@ -29,7 +29,7 @@ public enum BalanceSubTypeEnum {
     ACT_REBATE_BONUS(ProjectConstant.Fund.BalanceType.BONUS, 3011, "返水奖励"),
 
     // 人工存入
-    MANUAL(ProjectConstant.Fund.BalanceType.MANUAL, 5001, "人工存入"),
+    MANUAL(ProjectConstant.Fund.BalanceType.MANUAL, 5001, "人工發放"),
 
     // 游戏
     GAME_TRANSFER_IN(ProjectConstant.Fund.BalanceType.GAME, 6001, "游戏转入"),
