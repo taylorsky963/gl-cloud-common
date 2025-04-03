@@ -84,5 +84,5 @@ public class BalanceChangeReport extends BaseReport {
     private String updateUserName;
     private Long updateUserId;
     private Timestamp updateTime;
-
+    private String attachment;
 } 
