@@ -30,6 +30,7 @@ public enum BalanceSubTypeEnum {
 
     // 人工存入
     MANUAL(ProjectConstant.Fund.BalanceType.MANUAL, 5001, "人工存入"),
+    MANUAL_OUT(ProjectConstant.Fund.BalanceType.MANUAL, 5002, "人工转出"),
 
     // 游戏
     GAME_TRANSFER_IN(ProjectConstant.Fund.BalanceType.GAME, 6001, "游戏转入"),
