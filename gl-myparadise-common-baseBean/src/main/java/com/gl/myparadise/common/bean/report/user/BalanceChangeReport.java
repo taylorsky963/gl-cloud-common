@@ -45,7 +45,7 @@ public class BalanceChangeReport extends BaseReport {
     /**
      *  子类型
      */
-    private String subType;
+    private Integer subType;
     /**
      *  金额
      */
