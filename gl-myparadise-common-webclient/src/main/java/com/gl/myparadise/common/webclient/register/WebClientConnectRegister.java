@@ -1,6 +1,7 @@
 package com.gl.myparadise.common.webclient.register;
 
 import com.gl.myparadise.common.tools.util.ListUtil;
+import com.gl.myparadise.common.webclient.config.HttpPoolClientRetryProperties;
 import com.gl.myparadise.common.webclient.config.HttpPoolConfigurationProperties;
 import com.gl.myparadise.common.webclient.config.HttpPoolNameConfigurationProperties;
 import com.gl.myparadise.common.webclient.constants.WebClientConstants;
@@ -82,7 +83,11 @@ public class WebClientConnectRegister implements BeanDefinitionRegistryPostProce
 
                 logger.debug("bulidHttpPoolConfigurationPropertiesMap poolName is : " + poolName);
 
-                httpPoolConfigurationPropertiesMap.put(poolName, bulidHttpPoolConfigurationProperties(poolName));
+                HttpPoolConfigurationProperties httpPoolConfigurationProperties = bulidHttpPoolConfigurationProperties(poolName);
+
+                httpPoolConfigurationPropertiesMap.put(poolName, httpPoolConfigurationProperties);
+
+                WebClientConstants.httpPoolRetryPropertiesMap.put(httpPoolConfigurationProperties.getBeanName(), bulidHttpPoolClientRetryProperties(poolName));
             }
 
         } else {
@@ -95,6 +100,12 @@ public class WebClientConnectRegister implements BeanDefinitionRegistryPostProce
     private HttpPoolConfigurationProperties bulidHttpPoolConfigurationProperties(String poolName) {
 
         return binder.bind((WebClientConstants.HTTPPOOL_CONFIG_TAG + WebClientConstants.PROPERTIES_SPLIT_TAG + poolName).trim(), HttpPoolConfigurationProperties.class).get();
+
+    }
+
+    private HttpPoolClientRetryProperties bulidHttpPoolClientRetryProperties(String poolName) {
+
+        return binder.bind((WebClientConstants.HTTP_POOL_RETRY_BASE_TAG + WebClientConstants.PROPERTIES_SPLIT_TAG + poolName).trim(), HttpPoolClientRetryProperties.class).get();
 
     }
 

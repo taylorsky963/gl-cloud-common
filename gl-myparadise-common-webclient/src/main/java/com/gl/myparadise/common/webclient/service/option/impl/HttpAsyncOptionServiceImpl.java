@@ -1,0 +1,393 @@
+package com.gl.myparadise.common.webclient.service.option.impl;
+
+import com.gl.myparadise.common.webclient.model.request.stream.StreamUploadRequestModel;
+import com.gl.myparadise.common.bean.model.ServiceRsModel;
+import com.gl.myparadise.common.tools.bean.BeanMapUtil;
+import com.gl.myparadise.common.tools.jason.GJonUtilNamingPolicy;
+import com.gl.myparadise.common.webclient.model.request.WebClientRequestModel;
+import com.gl.myparadise.common.webclient.model.request.stream.StreamDownLoadRequestModel;
+import com.gl.myparadise.common.webclient.model.request.stream.WebClientStreamRequestModel;
+import com.gl.myparadise.common.webclient.model.response.stream.StreamDownLoadResponseData;
+import com.gl.myparadise.common.webclient.service.option.HttpAsyncOptionService;
+import com.gl.myparadise.common.webclient.service.option.HttpWebClientService;
+import com.gl.myparadise.common.webclient.util.HttpResponseStatusUtils;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.Future;
+
+/**
+ * @author Vincent
+ * @Description: TODO
+ * @ClassName: MatrixAsyncOptionServiceImpl
+ * @ProjectName: gi-matrix-parent
+ * @Date 2023-06-26 - 12:21 a.m.
+ */
+@Service
+@Slf4j
+public class HttpAsyncOptionServiceImpl implements HttpAsyncOptionService {
+    
+    @Autowired
+    private HttpWebClientService httpWebClientService;
+
+    /**
+     * http reques post 方法封装
+     * @param uri
+     * @param data
+     * @param rsDataClass
+     * @return
+     */
+    @Override
+    public ServiceRsModel<Object> sendRequestPostMatrixServer(String webClientBeanName, String threadPoolBeanName, String uri, Object data, Class rsDataClass){
+
+        try{
+
+
+            Future<String> rsFuture = httpWebClientService.sendRequestPostMatrixServer(buildWebClientRequestModelToData(webClientBeanName, threadPoolBeanName, uri, data));
+
+            String rsJason = rsFuture.get();
+
+            return HttpResponseStatusUtils.buildHttpResponseBean(rsJason, rsDataClass);
+
+        } catch (Exception e) {
+
+            log.error("sendRequestPostMatrixServer ia error",e);
+
+        }
+
+        return new ServiceRsModel().error();
+
+    }
+
+    /**
+     * http reques put 方法封装
+     * @param uri
+     * @param data
+     * @param rsDataClass
+     * @return
+     */
+    @Override
+    public ServiceRsModel<Object> sendRequestPutMatrixServer(String webClientBeanName, String threadPoolBeanName, String uri, Object data, Class rsDataClass){
+
+        try{
+
+
+            Future<String> rsFuture = httpWebClientService.sendRequestPutMatrixServer(buildWebClientRequestModelToData(webClientBeanName, threadPoolBeanName, uri, data));
+
+            String rsJason = rsFuture.get();
+
+            return HttpResponseStatusUtils.buildHttpResponseBean(rsJason, rsDataClass);
+
+        } catch (Exception e) {
+
+            log.error("sendRequestPutMatrixServer ia error",e);
+
+        }
+
+        return new ServiceRsModel().error();
+
+    }
+
+    /**
+     * http reques put 方法封装
+     * @param uri
+     * @param data
+     * @param header
+     * @param rsDataClass
+     * @return
+     */
+    @Override
+    public ServiceRsModel<Object> sendRequestPutMatrixServerHeader(String webClientBeanName, String threadPoolBeanName, String uri, Object data, Object header, Class rsDataClass){
+
+        try{
+
+            Future<String> rsFuture = httpWebClientService.sendRequestPutMatrixServer(buildWebClientRequestModelToData(webClientBeanName, threadPoolBeanName, uri, data));
+
+            String rsJason = rsFuture.get();
+
+            return HttpResponseStatusUtils.buildHttpResponseBean(rsJason, rsDataClass);
+
+        } catch (Exception e) {
+
+            log.error("sendRequestPutMatrixServer ia error",e);
+
+        }
+
+        return new ServiceRsModel().error();
+
+    }
+
+    /**
+     * http reques get 方法封装
+     * @param uri
+     * @param data
+     * @param rsDataClass
+     * @return
+     */
+    @Override
+    public ServiceRsModel<Object> sendRequestGetMatrixServer(String webClientBeanName, String threadPoolBeanName, String uri, Object data, Class rsDataClass){
+
+        try{
+
+            Future<String> rsFuture = httpWebClientService.sendRequestGetMatrixServer(buildWebClientRequestModelToDataMap(webClientBeanName, threadPoolBeanName, uri, data));
+
+            String rsJason = rsFuture.get();
+
+            return HttpResponseStatusUtils.buildHttpResponseBean(rsJason, rsDataClass);
+
+        } catch (Exception e) {
+
+            log.error("sendRequestGetMatrixServer ia error",e);
+
+        }
+
+        return new ServiceRsModel().error();
+
+    }
+
+    /**
+     * http reques get 方法封装
+     * @param uri
+     * @param data
+     * @param rsDataClass
+     * @return
+     */
+    @Override
+    public ServiceRsModel<?> sendRequestGetMatrixServerForAllType(String webClientBeanName, String threadPoolBeanName, String uri, Object data, Class rsDataClass){
+
+        try{
+
+            Future<String> rsFuture = httpWebClientService.sendRequestGetMatrixServer(buildWebClientRequestModelToDataMap(webClientBeanName, threadPoolBeanName, uri, data));
+
+            String rsJason = rsFuture.get();
+
+            return HttpResponseStatusUtils.buildHttpResponseBeanForAllType(rsJason, rsDataClass);
+
+        } catch (Exception e) {
+
+            log.error("sendRequestGetMatrixServer ia error",e);
+
+        }
+
+        return new ServiceRsModel().error();
+
+    }
+
+    /**
+     * http reques get MultiValue方法封装
+     * @param uri
+     * @param data
+     * @param rsDataClass
+     * @return
+     */
+    @Override
+    public ServiceRsModel<Object> sendRequestGetMultiValueMapMatrixServer(String webClientBeanName, String threadPoolBeanName, String uri, Object data, Class rsDataClass){
+
+        try{
+
+            Future<String> rsFuture = httpWebClientService.sendRequestGetMultiValueMapMatrixServer(buildWebClientRequestModelToDataMap(webClientBeanName, threadPoolBeanName, uri, data));
+
+            String rsJason = rsFuture.get();
+
+            return HttpResponseStatusUtils.buildHttpResponseBean(rsJason, rsDataClass);
+
+        } catch (Exception e) {
+
+            log.error("sendRequestGetMatrixServer ia error",e);
+
+        }
+
+        return new ServiceRsModel().error();
+
+    }
+
+    /**
+     * 上传文件方法
+     * @param uri
+     * @param streamUploadRequestModel
+     * @param rsDataClass
+     * @return
+     */
+    @Override
+    public ServiceRsModel<Object> sendRequestStreamUploadMatrixServer(String webClientBeanName, String threadPoolBeanName, String uri
+            , StreamUploadRequestModel streamUploadRequestModel, Class rsDataClass){
+
+        try{
+
+            WebClientRequestModel webClientRequestModel = new WebClientStreamRequestModel();
+
+            buildWebClientRequestModel(webClientRequestModel, webClientBeanName, threadPoolBeanName, uri);
+
+            webClientRequestModel.setHttpHeaderMap(bulidHttpHeaderMap(streamUploadRequestModel));
+
+            Future<String> rsFuture = httpWebClientService.sendRequestStreamUploadMatrixServer(webClientRequestModel, streamUploadRequestModel.getMultipartFile());
+
+            String rsJason = rsFuture.get();
+
+            return HttpResponseStatusUtils.buildHttpResponseBean(rsJason, rsDataClass);
+
+        } catch (Exception e) {
+
+            log.error("sendRequestStreamMatrixServer ia error",e);
+
+        }
+
+        return new ServiceRsModel().error();
+
+    }
+
+
+    /**
+     * 上传文件方法
+     * @param uri
+     * @param streamDownLoadRequestModel
+     * @param rsDataClass
+     * @return
+     */
+    @Override
+    public ServiceRsModel<Object> sendRequestStreamDownLoadMatrixServer(String webClientBeanName, String threadPoolBeanName, String uri
+            , StreamDownLoadRequestModel streamDownLoadRequestModel, Class rsDataClass){
+
+        try{
+
+            WebClientStreamRequestModel webClientStreamRequestModel = new WebClientStreamRequestModel();
+
+            buildWebClientRequestModel(webClientStreamRequestModel, webClientBeanName, threadPoolBeanName, uri);
+
+            webClientStreamRequestModel.setMediaName(streamDownLoadRequestModel.getMediaName());
+
+            webClientStreamRequestModel.setHttpHeaderMap(bulidHttpHeaderMap(streamDownLoadRequestModel));
+
+            Future<StreamDownLoadResponseData> rsFuture = httpWebClientService.sendRequestStreamDownLoadMatrixServer(webClientStreamRequestModel);
+
+            StreamDownLoadResponseData streamDownLoadResponseData = rsFuture.get();
+
+            if(streamDownLoadResponseData.getStreamData() != null){
+
+                return new ServiceRsModel().setRsData(streamDownLoadResponseData);
+
+            }else{
+
+                return HttpResponseStatusUtils.buildHttpResponseBean(streamDownLoadResponseData.getResponseErrorMessages(), rsDataClass);
+
+            }
+
+        } catch (Exception e) {
+
+            log.error("sendRequestStreamMatrixServer ia error",e);
+
+        }
+
+        return new ServiceRsModel().error();
+
+    }
+
+    /**
+     * http reques delete 方法封装
+     * @param uri
+     * @param data
+     * @param rsDataClass
+     * @return
+     */
+    @Override
+    public ServiceRsModel<Object> sendRequestDeleteMatrixServer(String webClientBeanName, String threadPoolBeanName, String uri, Object data, Class rsDataClass){
+
+        try{
+
+            Future<String> rsFuture = httpWebClientService.sendRequestDeleteMatrixServer(buildWebClientRequestModelToData(webClientBeanName, threadPoolBeanName, uri, data));
+
+            String rsJason = rsFuture.get();
+
+            return HttpResponseStatusUtils.buildHttpResponseBean(rsJason, rsDataClass);
+
+        } catch (Exception e) {
+
+            log.error("sendRequestDeleteMatrixServer ia error",e);
+
+        }
+
+        return new ServiceRsModel().error();
+
+    }
+
+
+    /**
+     * 组装httpHeader对象
+     * @param data
+     * @return
+     */
+    private Map<String, String> bulidHttpHeaderMap(Object data){
+
+//        if(data instanceof MatrixRequestModel) {
+//
+//            Map<String, String> httpHeaderMaps = ((MatrixRequestModel) data).getHttpRequestHeaderMaps();
+//
+//            String useAccessToken = getUseAccessToken(httpHeaderMaps.get(MatrixHttpConstants.MATRIX_HTTP_HEADER_TOKEN_TAG));
+//
+//            if(StringUtils.isNotEmpty(useAccessToken)){
+//
+//                httpHeaderMaps.put(MatrixHttpConstants.MATRIX_HTTP_HEADER_TOKEN_TAG, useAccessToken);
+//
+//            }
+//
+//            return httpHeaderMaps;
+//
+//        }
+
+        return new HashMap<String, String>();
+
+    }
+
+    /**
+     * 获得token
+     * @param useAccessToken
+     * @return
+     */
+    private String getUseAccessToken(String useAccessToken){
+
+        return  (StringUtils.isNotEmpty(useAccessToken) ? "Bearer " + useAccessToken  : null);
+
+    }
+
+    private WebClientRequestModel buildWebClientRequestModelToData(String webClientBeanName, String threadPoolBeanName, String uri, Object data){
+
+        WebClientRequestModel webClientRequestModel = new WebClientRequestModel();
+
+        buildWebClientRequestModel(webClientRequestModel, webClientBeanName, threadPoolBeanName, uri);
+
+        webClientRequestModel.setData(GJonUtilNamingPolicy.toJson(data));
+
+        webClientRequestModel.setHttpHeaderMap(bulidHttpHeaderMap(data));
+
+        return webClientRequestModel;
+    }
+
+
+    private WebClientRequestModel buildWebClientRequestModelToDataMap(String webClientBeanName, String threadPoolBeanName, String uri, Object data) throws IllegalAccessException {
+
+        WebClientRequestModel webClientRequestModel = new WebClientRequestModel();
+
+        webClientRequestModel.setDataMap(BeanMapUtil.beanToMapNotParentNotNull(data,false));
+
+        buildWebClientRequestModel(webClientRequestModel, webClientBeanName, threadPoolBeanName, uri);
+
+        webClientRequestModel.setHttpHeaderMap(bulidHttpHeaderMap(data));
+
+        return webClientRequestModel;
+
+    }
+
+    private void buildWebClientRequestModel(WebClientRequestModel webClientRequestModel, String webClientBeanName, String threadPoolBeanName, String uri){
+
+        webClientRequestModel.setWebClientBeanName(webClientBeanName);
+
+        webClientRequestModel.setThreadPoolBeanName(threadPoolBeanName);
+
+        webClientRequestModel.setPath(uri);
+
+    }
+}
