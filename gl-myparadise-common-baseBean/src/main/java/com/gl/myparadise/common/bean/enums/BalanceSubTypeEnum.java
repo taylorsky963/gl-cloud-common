@@ -4,6 +4,8 @@ package com.gl.myparadise.common.bean.enums;
 import com.gl.myparadise.common.bean.constant.ProjectConstant;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import java.util.HashMap;
+import java.util.Map;
 
 @Getter
 @AllArgsConstructor
@@ -15,7 +17,7 @@ public enum BalanceSubTypeEnum {
     WITHDRAW(ProjectConstant.Fund.BalanceType.WITHDRAW, 1001, "提现"),
 
     // 红利
-    ACT_MANUAL_BONUS(ProjectConstant.Fund.BalanceType.BONUS, 3999, "人工发放"),
+    ACT_MANUAL_BONUS(ProjectConstant.Fund.BalanceType.BONUS, 3999, "人工发放优惠"),
     VIP_UPGRADE_BONUS(ProjectConstant.Fund.BalanceType.BONUS, 3001, "VIP升级礼金"),
     VIP_RETENTION_BONUS(ProjectConstant.Fund.BalanceType.BONUS, 3002, "VIP保级礼金"),
     VIP_WEEKLY_SALARY(ProjectConstant.Fund.BalanceType.BONUS, 3003, "VIP周俸禄"),
@@ -47,5 +49,18 @@ public enum BalanceSubTypeEnum {
 
     private final String desc;
 
+    private static final Map<Integer, BalanceSubTypeEnum> SUB_TYPE_MAP = new HashMap<>();
 
+    static {
+        for (BalanceSubTypeEnum value : values()) {
+            SUB_TYPE_MAP.put(value.getSubType(), value);
+        }
+    }
+
+    public static BalanceSubTypeEnum valueOfSubType(Integer subType) {
+        if (subType == null) {
+            return null;
+        }
+        return SUB_TYPE_MAP.get(subType);
+    }
 }

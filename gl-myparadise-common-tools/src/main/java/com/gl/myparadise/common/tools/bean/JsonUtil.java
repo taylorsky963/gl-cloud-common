@@ -1,6 +1,7 @@
 package com.gl.myparadise.common.tools.bean;
 
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
@@ -8,6 +9,7 @@ import lombok.SneakyThrows;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
+import java.util.HashMap;
 
 public class JsonUtil {
 
@@ -41,5 +43,14 @@ public class JsonUtil {
             return null;
         }
         return objectMapper.readValue(content, clz);
+    }
+
+    @SneakyThrows
+    public static HashMap<String, Object> toMap(Object obj) {
+        if (obj == null) {
+            return new HashMap<>();
+        }
+        String json = toJson(obj);
+        return objectMapper.readValue(json, new TypeReference<HashMap<String, Object>>() {});
     }
 }
