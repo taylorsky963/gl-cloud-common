@@ -45,7 +45,7 @@ public class BalanceChangeReport extends BaseReport {
     /**
      *  子类型
      */
-    private String subType;
+    private Integer subType;
     /**
      *  金额
      */
@@ -84,5 +84,5 @@ public class BalanceChangeReport extends BaseReport {
     private String updateUserName;
     private Long updateUserId;
     private Timestamp updateTime;
-
+    private String attachment;
 } 

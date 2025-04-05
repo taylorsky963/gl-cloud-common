@@ -32,5 +32,7 @@ public class FundBaseReport implements Serializable {
      */
     private Object attachment;
 
+    private Integer subType;
+
 //    private Long ttl;
 }
