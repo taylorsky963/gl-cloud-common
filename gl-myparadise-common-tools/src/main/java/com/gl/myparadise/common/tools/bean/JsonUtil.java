@@ -4,16 +4,19 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.type.MapType;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 import lombok.SneakyThrows;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 import java.util.HashMap;
+import java.util.Map;
 
 public class JsonUtil {
 
     private static final ObjectMapper objectMapper = new ObjectMapper();
+    private static final MapType mapType = TypeFactory.defaultInstance().constructMapType(HashMap.class, String.class, String.class);
 
     static {
         objectMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
@@ -46,11 +49,10 @@ public class JsonUtil {
     }
 
     @SneakyThrows
-    public static HashMap<String, Object> toMap(Object obj) {
-        if (obj == null) {
+    public static HashMap<String, Object> toMap(String json) {
+        if (json == null) {
             return new HashMap<>();
         }
-        String json = toJson(obj);
-        return objectMapper.readValue(json, new TypeReference<HashMap<String, Object>>() {});
+        return objectMapper.readValue(json, mapType);
     }
 }
