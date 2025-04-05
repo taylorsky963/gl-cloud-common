@@ -121,4 +121,10 @@ public class ReportServiceImpl implements ReportService {
         report.set("uuid", report.getDataPkCode());
         reportProducer.sendMessage(ReportEvent.PointChange, report);
     }
+
+    @Override
+    public void betFlowChangeReport(BetFlowChangeReport report) {
+        report.set("uuid", report.getDataPkCode());
+        reportProducer.sendMessage(ReportEvent.BetFlowChange, report);
+    }
 }

@@ -88,4 +88,9 @@ public interface ReportService {
      * 用户积分变动上报
      */
     void pointChangeReport(PointChangeReport report);
+
+    /**
+     * 用户流水变动上报
+     */
+    void betFlowChangeReport(BetFlowChangeReport report);
 }

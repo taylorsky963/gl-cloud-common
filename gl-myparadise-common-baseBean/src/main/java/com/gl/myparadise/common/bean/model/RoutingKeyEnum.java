@@ -29,6 +29,7 @@ public enum RoutingKeyEnum {
     global_report_fund_withdraw(RoutingKeyConstant.GLOBAL_REPORT_FUND_WITHDRAW, "提现事件"),
     global_report_fund_balance_change(RoutingKeyConstant.GLOBAL_REPORT_FUND_BALANCE_CHANGE, "余额变动事件"),
     global_report_fund_point_change(RoutingKeyConstant.GLOBAL_REPORT_FUND_POINT_CHANGE, "积分变动事件"),
+    global_report_fund_bet_flow_change(RoutingKeyConstant.GLOBAL_REPORT_FUND_BET_FLOW_CHANGE, "流水变动事件"),
     
     // 統計相關事件
     global_report_daily_betting(RoutingKeyConstant.GLOBAL_REPORT_DAILY_BETTING, "每日投注统计"),

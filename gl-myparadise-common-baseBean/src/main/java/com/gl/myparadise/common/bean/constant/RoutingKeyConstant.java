@@ -22,6 +22,7 @@ public class RoutingKeyConstant {
     public final static String GLOBAL_REPORT_FUND_WITHDRAW = "global-report-fund-withdraw";
     public final static String GLOBAL_REPORT_FUND_BALANCE_CHANGE = "global-report-fund-balance-change";
     public final static String GLOBAL_REPORT_FUND_POINT_CHANGE = "global-report-fund-point-change";
+    public final static String GLOBAL_REPORT_FUND_BET_FLOW_CHANGE = "global-report-fund-bet-flow-change";
 
     // 統計相關事件
     public final static String GLOBAL_REPORT_DAILY_BETTING = "global-report-daily-betting";

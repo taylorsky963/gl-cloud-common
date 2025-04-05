@@ -63,6 +63,8 @@ public class ReportProducer {
                 return RoutingKeyEnum.global_report_fund_balance_change;
             case PointChange:
                 return RoutingKeyEnum.global_report_fund_point_change;
+            case BetFlowChange:
+                return RoutingKeyEnum.global_report_fund_bet_flow_change;
             default:
                 throw new IllegalArgumentException("未知的事件类型: " + event);
         }

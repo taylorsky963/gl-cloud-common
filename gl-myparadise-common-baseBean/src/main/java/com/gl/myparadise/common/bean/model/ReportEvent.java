@@ -29,6 +29,8 @@ public enum ReportEvent {
 
     PointChange(1020, "用户积分变动上报"),
 
+    BetFlowChange(1021, "用户流水变动上报"),
+
     DailyUserBetting(7000, "每日用户投注数据上報"),
 
     DailyUserRecharge(7001, "每日用户充值数据上報"),
