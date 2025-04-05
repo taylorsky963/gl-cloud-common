@@ -57,11 +57,11 @@ public class HttpWebClientServiceImpl implements HttpWebClientService {
     private ApplicationContext applicationContext;
 
     @Override
-    public Future<String> sendRequestPostMatrixServer(WebClientRequestModel webClientRequestModel) {
+    public Future<String> sendRequestPostHttpServer(WebClientRequestModel webClientRequestModel) {
 
-        log.debug("sendRequestPostMatrixServer start is : " + webClientRequestModel.getPath());
+        log.debug("sendRequestPostHttpServer start is : " + webClientRequestModel.getPath());
 
-        log.debug("sendRequestPostMatrixServer data is : " + webClientRequestModel.getData());
+        log.debug("sendRequestPostHttpServer data is : " + webClientRequestModel.getData());
 
         return getExecutorService(webClientRequestModel.getThreadPoolBeanName()).submit(() -> {
 
@@ -92,13 +92,13 @@ public class HttpWebClientServiceImpl implements HttpWebClientService {
 
             } catch (Exception e) {
 
-                log.error("sendRequestPostMatrixServer error, path: {}, data: {}", webClientRequestModel.getPath(), webClientRequestModel.getData(), e);
+                log.error("sendRequestPostHttpServer error, path: {}, data: {}", webClientRequestModel.getPath(), webClientRequestModel.getData(), e);
 
                 return e.getMessage();
 
             } finally {
 
-                log.debug("sendRequestPostMatrixServer end : {}", webClientRequestModel.getPath());
+                log.debug("sendRequestPostHttpServer end : {}", webClientRequestModel.getPath());
 
             }
 
@@ -107,11 +107,11 @@ public class HttpWebClientServiceImpl implements HttpWebClientService {
     }
 
     @Override
-    public Future<String> sendRequestPutMatrixServer(WebClientRequestModel webClientRequestModel) {
+    public Future<String> sendRequestPutHttpServer(WebClientRequestModel webClientRequestModel) {
 
-        log.debug("sendRequestPutMatrixServer start is : " + webClientRequestModel.getPath());
+        log.debug("sendRequestPutHttpServer start is : " + webClientRequestModel.getPath());
 
-        log.debug("sendRequestPutMatrixServer data is : " + webClientRequestModel.getData());
+        log.debug("sendRequestPutHttpServer data is : " + webClientRequestModel.getData());
 
         return getExecutorService(webClientRequestModel.getThreadPoolBeanName()).submit(() -> {
 
@@ -142,15 +142,15 @@ public class HttpWebClientServiceImpl implements HttpWebClientService {
 
             } catch (Exception e) {
 
-                log.error("sendRequestPutMatrixServer data is : " + webClientRequestModel.getData());
+                log.error("sendRequestPutHttpServer data is : " + webClientRequestModel.getData());
 
-                log.error("sendRequestPutMatrixServer is error path : " + webClientRequestModel.getPath(), e);
+                log.error("sendRequestPutHttpServer is error path : " + webClientRequestModel.getPath(), e);
 
                 return e.getMessage();
 
             } finally {
 
-                log.debug("sendRequestPutMatrixServer end : " + webClientRequestModel.getPath());
+                log.debug("sendRequestPutHttpServer end : " + webClientRequestModel.getPath());
 
             }
 
@@ -159,9 +159,9 @@ public class HttpWebClientServiceImpl implements HttpWebClientService {
     }
 
     @Override
-    public Future<String> sendRequestGetMultiValueMapMatrixServer(WebClientRequestModel webClientRequestModel) {
+    public Future<String> sendRequestGetMultiValueMapHttpServer(WebClientRequestModel webClientRequestModel) {
 
-        log.debug("sendRequestGetMultiValueMapMatrixServer start is : " + webClientRequestModel.getPath());
+        log.debug("sendRequestGetMultiValueMapHttpServer start is : " + webClientRequestModel.getPath());
 
         return getExecutorService(webClientRequestModel.getThreadPoolBeanName()).submit(() -> {
 
@@ -191,15 +191,15 @@ public class HttpWebClientServiceImpl implements HttpWebClientService {
 
             } catch (Exception e) {
 
-                log.error("sendRequestGetMultiValueMapMatrixServer data is : " + GJonUtil.toJson(webClientRequestModel.getDataMap()));
+                log.error("sendRequestGetMultiValueMapHttpServer data is : " + GJonUtil.toJson(webClientRequestModel.getDataMap()));
 
-                log.error("sendRequestGetMultiValueMapMatrixServer is error path : " + webClientRequestModel.getPath(), e);
+                log.error("sendRequestGetMultiValueMapHttpServer is error path : " + webClientRequestModel.getPath(), e);
 
                 return e.getMessage();
 
             } finally {
 
-                log.debug("sendRequestGetMultiValueMapMatrixServer end : " + webClientRequestModel.getPath());
+                log.debug("sendRequestGetMultiValueMapHttpServer end : " + webClientRequestModel.getPath());
 
             }
 
@@ -208,9 +208,9 @@ public class HttpWebClientServiceImpl implements HttpWebClientService {
     }
 
     @Override
-    public Future<String> sendRequestGetMatrixServer(WebClientRequestModel webClientRequestModel) {
+    public Future<String> sendRequestGetHttpServer(WebClientRequestModel webClientRequestModel) {
 
-        log.debug("sendRequestGetMatrixServer start is : " + webClientRequestModel.getPath());
+        log.debug("sendRequestGetHttpServer start is : " + webClientRequestModel.getPath());
 
         return getExecutorService(webClientRequestModel.getThreadPoolBeanName()).submit(() -> {
 
@@ -239,15 +239,15 @@ public class HttpWebClientServiceImpl implements HttpWebClientService {
 
             } catch (Exception e) {
 
-                log.error("sendRequestGetMatrixServer data is : " + GJonUtil.toJson(webClientRequestModel.getDataMap()));
+                log.error("sendRequestGetHttpServer data is : " + GJonUtil.toJson(webClientRequestModel.getDataMap()));
 
-                log.error("sendRequestGetMatrixServer is error path : " + webClientRequestModel.getPath(), e);
+                log.error("sendRequestGetHttpServer is error path : " + webClientRequestModel.getPath(), e);
 
                 return e.getMessage();
 
             } finally {
 
-                log.debug("sendRequestGetMatrixServer end : " + webClientRequestModel.getPath());
+                log.debug("sendRequestGetHttpServer end : " + webClientRequestModel.getPath());
 
             }
 
@@ -261,9 +261,9 @@ public class HttpWebClientServiceImpl implements HttpWebClientService {
      * @return
      */
     @Override
-    public Future<String> sendRequestStreamUploadMatrixServer(WebClientRequestModel webClientRequestModel, MultipartFile multipartFile) {
+    public Future<String> sendRequestStreamUploadHttpServer(WebClientRequestModel webClientRequestModel, MultipartFile multipartFile) {
 
-        log.debug("sendRequestStreamUploadMatrixServer start : " + webClientRequestModel.getPath());
+        log.debug("sendRequestStreamUploadHttpServer start : " + webClientRequestModel.getPath());
 
         return getExecutorService(webClientRequestModel.getThreadPoolBeanName()).submit(() -> {
 
@@ -300,13 +300,13 @@ public class HttpWebClientServiceImpl implements HttpWebClientService {
 
             } catch (Exception e) {
 
-                log.error("sendRequestStreamUploadMatrixServer is error path : " + webClientRequestModel.getPath(), e);
+                log.error("sendRequestStreamUploadHttpServer is error path : " + webClientRequestModel.getPath(), e);
 
                 return e.getMessage();
 
             } finally {
 
-                log.debug("sendRequestStreamUploadMatrixServer end : " + webClientRequestModel.getPath());
+                log.debug("sendRequestStreamUploadHttpServer end : " + webClientRequestModel.getPath());
 
             }
 
@@ -321,9 +321,9 @@ public class HttpWebClientServiceImpl implements HttpWebClientService {
      * @return
      */
     @Override
-    public Future<StreamDownLoadResponseData> sendRequestStreamDownLoadMatrixServer(WebClientStreamRequestModel webClientStreamRequestModel) {
+    public Future<StreamDownLoadResponseData> sendRequestStreamDownLoadHttpServer(WebClientStreamRequestModel webClientStreamRequestModel) {
 
-        log.debug("sendRequestStreamDownLoadMatrixServer start is : " + webClientStreamRequestModel.getPath());
+        log.debug("sendRequestStreamDownLoadHttpServer start is : " + webClientStreamRequestModel.getPath());
 
         return getExecutorService(webClientStreamRequestModel.getThreadPoolBeanName()).submit(() -> {
 
@@ -366,9 +366,9 @@ public class HttpWebClientServiceImpl implements HttpWebClientService {
 
             } catch (Exception e) {
 
-                log.error("sendRequestStreamDownLoadMatrixServer is error mediaName : " + webClientStreamRequestModel.getMediaName(), e);
+                log.error("sendRequestStreamDownLoadHttpServer is error mediaName : " + webClientStreamRequestModel.getMediaName(), e);
 
-                log.error("sendRequestStreamDownLoadMatrixServer is error path : " + webClientStreamRequestModel.getPath(), e);
+                log.error("sendRequestStreamDownLoadHttpServer is error path : " + webClientStreamRequestModel.getPath(), e);
 
                 streamDownLoadResponseData.setResponseErrorMessages(e.getMessage());
 
@@ -376,7 +376,7 @@ public class HttpWebClientServiceImpl implements HttpWebClientService {
 
             } finally {
 
-                log.debug("sendRequestStreamDownLoadMatrixServer end : " + webClientStreamRequestModel.getPath());
+                log.debug("sendRequestStreamDownLoadHttpServer end : " + webClientStreamRequestModel.getPath());
 
             }
 
@@ -386,9 +386,9 @@ public class HttpWebClientServiceImpl implements HttpWebClientService {
 
 
     @Override
-    public Future<String> sendRequestDeleteMatrixServer(WebClientRequestModel webClientRequestModel) {
+    public Future<String> sendRequestDeleteHttpServer(WebClientRequestModel webClientRequestModel) {
 
-        log.debug("sendRequestDeleteMatrixServer start is : " + webClientRequestModel.getPath());
+        log.debug("sendRequestDeleteHttpServer start is : " + webClientRequestModel.getPath());
 
         return getExecutorService(webClientRequestModel.getThreadPoolBeanName()).submit(() -> {
 
@@ -417,13 +417,13 @@ public class HttpWebClientServiceImpl implements HttpWebClientService {
 
             } catch (Exception e) {
 
-                log.error("sendRequestDeleteMatrixServer is error path : " + webClientRequestModel.getPath(), e);
+                log.error("sendRequestDeleteHttpServer is error path : " + webClientRequestModel.getPath(), e);
 
                 return e.getMessage();
 
             } finally {
 
-                log.debug("sendRequestDeleteMatrixServer end : " + webClientRequestModel.getPath());
+                log.debug("sendRequestDeleteHttpServer end : " + webClientRequestModel.getPath());
 
             }
 
@@ -439,7 +439,7 @@ public class HttpWebClientServiceImpl implements HttpWebClientService {
      */
     private Mono<RuntimeException> bulidResponseError(ClientResponse response) {
 
-        log.error("sendRequestPostMatrixServer response is error responseCode is : " + response.statusCode());
+        log.error("sendRequestPostHttpServer response is error responseCode is : " + response.statusCode());
 
         HttpResponseErrorData HttpResponseErrorData = new HttpResponseErrorData();
 

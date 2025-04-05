@@ -12,17 +12,17 @@ import java.util.concurrent.Future;
 public interface HttpWebClientService {
 
 
-    Future<String> sendRequestPostMatrixServer(WebClientRequestModel webClientRequestModel);
+    Future<String> sendRequestPostHttpServer(WebClientRequestModel webClientRequestModel);
 
-    Future<String> sendRequestPutMatrixServer(WebClientRequestModel webClientRequestModel);
+    Future<String> sendRequestPutHttpServer(WebClientRequestModel webClientRequestModel);
 
-    Future<String> sendRequestGetMultiValueMapMatrixServer(WebClientRequestModel webClientRequestModel);
+    Future<String> sendRequestGetMultiValueMapHttpServer(WebClientRequestModel webClientRequestModel);
 
-    Future<String> sendRequestGetMatrixServer(WebClientRequestModel webClientRequestModel);
+    Future<String> sendRequestGetHttpServer(WebClientRequestModel webClientRequestModel);
 
-    Future<String> sendRequestStreamUploadMatrixServer(WebClientRequestModel webClientRequestModel, MultipartFile multipartFile);
+    Future<String> sendRequestStreamUploadHttpServer(WebClientRequestModel webClientRequestModel, MultipartFile multipartFile);
 
-    Future<StreamDownLoadResponseData> sendRequestStreamDownLoadMatrixServer(WebClientStreamRequestModel webClientStreamRequestModel);
+    Future<StreamDownLoadResponseData> sendRequestStreamDownLoadHttpServer(WebClientStreamRequestModel webClientStreamRequestModel);
 
-    Future<String> sendRequestDeleteMatrixServer(WebClientRequestModel webClientRequestModel);
+    Future<String> sendRequestDeleteHttpServer(WebClientRequestModel webClientRequestModel);
 }

@@ -42,12 +42,12 @@ public class HttpAsyncOptionServiceImpl implements HttpAsyncOptionService {
      * @return
      */
     @Override
-    public ServiceRsModel<Object> sendRequestPostMatrixServer(String webClientBeanName, String threadPoolBeanName, String uri, Object data, Class rsDataClass){
+    public ServiceRsModel<Object> sendRequestPostHttpServer(String webClientBeanName, String threadPoolBeanName, String uri, Object data, Class rsDataClass){
 
         try{
 
 
-            Future<String> rsFuture = httpWebClientService.sendRequestPostMatrixServer(buildWebClientRequestModelToData(webClientBeanName, threadPoolBeanName, uri, data));
+            Future<String> rsFuture = httpWebClientService.sendRequestPostHttpServer(buildWebClientRequestModelToData(webClientBeanName, threadPoolBeanName, uri, data));
 
             String rsJason = rsFuture.get();
 
@@ -55,7 +55,7 @@ public class HttpAsyncOptionServiceImpl implements HttpAsyncOptionService {
 
         } catch (Exception e) {
 
-            log.error("sendRequestPostMatrixServer ia error",e);
+            log.error("sendRequestPostHttpServer ia error",e);
 
         }
 
@@ -71,12 +71,12 @@ public class HttpAsyncOptionServiceImpl implements HttpAsyncOptionService {
      * @return
      */
     @Override
-    public ServiceRsModel<Object> sendRequestPutMatrixServer(String webClientBeanName, String threadPoolBeanName, String uri, Object data, Class rsDataClass){
+    public ServiceRsModel<Object> sendRequestPutHttpServer(String webClientBeanName, String threadPoolBeanName, String uri, Object data, Class rsDataClass){
 
         try{
 
 
-            Future<String> rsFuture = httpWebClientService.sendRequestPutMatrixServer(buildWebClientRequestModelToData(webClientBeanName, threadPoolBeanName, uri, data));
+            Future<String> rsFuture = httpWebClientService.sendRequestPutHttpServer(buildWebClientRequestModelToData(webClientBeanName, threadPoolBeanName, uri, data));
 
             String rsJason = rsFuture.get();
 
@@ -84,7 +84,7 @@ public class HttpAsyncOptionServiceImpl implements HttpAsyncOptionService {
 
         } catch (Exception e) {
 
-            log.error("sendRequestPutMatrixServer ia error",e);
+            log.error("sendRequestPutHttpServer ia error",e);
 
         }
 
@@ -101,11 +101,11 @@ public class HttpAsyncOptionServiceImpl implements HttpAsyncOptionService {
      * @return
      */
     @Override
-    public ServiceRsModel<Object> sendRequestPutMatrixServerHeader(String webClientBeanName, String threadPoolBeanName, String uri, Object data, Object header, Class rsDataClass){
+    public ServiceRsModel<Object> sendRequestPutHttpServerHeader(String webClientBeanName, String threadPoolBeanName, String uri, Object data, Object header, Class rsDataClass){
 
         try{
 
-            Future<String> rsFuture = httpWebClientService.sendRequestPutMatrixServer(buildWebClientRequestModelToData(webClientBeanName, threadPoolBeanName, uri, data));
+            Future<String> rsFuture = httpWebClientService.sendRequestPutHttpServer(buildWebClientRequestModelToData(webClientBeanName, threadPoolBeanName, uri, data));
 
             String rsJason = rsFuture.get();
 
@@ -113,7 +113,7 @@ public class HttpAsyncOptionServiceImpl implements HttpAsyncOptionService {
 
         } catch (Exception e) {
 
-            log.error("sendRequestPutMatrixServer ia error",e);
+            log.error("sendRequestPutHttpServer ia error",e);
 
         }
 
@@ -129,11 +129,11 @@ public class HttpAsyncOptionServiceImpl implements HttpAsyncOptionService {
      * @return
      */
     @Override
-    public ServiceRsModel<Object> sendRequestGetMatrixServer(String webClientBeanName, String threadPoolBeanName, String uri, Object data, Class rsDataClass){
+    public ServiceRsModel<Object> sendRequestGetHttpServerAllParams(String webClientBeanName, String threadPoolBeanName, String uri, Object data, Class rsDataClass){
 
         try{
 
-            Future<String> rsFuture = httpWebClientService.sendRequestGetMatrixServer(buildWebClientRequestModelToDataMap(webClientBeanName, threadPoolBeanName, uri, data));
+            Future<String> rsFuture = httpWebClientService.sendRequestGetHttpServer(buildWebClientRequestModelToDataMap(webClientBeanName, threadPoolBeanName, uri, data, true));
 
             String rsJason = rsFuture.get();
 
@@ -141,7 +141,7 @@ public class HttpAsyncOptionServiceImpl implements HttpAsyncOptionService {
 
         } catch (Exception e) {
 
-            log.error("sendRequestGetMatrixServer ia error",e);
+            log.error("sendRequestGetHttpServer ia error",e);
 
         }
 
@@ -157,11 +157,39 @@ public class HttpAsyncOptionServiceImpl implements HttpAsyncOptionService {
      * @return
      */
     @Override
-    public ServiceRsModel<?> sendRequestGetMatrixServerForAllType(String webClientBeanName, String threadPoolBeanName, String uri, Object data, Class rsDataClass){
+    public ServiceRsModel<Object> sendRequestGetHttpServer(String webClientBeanName, String threadPoolBeanName, String uri, Object data, Class rsDataClass){
 
         try{
 
-            Future<String> rsFuture = httpWebClientService.sendRequestGetMatrixServer(buildWebClientRequestModelToDataMap(webClientBeanName, threadPoolBeanName, uri, data));
+            Future<String> rsFuture = httpWebClientService.sendRequestGetHttpServer(buildWebClientRequestModelToDataMap(webClientBeanName, threadPoolBeanName, uri, data, false));
+
+            String rsJason = rsFuture.get();
+
+            return HttpResponseStatusUtils.buildHttpResponseBean(rsJason, rsDataClass);
+
+        } catch (Exception e) {
+
+            log.error("sendRequestGetHttpServer ia error",e);
+
+        }
+
+        return new ServiceRsModel().error();
+
+    }
+
+    /**
+     * http reques get 方法封装
+     * @param uri
+     * @param data
+     * @param rsDataClass
+     * @return
+     */
+    @Override
+    public ServiceRsModel<?> sendRequestGetHttpServerForAllTypeAllParams(String webClientBeanName, String threadPoolBeanName, String uri, Object data, Class rsDataClass){
+
+        try{
+
+            Future<String> rsFuture = httpWebClientService.sendRequestGetHttpServer(buildWebClientRequestModelToDataMap(webClientBeanName, threadPoolBeanName, uri, data, true));
 
             String rsJason = rsFuture.get();
 
@@ -169,7 +197,36 @@ public class HttpAsyncOptionServiceImpl implements HttpAsyncOptionService {
 
         } catch (Exception e) {
 
-            log.error("sendRequestGetMatrixServer ia error",e);
+            log.error("sendRequestGetHttpServer ia error",e);
+
+        }
+
+        return new ServiceRsModel().error();
+
+    }
+
+
+    /**
+     * http reques get 方法封装
+     * @param uri
+     * @param data
+     * @param rsDataClass
+     * @return
+     */
+    @Override
+    public ServiceRsModel<?> sendRequestGetHttpServerForAllType(String webClientBeanName, String threadPoolBeanName, String uri, Object data, Class rsDataClass){
+
+        try{
+
+            Future<String> rsFuture = httpWebClientService.sendRequestGetHttpServer(buildWebClientRequestModelToDataMap(webClientBeanName, threadPoolBeanName, uri, data, false));
+
+            String rsJason = rsFuture.get();
+
+            return HttpResponseStatusUtils.buildHttpResponseBeanForAllType(rsJason, rsDataClass);
+
+        } catch (Exception e) {
+
+            log.error("sendRequestGetHttpServer ia error",e);
 
         }
 
@@ -185,11 +242,11 @@ public class HttpAsyncOptionServiceImpl implements HttpAsyncOptionService {
      * @return
      */
     @Override
-    public ServiceRsModel<Object> sendRequestGetMultiValueMapMatrixServer(String webClientBeanName, String threadPoolBeanName, String uri, Object data, Class rsDataClass){
+    public ServiceRsModel<Object> sendRequestGetMultiValueMapHttpServerAllParams(String webClientBeanName, String threadPoolBeanName, String uri, Object data, Class rsDataClass){
 
         try{
 
-            Future<String> rsFuture = httpWebClientService.sendRequestGetMultiValueMapMatrixServer(buildWebClientRequestModelToDataMap(webClientBeanName, threadPoolBeanName, uri, data));
+            Future<String> rsFuture = httpWebClientService.sendRequestGetMultiValueMapHttpServer(buildWebClientRequestModelToDataMap(webClientBeanName, threadPoolBeanName, uri, data, true));
 
             String rsJason = rsFuture.get();
 
@@ -197,7 +254,35 @@ public class HttpAsyncOptionServiceImpl implements HttpAsyncOptionService {
 
         } catch (Exception e) {
 
-            log.error("sendRequestGetMatrixServer ia error",e);
+            log.error("sendRequestGetHttpServer ia error",e);
+
+        }
+
+        return new ServiceRsModel().error();
+
+    }
+
+    /**
+     * http reques get MultiValue方法封装
+     * @param uri
+     * @param data
+     * @param rsDataClass
+     * @return
+     */
+    @Override
+    public ServiceRsModel<Object> sendRequestGetMultiValueMapHttpServer(String webClientBeanName, String threadPoolBeanName, String uri, Object data, Class rsDataClass){
+
+        try{
+
+            Future<String> rsFuture = httpWebClientService.sendRequestGetMultiValueMapHttpServer(buildWebClientRequestModelToDataMap(webClientBeanName, threadPoolBeanName, uri, data, false));
+
+            String rsJason = rsFuture.get();
+
+            return HttpResponseStatusUtils.buildHttpResponseBean(rsJason, rsDataClass);
+
+        } catch (Exception e) {
+
+            log.error("sendRequestGetHttpServer ia error",e);
 
         }
 
@@ -213,7 +298,7 @@ public class HttpAsyncOptionServiceImpl implements HttpAsyncOptionService {
      * @return
      */
     @Override
-    public ServiceRsModel<Object> sendRequestStreamUploadMatrixServer(String webClientBeanName, String threadPoolBeanName, String uri
+    public ServiceRsModel<Object> sendRequestStreamUploadHttpServer(String webClientBeanName, String threadPoolBeanName, String uri
             , StreamUploadRequestModel streamUploadRequestModel, Class rsDataClass){
 
         try{
@@ -224,7 +309,7 @@ public class HttpAsyncOptionServiceImpl implements HttpAsyncOptionService {
 
             webClientRequestModel.setHttpHeaderMap(bulidHttpHeaderMap(streamUploadRequestModel));
 
-            Future<String> rsFuture = httpWebClientService.sendRequestStreamUploadMatrixServer(webClientRequestModel, streamUploadRequestModel.getMultipartFile());
+            Future<String> rsFuture = httpWebClientService.sendRequestStreamUploadHttpServer(webClientRequestModel, streamUploadRequestModel.getMultipartFile());
 
             String rsJason = rsFuture.get();
 
@@ -232,7 +317,7 @@ public class HttpAsyncOptionServiceImpl implements HttpAsyncOptionService {
 
         } catch (Exception e) {
 
-            log.error("sendRequestStreamMatrixServer ia error",e);
+            log.error("sendRequestStreamHttpServer ia error",e);
 
         }
 
@@ -249,7 +334,7 @@ public class HttpAsyncOptionServiceImpl implements HttpAsyncOptionService {
      * @return
      */
     @Override
-    public ServiceRsModel<Object> sendRequestStreamDownLoadMatrixServer(String webClientBeanName, String threadPoolBeanName, String uri
+    public ServiceRsModel<Object> sendRequestStreamDownLoadHttpServer(String webClientBeanName, String threadPoolBeanName, String uri
             , StreamDownLoadRequestModel streamDownLoadRequestModel, Class rsDataClass){
 
         try{
@@ -262,7 +347,7 @@ public class HttpAsyncOptionServiceImpl implements HttpAsyncOptionService {
 
             webClientStreamRequestModel.setHttpHeaderMap(bulidHttpHeaderMap(streamDownLoadRequestModel));
 
-            Future<StreamDownLoadResponseData> rsFuture = httpWebClientService.sendRequestStreamDownLoadMatrixServer(webClientStreamRequestModel);
+            Future<StreamDownLoadResponseData> rsFuture = httpWebClientService.sendRequestStreamDownLoadHttpServer(webClientStreamRequestModel);
 
             StreamDownLoadResponseData streamDownLoadResponseData = rsFuture.get();
 
@@ -278,7 +363,7 @@ public class HttpAsyncOptionServiceImpl implements HttpAsyncOptionService {
 
         } catch (Exception e) {
 
-            log.error("sendRequestStreamMatrixServer ia error",e);
+            log.error("sendRequestStreamHttpServer ia error",e);
 
         }
 
@@ -294,11 +379,11 @@ public class HttpAsyncOptionServiceImpl implements HttpAsyncOptionService {
      * @return
      */
     @Override
-    public ServiceRsModel<Object> sendRequestDeleteMatrixServer(String webClientBeanName, String threadPoolBeanName, String uri, Object data, Class rsDataClass){
+    public ServiceRsModel<Object> sendRequestDeleteHttpServer(String webClientBeanName, String threadPoolBeanName, String uri, Object data, Class rsDataClass){
 
         try{
 
-            Future<String> rsFuture = httpWebClientService.sendRequestDeleteMatrixServer(buildWebClientRequestModelToData(webClientBeanName, threadPoolBeanName, uri, data));
+            Future<String> rsFuture = httpWebClientService.sendRequestDeleteHttpServer(buildWebClientRequestModelToData(webClientBeanName, threadPoolBeanName, uri, data));
 
             String rsJason = rsFuture.get();
 
@@ -306,7 +391,7 @@ public class HttpAsyncOptionServiceImpl implements HttpAsyncOptionService {
 
         } catch (Exception e) {
 
-            log.error("sendRequestDeleteMatrixServer ia error",e);
+            log.error("sendRequestDeleteHttpServer ia error",e);
 
         }
 
@@ -367,11 +452,27 @@ public class HttpAsyncOptionServiceImpl implements HttpAsyncOptionService {
     }
 
 
-    private WebClientRequestModel buildWebClientRequestModelToDataMap(String webClientBeanName, String threadPoolBeanName, String uri, Object data) throws IllegalAccessException {
+    private WebClientRequestModel buildWebClientRequestModelToDataMap(String webClientBeanName, String threadPoolBeanName, String uri, Object data, boolean isParent) throws IllegalAccessException {
 
         WebClientRequestModel webClientRequestModel = new WebClientRequestModel();
 
-        webClientRequestModel.setDataMap(BeanMapUtil.beanToMapNotParentNotNull(data,false));
+        if(data instanceof Map){
+
+            webClientRequestModel.setDataMap((Map)data);
+
+        }else{
+
+            if(isParent){
+
+                webClientRequestModel.setDataMap(BeanMapUtil.beanToMapNotNull(data,false));
+
+            }else{
+
+                webClientRequestModel.setDataMap(BeanMapUtil.beanToMapNotParentNotNull(data,false));
+
+            }
+
+        }
 
         buildWebClientRequestModel(webClientRequestModel, webClientBeanName, threadPoolBeanName, uri);
 

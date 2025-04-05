@@ -7,23 +7,29 @@ import com.gl.myparadise.common.webclient.model.request.stream.StreamUploadReque
 public interface HttpAsyncOptionService {
 
 
-    ServiceRsModel<Object> sendRequestPostMatrixServer(String webClientBeanName, String threadPoolBeanName, String uri, Object data, Class rsDataClass);
+    ServiceRsModel<Object> sendRequestPostHttpServer(String webClientBeanName, String threadPoolBeanName, String uri, Object data, Class rsDataClass);
 
-    ServiceRsModel<Object> sendRequestPutMatrixServer(String webClientBeanName, String threadPoolBeanName, String uri, Object data, Class rsDataClass);
+    ServiceRsModel<Object> sendRequestPutHttpServer(String webClientBeanName, String threadPoolBeanName, String uri, Object data, Class rsDataClass);
 
-    ServiceRsModel<Object> sendRequestPutMatrixServerHeader(String webClientBeanName, String threadPoolBeanName, String uri, Object data, Object header, Class rsDataClass);
+    ServiceRsModel<Object> sendRequestPutHttpServerHeader(String webClientBeanName, String threadPoolBeanName, String uri, Object data, Object header, Class rsDataClass);
 
-    ServiceRsModel<Object> sendRequestGetMatrixServer(String webClientBeanName, String threadPoolBeanName, String uri, Object data, Class rsDataClass);
+    ServiceRsModel<Object> sendRequestGetHttpServerAllParams(String webClientBeanName, String threadPoolBeanName, String uri, Object data, Class rsDataClass);
 
-    ServiceRsModel<?> sendRequestGetMatrixServerForAllType(String webClientBeanName, String threadPoolBeanName, String uri, Object data, Class rsDataClass);
+    ServiceRsModel<Object> sendRequestGetHttpServer(String webClientBeanName, String threadPoolBeanName, String uri, Object data, Class rsDataClass);
 
-    ServiceRsModel<Object> sendRequestGetMultiValueMapMatrixServer(String webClientBeanName, String threadPoolBeanName, String uri, Object data, Class rsDataClass);
+    ServiceRsModel<?> sendRequestGetHttpServerForAllTypeAllParams(String webClientBeanName, String threadPoolBeanName, String uri, Object data, Class rsDataClass);
 
-    ServiceRsModel<Object> sendRequestStreamUploadMatrixServer(String webClientBeanName, String threadPoolBeanName, String uri
+    ServiceRsModel<?> sendRequestGetHttpServerForAllType(String webClientBeanName, String threadPoolBeanName, String uri, Object data, Class rsDataClass);
+
+    ServiceRsModel<Object> sendRequestGetMultiValueMapHttpServerAllParams(String webClientBeanName, String threadPoolBeanName, String uri, Object data, Class rsDataClass);
+
+    ServiceRsModel<Object> sendRequestGetMultiValueMapHttpServer(String webClientBeanName, String threadPoolBeanName, String uri, Object data, Class rsDataClass);
+
+    ServiceRsModel<Object> sendRequestStreamUploadHttpServer(String webClientBeanName, String threadPoolBeanName, String uri
             , StreamUploadRequestModel streamUploadRequestModel, Class rsDataClass);
 
-    ServiceRsModel<Object> sendRequestStreamDownLoadMatrixServer(String webClientBeanName, String threadPoolBeanName, String uri
+    ServiceRsModel<Object> sendRequestStreamDownLoadHttpServer(String webClientBeanName, String threadPoolBeanName, String uri
             , StreamDownLoadRequestModel streamDownLoadRequestModel, Class rsDataClass);
 
-    ServiceRsModel<Object> sendRequestDeleteMatrixServer(String webClientBeanName, String threadPoolBeanName, String uri, Object data, Class rsDataClass);
+    ServiceRsModel<Object> sendRequestDeleteHttpServer(String webClientBeanName, String threadPoolBeanName, String uri, Object data, Class rsDataClass);
 }
