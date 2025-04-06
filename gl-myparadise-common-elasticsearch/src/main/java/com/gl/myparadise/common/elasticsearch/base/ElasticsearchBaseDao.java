@@ -27,6 +27,7 @@ public abstract class ElasticsearchBaseDao {
     public final static String RECHARGE = "report-recharge-";
     public final static String POINT_CHANGE = "report-point-change-";
     public final static String BALANCE_CHANGE = "report-balance-change-";
+    public final static String BETFLOW_CHANGE = "report-bet-flow-change-";
 
     public ZoneOffset timeZone = ZoneOffset.ofHours(8);
 
