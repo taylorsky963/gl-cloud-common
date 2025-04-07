@@ -21,6 +21,9 @@ public final class ProjectConstant {
     }
 
     public static final class Common {
+
+        public final static String TWO_MIN_CACHE = "TWO_MIN_CACHE";
+
         /**
          * 否 (FALSE)
          */
