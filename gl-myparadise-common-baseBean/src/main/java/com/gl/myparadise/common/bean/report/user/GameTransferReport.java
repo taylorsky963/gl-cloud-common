@@ -13,6 +13,7 @@ import java.util.Date;
 @ToString(callSuper = true)
 public class GameTransferReport extends BaseReport {
     private Long userId;//mambrinfoid
+    private String walletMode;//钱包模式
     private String username;//游戏平台账号
     private String userAccount;//会员账号
     private String gamePlatform;//平台编号code
