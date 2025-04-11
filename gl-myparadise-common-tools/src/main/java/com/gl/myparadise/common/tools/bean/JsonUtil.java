@@ -16,7 +16,7 @@ import java.util.Map;
 public class JsonUtil {
 
     private static final ObjectMapper objectMapper = new ObjectMapper();
-    private static final MapType mapType = TypeFactory.defaultInstance().constructMapType(HashMap.class, String.class, String.class);
+    private static final MapType mapType = TypeFactory.defaultInstance().constructMapType(HashMap.class, String.class, Object.class);
 
     static {
         objectMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
