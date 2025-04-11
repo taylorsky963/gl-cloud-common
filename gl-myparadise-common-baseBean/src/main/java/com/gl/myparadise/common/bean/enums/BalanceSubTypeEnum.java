@@ -14,7 +14,7 @@ public enum BalanceSubTypeEnum {
     RECHARGE(ProjectConstant.Fund.BalanceType.RECHARGE, 1001, "充值"),
 
     // 提款
-    WITHDRAW(ProjectConstant.Fund.BalanceType.WITHDRAW, 1001, "提现"),
+    WITHDRAW(ProjectConstant.Fund.BalanceType.WITHDRAW, 1002, "提现"),
 
     // 红利
     ACT_MANUAL_BONUS(ProjectConstant.Fund.BalanceType.BONUS, 3999, "人工发放优惠"),
