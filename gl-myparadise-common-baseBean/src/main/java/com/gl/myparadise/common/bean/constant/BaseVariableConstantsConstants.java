@@ -66,4 +66,8 @@ public class BaseVariableConstantsConstants {
     public final static String DEFAULT_STATUS_RUNNING = "10001001";
 
     public final static String DEFAULT_STATUS_BLOCK = "10001002";
+
+    public static final String WEBSITE_CONFIG_SYSTEM_TYPE_CODE = "systemType";
+
+    public static final String WEBSITE_CONFIG_SYSTEM_TYPE_TEST_VALUE = "test";
 }
