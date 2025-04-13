@@ -108,7 +108,7 @@ public class IpAddressUtil {
 
         log.info("getRealIP x-forwarded-for clientIp : " + clientIp);
 
-        log.info("getRealIP x-real-ip clientIp : " + request.getHeader("x-real-ip"));
+        log.info("getRealIP x-real-ip clientIp : " + request.getHeader("X-Real-IP"));
 
         if (clientIp == null || clientIp.length() == 0 || "unknown".equalsIgnoreCase(clientIp)) {
             clientIp = request.getRemoteAddr();
