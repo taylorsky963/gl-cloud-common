@@ -212,12 +212,4 @@ public class MongodbFileService {
             return;
         }
     }
-
-    public String getFilePath(final String fileId, final boolean isBackend) {
-        if (isBackend) {
-            return "/bg/system/file/mgmt/get" + fileId;
-        } else {
-            return "/bg/system/file/mgmt/get" + fileId;
-        }
-    }
 }
