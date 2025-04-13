@@ -106,15 +106,15 @@ public class IpAddressUtil {
         // 获取客户端ip地址
         String clientIp = request.getHeader("x-forwarded-for");
 
-        log.info("getRealIP x-forwarded-for clientIp : " + clientIp);
+        log.debug("getRealIP x-forwarded-for clientIp : " + clientIp);
 
-        log.info("getRealIP x-real-ip clientIp : " + request.getHeader("X-Real-IP"));
+        log.debug("getRealIP x-real-ip clientIp : " + request.getHeader("X-Real-IP"));
 
         if (clientIp == null || clientIp.length() == 0 || "unknown".equalsIgnoreCase(clientIp)) {
             clientIp = request.getRemoteAddr();
         }
 
-        log.info("getRealIP getRemoteAddr clientIp : " + clientIp);
+        log.debug("getRealIP getRemoteAddr clientIp : " + clientIp);
 
         String[] clientIps = clientIp.split(",");
         if (clientIps.length <= 1) return clientIp.trim();
@@ -122,7 +122,7 @@ public class IpAddressUtil {
         // 判断是否来自CDN
         if (isComefromCDN(request)) {
 
-            log.info("getRealIP cdn clientIp : " + clientIp);
+            log.debug("getRealIP cdn clientIp : " + clientIp);
 
             if (clientIps.length >= 2) return clientIps[clientIps.length - 2].trim();
         }
