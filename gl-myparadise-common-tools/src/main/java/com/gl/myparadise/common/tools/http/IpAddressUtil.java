@@ -103,38 +103,90 @@ public class IpAddressUtil {
     }
 
     public static String getRealIP(HttpServletRequest request) {
-        // 获取客户端ip地址
-        String clientIp = request.getHeader("x-forwarded-for");
 
-        log.debug("getRealIP x-forwarded-for clientIp : " + clientIp);
+        String realIp = "127.0.0.1";
 
-        log.debug("getRealIP x-real-ip clientIp : " + request.getHeader("X-Real-IP"));
+        String xForwardedFor = request.getHeader("X-Forwarded-For");
 
-        if (clientIp == null || clientIp.length() == 0 || "unknown".equalsIgnoreCase(clientIp)) {
-            clientIp = request.getRemoteAddr();
+        String xRealIp = request.getHeader("X-Real-IP");
+
+        log.debug("getRealIP X-Forwarded-For: {}", xForwardedFor);
+
+        log.debug("getRealIP X-Real-IP: {}", xRealIp);
+
+        if (xForwardedFor != null && !xForwardedFor.isEmpty() && !"unknown".equalsIgnoreCase(xForwardedFor)) {
+
+            String[] ipList = xForwardedFor.split(",");
+
+            if (isComefromCDN(request) && ipList.length >= 2) {
+
+                realIp = ipList[ipList.length - 2].trim();
+
+                log.debug("CDN detected, use CDN-preceding IP: {}", realIp);
+
+                return realIp;
+            }
+
+            for (String ip : ipList) {
+
+                ip = ip.trim();
+
+                if (!"unknown".equalsIgnoreCase(ip) && !ip.isEmpty()) {
+
+                    realIp = ip;
+
+                    log.debug("First valid IP from X-Forwarded-For: {}", realIp);
+
+                    return realIp;
+                }
+            }
         }
 
-        log.debug("getRealIP getRemoteAddr clientIp : " + clientIp);
+        // fallback to X-Real-IP
+        if (xRealIp != null && !xRealIp.isEmpty() && !"unknown".equalsIgnoreCase(xRealIp)) {
 
-        String[] clientIps = clientIp.split(",");
-        if (clientIps.length <= 1) return clientIp.trim();
+            realIp = xRealIp.trim();
 
-        // 判断是否来自CDN
-        if (isComefromCDN(request)) {
+            log.debug("Fallback to X-Real-IP: {}", realIp);
 
-            log.debug("getRealIP cdn clientIp : " + clientIp);
+            return realIp;
 
-            if (clientIps.length >= 2) return clientIps[clientIps.length - 2].trim();
         }
 
-        return clientIps[clientIps.length - 1].trim();
+        // final fallback
+        realIp = request.getRemoteAddr();
+
+        log.debug("Fallback to request.getRemoteAddr(): {}", realIp);
+
+        return realIp;
     }
 
     private static boolean isComefromCDN(HttpServletRequest request) {
-        String host = request.getHeader("host");
-        return host.contains("www.189.cn") || host.contains("shouji.189.cn") || host.contains(
-                "image2.chinatelecom-ec.com") || host.contains(
-                "image1.chinatelecom-ec.com");
+
+        String via = request.getHeader("Via");
+        String cdnSrcIp = request.getHeader("CDN-Src-IP");
+        String xForwardedFor = request.getHeader("X-Forwarded-For");
+        String userAgent = request.getHeader("User-Agent");
+
+        log.debug("CDN check - Via: {}", via);
+
+        log.debug("CDN check - CDN-Src-IP: {}", cdnSrcIp);
+
+        log.debug("CDN check - X-Forwarded-For: {}", xForwardedFor);
+
+        log.debug("CDN check - User-Agent: {}", userAgent);
+
+        // 判断是否存在CDN特征
+        if ((via != null && via.toLowerCase().contains("cdn")) ||
+                (cdnSrcIp != null && !cdnSrcIp.isEmpty()) ||
+                (userAgent != null && userAgent.toLowerCase().contains("cdn")) ||
+                (xForwardedFor != null && xForwardedFor.split(",").length > 1)) {
+
+            return true;
+
+        }
+
+        return false;
 
     }
 }
