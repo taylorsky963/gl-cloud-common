@@ -1,6 +1,7 @@
 package com.gl.myparadise.common.bean.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.util.StringUtils;
@@ -18,7 +19,7 @@ public class UserLevelModel extends BaseEntity {
 
     private static final long serialVersionUID = 1438724499928393484L;
 
-    @JsonIgnore
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String userLevel1;
 
     @JsonIgnore
