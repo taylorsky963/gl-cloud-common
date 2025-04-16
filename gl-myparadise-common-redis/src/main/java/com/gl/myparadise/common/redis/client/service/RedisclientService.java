@@ -82,4 +82,13 @@ public interface RedisclientService {
     void extendLockExpiration(String lockKey, long timeoutSeconds);
 
     boolean releaseLock(String lockKey);
+
+    /**
+     * 尝试以原子性方式获取永久锁，直到显式释放。
+     *
+     * @param key   Redis中锁的键
+     * @param value 锁的值（通常为唯一标识）
+     * @return 如果成功获取锁，返回true；否则返回false
+     */
+    boolean setNxPermanent(String key, String value);
 }

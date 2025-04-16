@@ -762,4 +762,33 @@ public class RedisclientServiceImpl implements RedisclientService {
             return false;
         }
     }
+
+    /**
+     * 尝试以原子性方式获取永久锁，直到显式释放。
+     *
+     * @param key   Redis中锁的键
+     * @param value 锁的值（通常为唯一标识）
+     * @return 如果成功获取锁，返回true；否则返回false
+     * @throws IllegalArgumentException 如果key或value为null
+     */
+    @Override
+    public boolean setNxPermanent(String key, String value) {
+        if (key == null || value == null) {
+            throw new IllegalArgumentException("key or value cannot be null");
+        }
+
+        try {
+            Boolean success = redisTemplate.opsForValue().setIfAbsent(key, value);
+            if (success != null && success) {
+                log.info("成功获取永久锁，key: {}, value: {}", key, value);
+                return true;
+            } else {
+                log.warn("无法获取永久锁，key: {}, value: {}", key, value);
+                return false;
+            }
+        } catch (Exception e) {
+            log.error("获取永久锁失败，key: {}, value: {}", key, value, e);
+            return false;
+        }
+    }
 }
