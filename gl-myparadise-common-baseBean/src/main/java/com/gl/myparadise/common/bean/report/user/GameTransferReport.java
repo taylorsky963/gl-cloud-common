@@ -22,7 +22,7 @@ public class GameTransferReport extends BaseReport {
     private String currencyCode;//游戏币种datapkcode
     private BigDecimal transferAmount;//转账金额
     private String transferStatus;//转账状态: 1=Deposit;2=Withdraw
-    private Date createTime;//转账时间
+    private Long createTime;//转账时间
     private String newOrderNo;//转账单号
 }
 
