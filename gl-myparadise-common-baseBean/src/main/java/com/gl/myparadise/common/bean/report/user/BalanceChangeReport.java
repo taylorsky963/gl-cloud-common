@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 @Data
@@ -85,4 +86,12 @@ public class BalanceChangeReport extends BaseReport {
     private Long updateUserId;
     private Timestamp updateTime;
     private String attachment;
+    /**
+     * 计入存提
+     */
+    private Integer memoPayDeposit;
+    /**
+     * 變動流水金額 如果有傳入 就依照該欄位為主 否則 流水為1倍
+     */
+    private BigDecimal externalBetflow;
 } 
