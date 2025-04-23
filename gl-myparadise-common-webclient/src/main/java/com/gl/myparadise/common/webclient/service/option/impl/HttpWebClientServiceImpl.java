@@ -105,11 +105,15 @@ public class HttpWebClientServiceImpl implements HttpWebClientService {
     }
 
     public Future<String> sendRequestPostFormHttpServer(WebClientRequestModel webClientRequestModel) {
-        log.debug("sendRequestPostHttpServer start is : " + webClientRequestModel.getPath());
-        log.debug("sendRequestPostHttpServer data is : " + webClientRequestModel.getData());
+
+        log.debug("sendRequestPostFormHttpServer start is : " + webClientRequestModel.getPath());
+
+        log.debug("sendRequestPostFormHttpServer data is : " + webClientRequestModel.getData());
 
         return getExecutorService(webClientRequestModel.getThreadPoolBeanName()).submit(() -> {
+
             try {
+
                 return getWebClient(webClientRequestModel.getWebClientBeanName())
                         .post()
                         .uri(webClientRequestModel.getPath())
@@ -132,11 +136,16 @@ public class HttpWebClientServiceImpl implements HttpWebClientService {
                         .block();
 
             } catch (Exception e) {
-                log.error("sendRequestPostHttpServer error, path: {}, data: {}",
+
+                log.error("sendRequestPostFormHttpServer error, path: {}, data: {}",
                         webClientRequestModel.getPath(), webClientRequestModel.getData(), e);
+
                 return e.getMessage();
+
             } finally {
-                log.debug("sendRequestPostHttpServer end : {}", webClientRequestModel.getPath());
+
+                log.debug("sendRequestPostFormHttpServer end : {}", webClientRequestModel.getPath());
+
             }
         });
     }
