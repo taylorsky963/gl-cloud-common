@@ -8,6 +8,7 @@ public interface HttpAsyncOptionService {
 
 
     ServiceRsModel<Object> sendRequestPostHttpServer(String webClientBeanName, String threadPoolBeanName, String uri, Object data, Class rsDataClass);
+    ServiceRsModel<Object> sendRequestPostFormHttpServer(String webClientBeanName, String threadPoolBeanName, String uri, Object data, Class rsDataClass);
 
     ServiceRsModel<Object> sendRequestPutHttpServer(String webClientBeanName, String threadPoolBeanName, String uri, Object data, Class rsDataClass);
 
