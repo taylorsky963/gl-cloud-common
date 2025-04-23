@@ -4,15 +4,15 @@ import com.gl.myparadise.common.webclient.model.request.WebClientRequestModel;
 import com.gl.myparadise.common.webclient.model.request.stream.WebClientStreamRequestModel;
 import com.gl.myparadise.common.webclient.model.response.stream.StreamDownLoadResponseData;
 import org.springframework.web.multipart.MultipartFile;
-import reactor.core.publisher.Mono;
 
-import java.util.Map;
 import java.util.concurrent.Future;
 
 public interface HttpWebClientService {
 
 
     Future<String> sendRequestPostHttpServer(WebClientRequestModel webClientRequestModel);
+
+    Future<String> sendRequestPostFormHttpServer(WebClientRequestModel webClientRequestModel);
 
     Future<String> sendRequestPutHttpServer(WebClientRequestModel webClientRequestModel);
 
