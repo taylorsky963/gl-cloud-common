@@ -19,15 +19,15 @@ import java.util.*;
 public abstract class ElasticsearchBaseDao {
 
     public final static String USER = "gl_user";
-    public final static String BETTING = "report-betting-";
-    public final static String GAME_TRANSFER = "report-game-transfer-";
-    public final static String MEMBER_VIP = "report-member-vip-";
-    public final static String DAILY_USER_BETTING = "report-daily-user-betting-";
-    public final static String DAILY_USER_RECHARGE = "report-daily-user-recharge-";
-    public final static String RECHARGE = "report-recharge-";
-    public final static String POINT_CHANGE = "report-point-change-";
-    public final static String BALANCE_CHANGE = "report-balance-change-";
-    public final static String BETFLOW_CHANGE = "report-bet-flow-change-";
+    public final static String BETTING = "report-betting-20";
+    public final static String GAME_TRANSFER = "report-game-transfer-20";
+    public final static String MEMBER_VIP = "report-member-vip-20";
+    public final static String DAILY_USER_BETTING = "report-daily-user-betting-20";
+    public final static String DAILY_USER_RECHARGE = "report-daily-user-recharge-20";
+    public final static String RECHARGE = "report-recharge-20";
+    public final static String POINT_CHANGE = "report-point-change-20";
+    public final static String BALANCE_CHANGE = "report-balance-change-20";
+    public final static String BETFLOW_CHANGE = "report-bet-flow-change-20";
 
     public ZoneOffset timeZone = ZoneOffset.ofHours(8);
 
