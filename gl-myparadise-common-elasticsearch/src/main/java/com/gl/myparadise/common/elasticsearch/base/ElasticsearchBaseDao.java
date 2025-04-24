@@ -25,6 +25,7 @@ public abstract class ElasticsearchBaseDao {
     public final static String DAILY_USER_BETTING = "report-daily-user-betting-20";
     public final static String DAILY_USER_RECHARGE = "report-daily-user-recharge-20";
     public final static String RECHARGE = "report-recharge-20";
+    public final static String WITHDRAW = "report-withdraw-20";
     public final static String POINT_CHANGE = "report-point-change-20";
     public final static String BALANCE_CHANGE = "report-balance-change-20";
     public final static String BETFLOW_CHANGE = "report-bet-flow-change-20";
