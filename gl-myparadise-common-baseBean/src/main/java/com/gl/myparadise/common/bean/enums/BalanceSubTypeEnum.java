@@ -34,6 +34,10 @@ public enum BalanceSubTypeEnum {
     MANUAL(ProjectConstant.Fund.BalanceType.MANUAL, 5001, "人工存入"),
     MANUAL_OUT(ProjectConstant.Fund.BalanceType.MANUAL, 5002, "人工转出"),
 
+    // 人工存入 不计存提
+    MANUAL_NOMEMO(ProjectConstant.Fund.BalanceType.MANUAL, 5003, "人工存入 不计存款订单"),
+    MANUAL_OUT_NOMEMO(ProjectConstant.Fund.BalanceType.MANUAL, 5004, "人工转出 不计提款订单"),
+
     // 游戏
     GAME_TRANSFER_IN(ProjectConstant.Fund.BalanceType.GAME, 6001, "游戏转入"),
     GAME_TRANSFER_OUT(ProjectConstant.Fund.BalanceType.GAME, 6002, "游戏转出"),
