@@ -2,7 +2,6 @@ package com.gl.myparadise.common.webclient.service.option.impl;
 
 import com.gl.myparadise.common.tools.jason.GJonUtil;
 import com.gl.myparadise.common.webclient.config.HttpPoolClientRetryProperties;
-import com.gl.myparadise.common.webclient.config.HttpPoolConfigurationProperties;
 import com.gl.myparadise.common.webclient.constants.WebClientConstants;
 import com.gl.myparadise.common.webclient.model.request.WebClientRequestModel;
 import com.gl.myparadise.common.webclient.model.request.stream.WebClientStreamRequestModel;
@@ -12,14 +11,13 @@ import com.gl.myparadise.common.webclient.service.option.HttpWebClientService;
 import com.gl.myparadise.common.webclient.util.HttpMediaDataUtils;
 import io.netty.channel.ConnectTimeoutException;
 import lombok.extern.slf4j.Slf4j;
-
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -104,6 +102,52 @@ public class HttpWebClientServiceImpl implements HttpWebClientService {
 
         });
 
+    }
+
+    public Future<String> sendRequestPostFormHttpServer(WebClientRequestModel webClientRequestModel) {
+
+        log.debug("sendRequestPostFormHttpServer start is : " + webClientRequestModel.getPath());
+
+        log.debug("sendRequestPostFormHttpServer data is : " + webClientRequestModel.getData());
+
+        return getExecutorService(webClientRequestModel.getThreadPoolBeanName()).submit(() -> {
+
+            try {
+
+                return getWebClient(webClientRequestModel.getWebClientBeanName())
+                        .post()
+                        .uri(webClientRequestModel.getPath())
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_FORM_URLENCODED) // 修改为表单提交
+                        .headers(buildHttpHeaders(webClientRequestModel.getHttpHeaderMap()))
+                        .acceptCharset(StandardCharsets.UTF_8)
+                        .body(BodyInserters.fromFormData(buildMultiValueMap(webClientRequestModel.getDataMap()))) // 使用表单数据
+                        .ifModifiedSince(ZonedDateTime.now())
+                        .ifNoneMatch("*")
+                        .retrieve()
+                        .onStatus(HttpStatus::is5xxServerError, response -> {
+                            return bulidResponseError(response);
+                        })
+                        .onStatus(HttpStatus::is4xxClientError, response -> {
+                            return bulidResponseError(response);
+                        })
+                        .bodyToMono(String.class)
+                        .retryWhen(getClientRetry(webClientRequestModel.getWebClientBeanName()))
+                        .block();
+
+            } catch (Exception e) {
+
+                log.error("sendRequestPostFormHttpServer error, path: {}, data: {}",
+                        webClientRequestModel.getPath(), webClientRequestModel.getData(), e);
+
+                return e.getMessage();
+
+            } finally {
+
+                log.debug("sendRequestPostFormHttpServer end : {}", webClientRequestModel.getPath());
+
+            }
+        });
     }
 
     @Override

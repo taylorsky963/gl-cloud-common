@@ -63,6 +63,26 @@ public class HttpAsyncOptionServiceImpl implements HttpAsyncOptionService {
 
     }
 
+    @Override
+    public ServiceRsModel<Object> sendRequestPostFormHttpServer(String webClientBeanName, String threadPoolBeanName, String uri, Object data, Class rsDataClass) {
+        try{
+
+
+            Future<String> rsFuture = httpWebClientService.sendRequestPostFormHttpServer(buildWebClientRequestModelToDataMap(webClientBeanName, threadPoolBeanName, uri, data,true));
+
+            String rsJason = rsFuture.get();
+
+            return HttpResponseStatusUtils.buildHttpResponseBean(rsJason, rsDataClass);
+
+        } catch (Exception e) {
+
+            log.error("sendRequestPostHttpServer ia error",e);
+
+        }
+
+        return new ServiceRsModel().error();
+    }
+
     /**
      * http reques put 方法封装
      * @param uri
