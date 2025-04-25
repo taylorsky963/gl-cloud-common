@@ -6,6 +6,7 @@ import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
 import org.elasticsearch.search.aggregations.Aggregation;
 import org.elasticsearch.search.aggregations.Aggregations;
+import org.elasticsearch.search.aggregations.metrics.Cardinality;
 import org.elasticsearch.search.aggregations.metrics.Sum;
 import org.elasticsearch.search.aggregations.metrics.ValueCount;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -150,6 +151,15 @@ public abstract class ElasticsearchBaseDao {
                 }
             } else if (aggregation instanceof ValueCount) {
                 long value = ((ValueCount) aggregation).getValue();
+                if (type == Integer.class) {
+                    return (V) Integer.valueOf((int) value);
+                } else if (type == Long.class) {
+                    return (V) Long.valueOf(value);
+                } else if (type == BigDecimal.class) {
+                    return (V) new BigDecimal(String.valueOf(value));
+                }
+            }else if (aggregation instanceof Cardinality) {
+                long value = ((Cardinality) aggregation).getValue();
                 if (type == Integer.class) {
                     return (V) Integer.valueOf((int) value);
                 } else if (type == Long.class) {
