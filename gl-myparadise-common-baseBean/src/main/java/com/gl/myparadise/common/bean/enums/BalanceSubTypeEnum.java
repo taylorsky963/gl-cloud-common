@@ -43,7 +43,8 @@ public enum BalanceSubTypeEnum {
     GAME_TRANSFER_OUT(ProjectConstant.Fund.BalanceType.GAME, 6002, "游戏转出"),
 
     // 积分兑换
-    POINT_IN(ProjectConstant.Fund.BalanceType.POINT, 7001, "积分兑换"),
+    POINT_CASH_EXCHANGE(ProjectConstant.Fund.BalanceType.POINT, 7001, "积分兑换現金"),
+    POINT_CARGO_EXCHANGE(ProjectConstant.Fund.BalanceType.POINT, 7002, "积分兑换實物"),
 
     ;
 
