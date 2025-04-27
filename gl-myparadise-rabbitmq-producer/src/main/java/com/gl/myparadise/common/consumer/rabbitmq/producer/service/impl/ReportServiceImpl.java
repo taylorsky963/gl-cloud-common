@@ -96,7 +96,7 @@ public class ReportServiceImpl implements ReportService {
 
     @Override
     public void memberVipReport(MemberVipReport report) {
-        report.set("uuid", report.getDataPkCode());
+        report.set("uuid", report.getMemberInfoId());
         reportProducer.sendMessage(ReportEvent.MemberVip, report);
     }
 
