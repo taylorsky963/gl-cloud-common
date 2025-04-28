@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartException;
 import org.springframework.web.multipart.support.MissingServletRequestPartException;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author Vincent
  * @Description: TODO
@@ -52,8 +54,12 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = {HttpMediaTypeNotSupportedException.class})
     @ResponseBody
-    public ModelJson handleHttpMessageNotReadableException(HttpMediaTypeNotSupportedException e) {
-        logger.error("参数类型不支持异常 : ", e);
+    public ModelJson handleHttpMessageNotReadableException(HttpMediaTypeNotSupportedException e, HttpServletRequest request) {
+        String requestUrl = request.getRequestURL().toString();
+
+        String contentType = request.getContentType();
+
+        logger.error("参数类型不支持异常, URL: {}, Content-Type: {}, 錯誤訊息: ", requestUrl, contentType, e);
 
         return errorMsg(ExceptionEnum.PARAMETER_NOT_MATCH.getResponseCode(),
                 ExceptionEnum.PARAMETER_NOT_MATCH.getResponseMsg());
