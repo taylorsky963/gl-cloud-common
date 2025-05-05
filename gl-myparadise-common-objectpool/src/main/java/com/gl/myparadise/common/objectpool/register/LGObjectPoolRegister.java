@@ -63,10 +63,10 @@ public class LGObjectPoolRegister implements SmartInitializingSingleton, Environ
 
         binder = Binder.get(environment); //绑定配置器
 
-        bulidThreadPoolConfigPropsMap();
+        buildThreadPoolConfigPropsMap();
     }
 
-    private void bulidThreadPoolConfigPropsMap() {
+    private void buildThreadPoolConfigPropsMap() {
 
         MultipleObjectPoolProperties objectPoolConfigModel = binder.bind((ObjectPoolConfigConstants.OBJECT_POOL_CONFIG_TAG).trim(), MultipleObjectPoolProperties.class).get();
 

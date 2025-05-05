@@ -18,6 +18,8 @@ import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.gridfs.GridFsResource;
@@ -33,10 +35,8 @@ import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.net.URLEncoder;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.UUID;
+import java.nio.charset.StandardCharsets;
+import java.util.*;
 import java.util.concurrent.Executor;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -55,16 +55,20 @@ public class MongodbFileService {
     private Executor executor;
     @Autowired
     private GlExportService glExportService;
+    @Autowired
+    private MessageSource messageSource;
 
     public <T, R> void saveAsync(
             @NonNull Long userId,
-            @NonNull String fileName,
+            @NonNull String rawFileName,
             @NonNull Function<R, PageResult<T>> method,
             @NonNull Function<R, R> doNext,
             @NonNull R args
     ) {
+        Locale locale = LocaleContextHolder.getLocale();
+        String fileName = StringUtils.trimToEmpty(messageSource.getMessage(rawFileName, null, rawFileName, locale));
         String id = glExportService.startExport(userId, fileName);
-        executor.execute(() -> save(fileName, method, doNext, args, (data) -> defaultExportCallBacker(id, fileName).accept(data)));
+        executor.execute(() -> save(fileName, method, doNext, args, (data) -> defaultExportCallBacker(id, fileName).accept(data), locale));
     }
 
     @SneakyThrows
@@ -73,7 +77,8 @@ public class MongodbFileService {
             @NonNull Function<R, PageResult<T>> method,
             @NonNull Function<R, R> doNext,
             @NonNull R args,
-            @Nullable Consumer<RemainingTimeUtils.ProcessVO> callBacker
+            @Nullable Consumer<RemainingTimeUtils.ProcessVO> callBacker,
+            Locale locale
     ) {
         GridFSUploadStream gridFSUploadStream = gridFSBucket.openUploadStream(fileName + ".csv", computeUploadOptionsFor());
         String objectId = gridFSUploadStream.getObjectId().toString();
@@ -97,7 +102,7 @@ public class MongodbFileService {
                 log.info("导出结束:到達total");
                 break;
             }
-            write(gridFSUploadStream, currentPage.getResult(), totalDownloadElementCount == 0);
+            write(gridFSUploadStream, currentPage.getResult(), totalDownloadElementCount == 0, locale);
             totalDownloadElementCount = totalDownloadElementCount + currentPage.getResult().size();
 
             invokeNotify(startTime, currentPage.getTotal(), totalDownloadElementCount, objectId, callBacker, false);
@@ -112,8 +117,8 @@ public class MongodbFileService {
         return Objects.isNull(currentPage) || CollectionUtils.isEmpty(currentPage.getResult());
     }
 
-    private <T> void write(GridFSUploadStream gridFSUploadStream, List<T> tmp, boolean isNewDoc) {
-        gridFSUploadStream.write(ExportUtils.getExportData(tmp, isNewDoc));
+    private <T> void write(GridFSUploadStream gridFSUploadStream, List<T> tmp, boolean isNewDoc, Locale locale) {
+        gridFSUploadStream.write(ExportUtils.getExportData(tmp, isNewDoc, messageSource, locale));
     }
 
     private GridFSUploadOptions computeUploadOptionsFor() {
@@ -205,6 +210,9 @@ public class MongodbFileService {
         }
         try (InputStream inputStream = gridFsResource.getInputStream(); OutputStream outputStream = response.getOutputStream()) {
             response.setContentType(gridFsResource.getContentType());
+            String fileName = gridFsResource.getFilename();
+            String encodedFileName = URLEncoder.encode(fileName, StandardCharsets.UTF_8.toString()).replace("+", "%20");
+            response.setHeader("content-disposition", "attachment; filename*=" + encodedFileName);
             IOUtils.copy(inputStream, outputStream);
             outputStream.flush();
         } catch (Exception ex) {

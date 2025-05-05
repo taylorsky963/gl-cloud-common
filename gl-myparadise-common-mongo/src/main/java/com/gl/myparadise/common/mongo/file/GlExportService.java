@@ -55,7 +55,7 @@ public class GlExportService {
         export.setId(id);
         export.setCompleteDate(new Date().getTime());
         export.setFileId(mongoFileId);
-        export.setFilePath(getFilePath(export.getFileId()) + ".csv");
+        export.setFilePath(export.getFileId());
         export.setStatus(1);
         export.setRemainingTime(null);
 
