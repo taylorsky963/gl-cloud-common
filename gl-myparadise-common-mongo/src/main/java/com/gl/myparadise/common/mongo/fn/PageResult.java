@@ -14,13 +14,6 @@ public class PageResult<T> extends ArrayList<T> {
     @Getter
     private long total = 0;
 
-    public PageResult(Collection<T> result, long total) {
-        if (!ObjectUtils.isEmpty(result)) {
-            this.addAll(result);
-            this.total = total;
-        }
-    }
-
     public <I> PageResult(Collection<I> result, long total, Function<I, T> mapping) {
         if (!ObjectUtils.isEmpty(result)) {
             this.addAll(result.stream().map(mapping).collect(Collectors.toList()));
