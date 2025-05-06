@@ -34,6 +34,9 @@ public enum RoutingKeyEnum {
     // 統計相關事件
     global_report_daily_betting(RoutingKeyConstant.GLOBAL_REPORT_DAILY_BETTING, "每日投注统计"),
     global_report_daily_recharge(RoutingKeyConstant.GLOBAL_REPORT_DAILY_RECHARGE, "每日充值统计"),
+
+    // 活动相关事件
+    global_report_activity_member_award(RoutingKeyConstant.GLOBAL_REPORT_ACTIVITY_MEMBER_AWARD, "流水变动事件"),
     ;
 
     private final String routingKeyName;

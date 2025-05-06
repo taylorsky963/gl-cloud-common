@@ -2,6 +2,7 @@ package com.gl.myparadise.common.consumer.rabbitmq.producer.service.impl;
 
 import com.gl.myparadise.common.bean.model.ReportEvent;
 import com.gl.myparadise.common.bean.report.activity.ActivityBaseReport;
+import com.gl.myparadise.common.bean.report.activity.ActivityMemberAwardReport;
 import com.gl.myparadise.common.bean.report.fund.FundBaseReport;
 import com.gl.myparadise.common.bean.report.fund.RechargeReport;
 import com.gl.myparadise.common.bean.report.fund.WithdrawReport;
@@ -126,5 +127,11 @@ public class ReportServiceImpl implements ReportService {
     public void betFlowChangeReport(BetFlowChangeReport report) {
         report.set("uuid", report.getDataPkCode());
         reportProducer.sendMessage(ReportEvent.BetFlowChange, report);
+    }
+
+    @Override
+    public void activityMemberAward(ActivityMemberAwardReport report) {
+        report.set("uuid", Objects.requireNonNull(report.getTradeId()));
+        reportProducer.sendMessage(ReportEvent.ActivityMemberAward, report);
     }
 }

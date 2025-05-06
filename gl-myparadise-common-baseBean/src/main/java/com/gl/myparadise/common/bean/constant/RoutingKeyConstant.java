@@ -27,4 +27,7 @@ public class RoutingKeyConstant {
     // 統計相關事件
     public final static String GLOBAL_REPORT_DAILY_BETTING = "global-report-daily-betting";
     public final static String GLOBAL_REPORT_DAILY_RECHARGE = "global-report-daily-recharge";
+
+    // 活动相关事件
+    public final static String GLOBAL_REPORT_ACTIVITY_MEMBER_AWARD = "global-report-activity-member-award";
 } 
