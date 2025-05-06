@@ -35,4 +35,5 @@ public class BettingReport extends BaseReport {
     private String curDataPkCode;
     private String memberAccount;
     private Long memberInfoId;
+    private Object childItemData;
 }
