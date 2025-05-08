@@ -45,7 +45,7 @@ import java.util.function.Function;
 @Slf4j
 @ConditionalOnBean(name = "asyncExecutor")
 public class MongodbFileService {
-    final Integer limit = 100000;
+    final Integer limit = 10000;
     @Autowired
     private GridFsTemplate gridFsTemplate;
     @Autowired
