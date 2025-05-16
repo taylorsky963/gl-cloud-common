@@ -118,15 +118,6 @@ public class IpAddressUtil {
 
             String[] ipList = xForwardedFor.split(",");
 
-            if (isComefromCDN(request) && ipList.length >= 2) {
-
-                realIp = ipList[ipList.length - 2].trim();
-
-                log.debug("CDN detected, use CDN-preceding IP: {}", realIp);
-
-                return realIp;
-            }
-
             for (String ip : ipList) {
 
                 ip = ip.trim();
