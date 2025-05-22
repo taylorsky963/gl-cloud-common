@@ -247,6 +247,7 @@ public final class ProjectConstant {
     public static final class Data {
         public static final class LockKey {
             public final static String DATA_CURRENCY_CONFIG_KEY = "DATA_CURRENCY_CONFIG_KEY_";
+            public final static String DATA_CBO_MAPPING_KEY = "DATA_CBO_MAPPING_KEY_";
         }
     }
 
