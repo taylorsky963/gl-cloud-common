@@ -91,4 +91,6 @@ public interface RedisclientService {
      * @return 如果成功获取锁，返回true；否则返回false
      */
     boolean setNxPermanent(String key, String value);
+
+    void pipelineSet(Map<String, String> keyValueMap);
 }

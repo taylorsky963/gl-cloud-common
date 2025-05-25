@@ -8,7 +8,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
+import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -790,5 +792,18 @@ public class RedisclientServiceImpl implements RedisclientService {
             log.error("获取永久锁失败，key: {}, value: {}", key, value, e);
             return false;
         }
+    }
+
+    @Override
+    public void pipelineSet(Map<String, String> keyValueMap) {
+        redisTemplate.executePipelined((RedisCallback<Object>) connection -> {
+            StringRedisSerializer stringSerializer = new StringRedisSerializer();
+            for (Map.Entry<String, String> entry : keyValueMap.entrySet()) {
+                byte[] key = stringSerializer.serialize(entry.getKey());
+                byte[] value = stringSerializer.serialize(entry.getValue());
+                connection.stringCommands().set(key, value);
+            }
+            return null;
+        });
     }
 }
