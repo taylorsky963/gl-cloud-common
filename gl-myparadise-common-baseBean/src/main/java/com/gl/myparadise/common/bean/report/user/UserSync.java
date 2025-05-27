@@ -28,7 +28,7 @@ public class UserSync implements Serializable {
     private String regResource;
     private String regClientVersion;
     private Long agentId;
-    private String agentName;
+    private String agentAccount;
     private String agentInviteCode;
     private Timestamp birthdayTime;
     private String realName;
