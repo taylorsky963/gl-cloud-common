@@ -45,4 +45,5 @@ public class ActivityMemberAwardReport extends BaseReport {
     private String coinDataPkCode;
     private Integer subType;
     private Long memberInfoId;
+    private Long agentId;
 }
