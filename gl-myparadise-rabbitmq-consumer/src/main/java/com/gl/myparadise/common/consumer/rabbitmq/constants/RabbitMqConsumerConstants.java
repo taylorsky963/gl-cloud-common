@@ -25,6 +25,8 @@ public class RabbitMqConsumerConstants {
 
     public static final String RABBITMQ_CONSUMER_CONNECT_FACTORY_NAME = "connectionFactoryListener";
 
+    public static final String RABBITMQ_CONSUMER_RABBIT_ADMIN_NAME = "consumerRabbitAdmin";
+
     public static final String RABBITMQ_CONSUMER_CONFIG_TAG = "spring.lg.rabbitmq.consumer";
 
     public static final String RABBITMQ_CONSUMER_LISTENER_CONFIG_TAG = RABBITMQ_CONSUMER_CONFIG_TAG + PROPERTIES_SPLIT_TAG + "listener";

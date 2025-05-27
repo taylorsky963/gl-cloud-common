@@ -55,6 +55,14 @@ public class WithdrawReport extends BaseReport {
      */
     private String memberAccount;
     /**
+     * 代理ID
+     */
+    private Long agentId;
+    /**
+     * 代理账号
+     */
+    private String agentAccount;
+    /**
      *  会员银行卡提现方式对应的银行账户名
      */
     private String bankAccount;
