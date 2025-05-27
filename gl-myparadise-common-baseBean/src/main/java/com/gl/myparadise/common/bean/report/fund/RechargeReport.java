@@ -27,6 +27,14 @@ public class RechargeReport extends BaseReport {
      */
     private String memberAccount;
     /**
+     * 代理ID
+     */
+    private Long agentId;
+    /**
+     * 代理账号
+     */
+    private String agentAccount;
+    /**
      *  订单编号
      */
     private String orderNumber;
