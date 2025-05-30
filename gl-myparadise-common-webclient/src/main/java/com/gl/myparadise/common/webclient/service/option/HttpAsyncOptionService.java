@@ -8,6 +8,7 @@ public interface HttpAsyncOptionService {
 
 
     ServiceRsModel<Object> sendRequestPostHttpServer(String webClientBeanName, String threadPoolBeanName, String uri, Object data, Class rsDataClass);
+
     ServiceRsModel<Object> sendRequestPostFormHttpServer(String webClientBeanName, String threadPoolBeanName, String uri, Object data, Class rsDataClass);
 
     ServiceRsModel<Object> sendRequestPutHttpServer(String webClientBeanName, String threadPoolBeanName, String uri, Object data, Class rsDataClass);
@@ -21,6 +22,8 @@ public interface HttpAsyncOptionService {
     ServiceRsModel<?> sendRequestGetHttpServerForAllTypeAllParams(String webClientBeanName, String threadPoolBeanName, String uri, Object data, Class rsDataClass);
 
     ServiceRsModel<?> sendRequestGetHttpServerForAllType(String webClientBeanName, String threadPoolBeanName, String uri, Object data, Class rsDataClass);
+
+    ServiceRsModel<?> sendRequestPostAllTypeHttpServer(String webClientBeanName, String threadPoolBeanName, String uri, Object data, Class rsDataClass);
 
     ServiceRsModel<Object> sendRequestGetMultiValueMapHttpServerAllParams(String webClientBeanName, String threadPoolBeanName, String uri, Object data, Class rsDataClass);
 
