@@ -94,4 +94,6 @@ public class BalanceChangeReport extends BaseReport {
      * 變動流水金額 如果有傳入 就依照該欄位為主 否則 流水為1倍
      */
     private BigDecimal externalBetflow;
+
+    private Long agentId;
 } 
