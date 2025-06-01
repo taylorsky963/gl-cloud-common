@@ -29,4 +29,6 @@ public class FundActivityBalanceReport extends FundBaseReport {
     private Integer awardType;
 
     private BigDecimal betFlowAmount;
+
+    private Long agentId;
 }
