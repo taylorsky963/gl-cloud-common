@@ -20,6 +20,10 @@ public final class ProjectConstant {
 
     }
 
+    public static final class AGENT {
+        public final static Long DEFAULT_AGENT_ID = -100L;
+    }
+
     public static final class Common {
 
         public final static String TWO_MIN_CACHE = "TWO_MIN_CACHE";
