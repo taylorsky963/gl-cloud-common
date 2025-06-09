@@ -35,16 +35,6 @@ public class ReportServiceImpl implements ReportService {
     private DefaultProducer defaultProducer;
 
     @Override
-    public void loginReport(LoginReport loginReport) {
-        reportProducer.sendMessage(ReportEvent.Login, loginReport);
-    }
-
-    @Override
-    public void registerReport(RegisterReport registerReport) {
-        reportProducer.sendMessage(ReportEvent.Register, registerReport);
-    }
-
-    @Override
     public void userSync(@NonNull UserSync userSync) {
         log.info("用户上报 {}", JsonUtil.toJson(userSync));
         userProducer.sendMessage(userSync);
@@ -59,12 +49,6 @@ public class ReportServiceImpl implements ReportService {
     public void bettingReport(BettingReport report) {
         report.set("uuid", Objects.requireNonNull(report.getFlowId()));
         reportProducer.sendMessage(ReportEvent.Betting, report);
-    }
-
-    @Override
-    public void gameTransferReport(GameTransferReport report) {
-        report.set("uuid", UUID.randomUUID().toString());
-        reportProducer.sendMessage(ReportEvent.GameTransfer, report);
     }
 
     @Override

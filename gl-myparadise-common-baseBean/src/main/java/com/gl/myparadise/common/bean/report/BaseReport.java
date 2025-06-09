@@ -1,7 +1,6 @@
 package com.gl.myparadise.common.bean.report;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.gl.myparadise.common.bean.report.user.RegisterReport;
 import lombok.Getter;
 
 import java.io.Serializable;
