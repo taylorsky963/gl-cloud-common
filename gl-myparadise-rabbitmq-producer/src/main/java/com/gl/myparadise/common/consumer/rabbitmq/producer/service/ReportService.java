@@ -11,16 +11,6 @@ import com.gl.myparadise.common.bean.report.user.*;
 public interface ReportService {
 
     /**
-     * 登录上报
-     */
-    void loginReport(LoginReport report);
-
-    /**
-     * 注册上报
-     */
-    void registerReport(RegisterReport report);
-
-    /**
      * 用户信息同步上报
      */
     void userSync(UserSync report);
@@ -34,11 +24,6 @@ public interface ReportService {
      * 游戏注单成功上报
      */
     void bettingReport(BettingReport report);
-
-    /**
-     * 游戏轉帳紀錄
-     */
-    void gameTransferReport(GameTransferReport report);
 
     /**
      * 财务相关上报
