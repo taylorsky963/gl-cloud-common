@@ -1,7 +1,11 @@
 package com.gl.myparadise.common.elasticsearch.base;
 
+import lombok.SneakyThrows;
+import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
+import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
 import org.elasticsearch.search.aggregations.Aggregation;
@@ -9,6 +13,7 @@ import org.elasticsearch.search.aggregations.Aggregations;
 import org.elasticsearch.search.aggregations.metrics.Cardinality;
 import org.elasticsearch.search.aggregations.metrics.Sum;
 import org.elasticsearch.search.aggregations.metrics.ValueCount;
+import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 
@@ -175,4 +180,38 @@ public abstract class ElasticsearchBaseDao {
             return defaultVal;
         }
     }
+
+    /**
+     * 批量查询某个索引，支持 terms 分批查询
+     *
+     * @param indexName     索引名
+     * @param fieldName     terms 查询字段名，例如 "memberInfoId"
+     * @param ids           要查询的 ID 集合
+     * @param includeFields 需要返回的字段名数组
+     * @param batchSize     每批查询数量（建议 1000~5000）
+     * @return 所有命中结果的 Map 列表（每个 Map 是一条记录的字段键值）
+     */
+    @SneakyThrows
+    public List<Map<String, Object>> batchTermsQuery(
+            String indexName,
+            String fieldName,
+            List<?> ids,
+            String[] includeFields,
+            int batchSize) {
+        List<Map<String, Object>> results = new ArrayList<>();
+        for (int i = 0; i < ids.size(); i += batchSize) {
+            List<?> batch = ids.subList(i, Math.min(i + batchSize, ids.size()));
+            SearchSourceBuilder sourceBuilder = new SearchSourceBuilder()
+                    .query(QueryBuilders.termsQuery(fieldName, batch))
+                    .fetchSource(includeFields, null)
+                    .size(batchSize);
+            SearchRequest searchRequest = new SearchRequest(indexName).source(sourceBuilder);
+            SearchResponse response = esClient.search(searchRequest, RequestOptions.DEFAULT);
+            for (SearchHit hit : response.getHits()) {
+                results.add(hit.getSourceAsMap());
+            }
+        }
+        return results;
+    }
+
 }
