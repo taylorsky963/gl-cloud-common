@@ -2,6 +2,7 @@ package com.gl.myparadise.common.redis.client.service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Vincent
@@ -93,4 +94,8 @@ public interface RedisclientService {
     boolean setNxPermanent(String key, String value);
 
     void pipelineSet(Map<String, String> keyValueMap);
+
+    Double hIncrByFloat(String key, String hashKey, double increment);
+
+    Set<String> scanKeysByPattern(String pattern);
 }
