@@ -8,16 +8,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
+import org.springframework.data.redis.core.Cursor;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ScanOptions;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -805,5 +804,58 @@ public class RedisclientServiceImpl implements RedisclientService {
             }
             return null;
         });
+    }
+
+    @Override
+    public Double hIncrByFloat(String key, String hashKey, double increment) {
+        if (key == null || hashKey == null) {
+            log.error("HINCRBYFLOAT 失败，键或字段名为空：key={}, hashKey={}", key, hashKey);
+            throw new IllegalArgumentException("Redis key 或 hashKey 不能为空");
+        }
+        try {
+            Double result = redisTemplate.opsForHash().increment(key, hashKey, increment);
+            return result;
+        } catch (Exception e) {
+            log.error("HINCRBYFLOAT 操作失败，key={}, hashKey={}, 错误：{}", key, hashKey, e.getMessage(), e);
+            throw new RuntimeException("HINCRBYFLOAT 操作失败: " + e.getMessage(), e);
+        }
+    }
+
+
+    /**
+     * 扫描匹配键
+     *
+     * @param pattern 键模式，例如 "game.rtp.stats.*"
+     * @return 匹配的键集合
+     */
+    @Override
+    public Set<String> scanKeysByPattern(String pattern) {
+        Set<String> keys = new HashSet<>();
+        try {
+            redisTemplate.execute((RedisCallback<Void>) connection -> {
+                Cursor<byte[]> cursor = connection.scan(ScanOptions.scanOptions()
+                        .match(pattern)
+                        .count(1000)
+                        .build());
+                StringRedisSerializer stringSerializer = new StringRedisSerializer();
+                while (cursor.hasNext()) {
+                    try {
+                        keys.add(stringSerializer.deserialize(cursor.next()));
+                    } catch (Exception ex) {
+                        log.warn("Failed to deserialize Redis key", ex);
+                    }
+                }
+                try {
+                    cursor.close();
+                } catch (Exception e) {
+                    log.error("Error closing cursor for pattern: {}", pattern, e);
+                }
+                return null;
+            });
+            log.info("Scanned {} keys for pattern: {}", keys.size(), pattern);
+        } catch (Exception e) {
+            log.error("Error scanning keys with pattern: {}", pattern, e);
+        }
+        return keys;
     }
 }
