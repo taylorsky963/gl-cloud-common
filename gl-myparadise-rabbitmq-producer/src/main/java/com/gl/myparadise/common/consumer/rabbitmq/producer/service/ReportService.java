@@ -84,4 +84,14 @@ public interface ReportService {
      * 活動领奖纪录上报
      */
     void activityMemberAward(ActivityMemberAwardReport report);
+
+    /**
+     * 单一钱包游戏交易纪录
+     */
+    void seamlessGameTransactionReport(SeamlessGameTransactionReport report);
+
+    /**
+     * 单一钱包体育交易纪录
+     */
+    void seamlessSportTransactionReport(SeamlessSportTransactionReport report);
 }

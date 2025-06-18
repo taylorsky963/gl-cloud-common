@@ -14,7 +14,8 @@ public class RoutingKeyConstant {
 
     // 遊戲相關事件
     public final static String GLOBAL_REPORT_GAME_BETTING = "global-report-game-betting";
-    public final static String GLOBAL_REPORT_GAME_TRANSFER = "global-report-game-transfer";
+    public final static String GLOBAL_REPORT_GAME_SEAMLESS_GAME_TRANSACTION = "global-report-game-seamless-game-transaction";
+    public final static String GLOBAL_REPORT_GAME_SEAMLESS_SPORT_TRANSACTION = "global-report-game-seamless-sport-transaction";
     public final static String GLOBAL_REPORT_GAME_WALLET = "global-report-game-wallet";
 
     // 財務相關事件

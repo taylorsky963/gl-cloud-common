@@ -21,7 +21,8 @@ public enum RoutingKeyEnum {
     
     // 遊戲相關事件
     global_report_game_betting(RoutingKeyConstant.GLOBAL_REPORT_GAME_BETTING, "游戏投注事件"),
-    global_report_game_transfer(RoutingKeyConstant.GLOBAL_REPORT_GAME_TRANSFER, "游戏转账事件"),
+    global_report_game_seamless_game_transaction(RoutingKeyConstant.GLOBAL_REPORT_GAME_SEAMLESS_GAME_TRANSACTION, "单一钱包游戏交易纪录"),
+    global_report_game_seamless_sport_transaction(RoutingKeyConstant.GLOBAL_REPORT_GAME_SEAMLESS_SPORT_TRANSACTION, "单一钱包体育交易纪录"),
     global_report_game_wallet(RoutingKeyConstant.GLOBAL_REPORT_GAME_WALLET, "游戏钱包事件"),
     
     // 財務相關事件
