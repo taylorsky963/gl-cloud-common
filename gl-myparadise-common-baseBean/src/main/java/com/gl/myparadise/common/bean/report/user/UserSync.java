@@ -1,5 +1,6 @@
 package com.gl.myparadise.common.bean.report.user;
 
+import com.gl.myparadise.common.bean.report.fund.MemberFinGatherReport;
 import lombok.*;
 
 import java.io.Serializable;
@@ -91,65 +92,12 @@ public class UserSync implements Serializable {
      */
     private String currCurDataPkCode;
 
-    /**
-     * 统计存提款货币ID
-     */
-    private Long curConfigId;
-    /**
-     *统计存提款货币名称
-     */
-    private String curSign;
-    /**
-     * 统计存提款货币编号
-     */
-    private String curDataPkCode;
-    /**
-     * 首存金额
-     */
-    private java.math.BigDecimal firstDepositAmount;
-    /**
-     * 首存时间
-     */
-    private Timestamp firstDepositTime;
-    /**
-     * 最后一次存款金额
-     */
-    private java.math.BigDecimal lastDepositAmount;
-    /**
-     * 最后一次存款时间
-     */
-    private Timestamp lastDepositTime;
-    /**
-     * 总存款次数
-     */
-    private Integer totalDepositCount;
-    /**
-     * 总存款金额
-     */
-    private java.math.BigDecimal totalDepositAmount;
-    /**
-     * 首次提款金额
-     */
-    private java.math.BigDecimal firstWithdrawAmount;
-    /**
-     * 首次提款时间
-     */
-    private Timestamp firstWithdrawTime;
-    /**
-     * 最后一次提款金额
-     */
-    private java.math.BigDecimal lastWithdrawAmount;
-    /**
-     * 最后一次提款时间
-     */
-    private Timestamp lastWithdrawTime;
-    /**
-     * 总提款次数
-     */
-    private Integer totalWithdrawCount;
-    /**
-     * 总提款金额
-     */
-    private java.math.BigDecimal totalWithdrawAmount;
+    private MemberFinGatherReport funPHP;
+
+    private MemberFinGatherReport funCNY;
+
+    private MemberFinGatherReport funVND;
+
+    private MemberFinGatherReport funUSD;
 
 }

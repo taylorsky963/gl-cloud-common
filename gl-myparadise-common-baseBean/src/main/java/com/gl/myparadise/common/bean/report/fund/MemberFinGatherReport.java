@@ -13,39 +13,6 @@ import java.sql.Timestamp;
 @Getter
 @Setter
 public class MemberFinGatherReport {
-
-    /**
-     * 数据ID
-     */
-    private Long id;
-    /**
-     * 会员ID
-     */
-    private Long memberInfoId;
-    /**
-     * 会员账号
-     */
-    private String memberAccount;
-    /**
-     * 货币ID
-     */
-    private Long curConfigId;
-    /**
-     * 货币名
-     */
-    private String curSign;
-    /**
-     * 货币数据编号
-     */
-    private String curDataPkCode;
-    /**
-     * 代理ID
-     */
-    private Long agentId;
-    /**
-     * 代理账号
-     */
-    private String agentAccount;
     /**
      * 首存金额
      */
@@ -94,20 +61,4 @@ public class MemberFinGatherReport {
      * 总提款金额
      */
     private java.math.BigDecimal totalWithdrawAmount;
-
-    private String isDelete;
-
-    private String createUserName;
-
-    private Long createUserId;
-
-    private Timestamp createTime;
-
-    private String updateUserName;
-
-    private Long updateUserId;
-
-    private Timestamp updateTime;
-
-    private String dataPkCode;
 }
