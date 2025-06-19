@@ -19,7 +19,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Objects;
-import java.util.UUID;
 
 @Slf4j
 @Component
@@ -117,5 +116,17 @@ public class ReportServiceImpl implements ReportService {
     public void activityMemberAward(ActivityMemberAwardReport report) {
         report.set("uuid", Objects.requireNonNull(report.getTradeId()));
         reportProducer.sendMessage(ReportEvent.ActivityMemberAward, report);
+    }
+
+    @Override
+    public void seamlessGameTransactionReport(SeamlessGameTransactionReport report) {
+        report.set("uuid", Objects.requireNonNull(report.getId()));
+        reportProducer.sendMessage(ReportEvent.SeamlessGameTransaction, report);
+    }
+
+    @Override
+    public void seamlessSportTransactionReport(SeamlessSportTransactionReport report) {
+        report.set("uuid", Objects.requireNonNull(report.getId()));
+        reportProducer.sendMessage(ReportEvent.SeamlessSportTransaction, report);
     }
 }
