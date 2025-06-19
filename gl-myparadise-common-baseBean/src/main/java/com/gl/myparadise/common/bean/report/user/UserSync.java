@@ -92,6 +92,18 @@ public class UserSync implements Serializable {
     private String currCurDataPkCode;
 
     /**
+     * 统计存提款货币ID
+     */
+    private Long curConfigId;
+    /**
+     *统计存提款货币名称
+     */
+    private String curSign;
+    /**
+     * 统计存提款货币编号
+     */
+    private String curDataPkCode;
+    /**
      * 首存金额
      */
     private java.math.BigDecimal firstDepositAmount;
