@@ -45,10 +45,12 @@ public class ReportProducer {
                 return RoutingKeyEnum.global_report_user_register;
             case Betting:
                 return RoutingKeyEnum.global_report_game_betting;
-            case GameTransfer:
-                return RoutingKeyEnum.global_report_game_transfer;
             case UserWallet:
                 return RoutingKeyEnum.global_report_game_wallet;
+            case SeamlessGameTransaction:
+                return RoutingKeyEnum.global_report_game_seamless_game_transaction;
+            case SeamlessSportTransaction:
+                return RoutingKeyEnum.global_report_game_seamless_sport_transaction;
             case Recharge:
                 return RoutingKeyEnum.global_report_fund_recharge;
             case Withdraw:

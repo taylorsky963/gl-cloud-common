@@ -36,6 +36,7 @@ public abstract class ElasticsearchBaseDao {
     public final static String BALANCE_CHANGE = "report-balance-change-20";
     public final static String BETFLOW_CHANGE = "report-bet-flow-change-20";
     public final static String ACTIVITY_MEMBER_AWARD = "report-activity-member-award-20";
+    public final static String SEAMLESS_GAME_TRANSACTION = "report-seamless-game-transaction-20";
 
     public ZoneOffset timeZone = ZoneOffset.ofHours(8);
 

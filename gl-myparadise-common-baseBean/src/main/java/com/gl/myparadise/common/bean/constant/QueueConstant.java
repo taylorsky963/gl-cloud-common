@@ -10,4 +10,5 @@ public class QueueConstant {
     public final static String GLOBAL_ACTIVITY_EVENT = "global-activity-event";
 
     public final static String EVENT_DATE_COLLECTION = "global-event-date-collection";
+    public final static String EVENT_DISPSET_COLLECTION = "global-event-dispset-collection";
 }
