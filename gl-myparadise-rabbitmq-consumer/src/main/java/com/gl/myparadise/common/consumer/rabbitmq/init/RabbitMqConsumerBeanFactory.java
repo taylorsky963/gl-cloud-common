@@ -13,6 +13,9 @@ import org.springframework.amqp.rabbit.support.ListenerExecutionFailedException;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import lombok.extern.slf4j.Slf4j;
 
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+
 /**
  * @author Vincent
  * @description:
@@ -25,17 +28,35 @@ public class RabbitMqConsumerBeanFactory {
 
     public static ConnectionFactory createConsumerConnectionFactory(RabbitMQConsumerConfigurationProperties rabbitMQListenerConfigurationProperties) {
 
-        CachingConnectionFactory connectionFactory = new CachingConnectionFactory();
+        com.rabbitmq.client.ConnectionFactory rabbitFactory = new com.rabbitmq.client.ConnectionFactory();
 
-        connectionFactory.setUsername(rabbitMQListenerConfigurationProperties.getUsername());
+        rabbitFactory.setUsername(rabbitMQListenerConfigurationProperties.getUsername());
 
-        connectionFactory.setPassword(rabbitMQListenerConfigurationProperties.getPassword());
+        rabbitFactory.setPassword(rabbitMQListenerConfigurationProperties.getPassword());
 
-        connectionFactory.setVirtualHost(rabbitMQListenerConfigurationProperties.getVirtualhost());
+        rabbitFactory.setVirtualHost(rabbitMQListenerConfigurationProperties.getVirtualhost());
+
+        rabbitFactory.setConnectionTimeout(rabbitMQListenerConfigurationProperties.getConnectiontimeout());
+
+        if (rabbitMQListenerConfigurationProperties.isSsl()) {
+
+            try {
+
+                rabbitFactory.useSslProtocol(); // 自动使用默认 SSLContext（如 AWS MQ）
+
+            } catch (NoSuchAlgorithmException e) {
+
+                throw new RuntimeException(e);
+
+            } catch (KeyManagementException e) {
+
+                throw new RuntimeException(e);
+            }
+        }
+
+        CachingConnectionFactory connectionFactory = new CachingConnectionFactory(rabbitFactory);
 
         connectionFactory.setRequestedHeartBeat(rabbitMQListenerConfigurationProperties.getRequestedHeartbeat());
-
-        connectionFactory.setConnectionTimeout(rabbitMQListenerConfigurationProperties.getConnectiontimeout());
 
         if(StringUtils.isNotEmpty(rabbitMQListenerConfigurationProperties.getCacheMode())){
 

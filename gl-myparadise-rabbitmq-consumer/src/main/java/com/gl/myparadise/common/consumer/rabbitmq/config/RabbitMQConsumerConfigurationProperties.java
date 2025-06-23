@@ -32,6 +32,16 @@ public class RabbitMQConsumerConfigurationProperties {
 
     private long channelCacheCheckoutTimeout = 0L;
 
+    private boolean ssl = false;
+
+    public boolean isSsl() {
+        return ssl;
+    }
+
+    public void setSsl(boolean ssl) {
+        this.ssl = ssl;
+    }
+
     public String getHostAddress() {
         return hostAddress;
     }

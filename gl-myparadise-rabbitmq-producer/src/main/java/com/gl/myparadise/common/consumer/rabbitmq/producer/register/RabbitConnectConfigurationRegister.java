@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gl.myparadise.common.consumer.rabbitmq.producer.config.RabbitMQProductConfigurationProperties;
 import com.gl.myparadise.common.consumer.rabbitmq.producer.constants.RabbitMqProducerConstants;
+import com.rabbitmq.client.ConnectionFactory;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +17,9 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.annotation.Order;
+
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 
 /**
  * @author Vincent
@@ -37,9 +40,36 @@ public class RabbitConnectConfigurationRegister{
 
 
     @Bean(name="connectionFactory")
-    public CachingConnectionFactory connectionFactory() {
+    public CachingConnectionFactory connectionFactory(){
 
-        CachingConnectionFactory connectionFactory = new CachingConnectionFactory();
+        ConnectionFactory rabbitFactory = new ConnectionFactory();
+
+        rabbitFactory.setUsername(rabbitMQProductConfigurationProperties.getUsername());
+
+        rabbitFactory.setPassword(rabbitMQProductConfigurationProperties.getPassword());
+
+        rabbitFactory.setVirtualHost(rabbitMQProductConfigurationProperties.getVirtualhost());
+
+        rabbitFactory.setConnectionTimeout(rabbitMQProductConfigurationProperties.getConnectiontimeout());
+
+        if (rabbitMQProductConfigurationProperties.isSsl()) {
+
+            try {
+
+                rabbitFactory.useSslProtocol(); // 自动使用默认 SSLContext（如 AWS MQ）
+
+            } catch (NoSuchAlgorithmException e) {
+
+                throw new RuntimeException(e);
+
+            } catch (KeyManagementException e) {
+
+                throw new RuntimeException(e);
+            }
+
+        }
+
+        CachingConnectionFactory connectionFactory = new CachingConnectionFactory(rabbitFactory);
 
         connectionFactory.setUsername(rabbitMQProductConfigurationProperties.getUsername());
 
