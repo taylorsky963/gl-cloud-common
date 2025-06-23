@@ -46,6 +46,16 @@ public class RabbitMQProductConfigurationProperties {
 
     private int requestedHeartbeat = 60;
 
+    private boolean ssl = false;
+
+    public boolean isSsl() {
+        return ssl;
+    }
+
+    public void setSsl(boolean ssl) {
+        this.ssl = ssl;
+    }
+
     public String getHostAddress() {
         return hostAddress;
     }
