@@ -24,11 +24,13 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.gridfs.GridFsResource;
 import org.springframework.data.mongodb.gridfs.GridFsTemplate;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Nullable;
+import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletResponse;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -43,7 +45,6 @@ import java.util.function.Function;
 
 @Service
 @Slf4j
-@ConditionalOnBean(name = "asyncExecutor")
 public class MongodbFileService {
     final Integer limit = 10000;
     @Autowired
@@ -51,12 +52,16 @@ public class MongodbFileService {
     @Autowired
     private GridFSBucket gridFSBucket;
     @Autowired
-    @Qualifier("asyncExecutor")
-    private Executor executor;
+    private ThreadPoolTaskExecutor executor;
     @Autowired
     private GlExportService glExportService;
     @Autowired
     private MessageSource messageSource;
+
+    @PostConstruct
+    public void confirm() {
+        log.info("MongodbFileService init");
+    }
 
     public <T, R> void saveAsync(
             @NonNull Long userId,
