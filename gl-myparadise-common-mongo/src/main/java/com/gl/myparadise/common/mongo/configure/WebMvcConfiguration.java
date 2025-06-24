@@ -3,10 +3,10 @@ package com.gl.myparadise.common.mongo.configure;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import javax.annotation.PostConstruct;
-import java.util.concurrent.Executor;
 import java.util.concurrent.ThreadPoolExecutor;
 
 @Configuration
@@ -18,8 +18,10 @@ public class WebMvcConfiguration {
         log.info("WebMvcConfiguration init");
     }
 
-    @Bean(name = "asyncExecutor")
-    public Executor asyncExecutor() {
+    @Bean
+    @Primary
+    public ThreadPoolTaskExecutor asyncExecutor() {
+        log.info("asyncExecutor init");
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
         executor.setCorePoolSize(10);
         executor.setMaxPoolSize(50);
