@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.time.ZoneOffset;
 import java.util.*;
 
@@ -106,7 +107,9 @@ public abstract class ElasticsearchBaseDao {
                 return (V) new BigDecimal(value.toString());
             } else if (Number.class.isAssignableFrom(targetClass) && value instanceof Number) {
                 return (V) convertNumber((Number) value, targetClass);
-            } else if (Date.class.isAssignableFrom(targetClass) && value instanceof Long) {
+            } else if (Timestamp.class.isAssignableFrom(targetClass) && value instanceof Long) {
+                return (V) new Timestamp((long) value);
+            } if (Date.class.isAssignableFrom(targetClass) && value instanceof Long) {
                 return (V) new Date((long) value);
             }
             return (V) value;
