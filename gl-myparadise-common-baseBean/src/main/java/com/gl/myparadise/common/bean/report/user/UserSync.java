@@ -1,5 +1,6 @@
 package com.gl.myparadise.common.bean.report.user;
 
+import com.gl.myparadise.common.bean.report.fund.MemberFinGatherReport;
 import lombok.*;
 
 import java.io.Serializable;
@@ -90,5 +91,13 @@ public class UserSync implements Serializable {
      *  当前货币表pkcode
      */
     private String currCurDataPkCode;
+
+    private MemberFinGatherReport funPHP;
+
+    private MemberFinGatherReport funCNY;
+
+    private MemberFinGatherReport funVND;
+
+    private MemberFinGatherReport funUSD;
 
 }
