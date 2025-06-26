@@ -1,6 +1,7 @@
 package com.gl.myparadise.common.tools.util;
 
 import com.gl.myparadise.common.bean.model.PageListModel;
+import com.google.common.collect.Lists;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -51,6 +52,15 @@ public class ListPageUtils implements Serializable {
         result.setPageTotal(totalItems);
         result.setPages((int) ((totalItems + pageSize - 1) / pageSize));
 
+        return result;
+    }
+
+    public static <T> PageListModel<T> empty(Integer pageNum, Integer pageSize) {
+        PageListModel<T> result = new PageListModel<>(Lists.newArrayList());
+        result.setPageSize(pageSize);
+        result.setPageNum(pageNum);
+        result.setPageTotal(0L);
+        result.setPages(0);
         return result;
     }
 
