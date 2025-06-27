@@ -4,6 +4,9 @@ import com.gl.myparadise.common.consumer.rabbitmq.config.RabbitMQConsumerConfigu
 import com.gl.myparadise.common.consumer.rabbitmq.config.RabbitMQListenerQueueProperties;
 import com.gl.myparadise.common.consumer.rabbitmq.config.RabbitMQListenerSimpleConfigurationProperties;
 import com.gl.myparadise.common.consumer.rabbitmq.config.RabbitMQListenerSimpleRetryConfigurationProperties;
+import com.gl.myparadise.common.consumer.rabbitmq.dto.RabbitMQConsumerListenerDto;
+
+import java.util.List;
 
 /**
  * @author Vincent
@@ -18,4 +21,7 @@ public interface RabbitMqConsumerAPIService {
                                 RabbitMQListenerSimpleConfigurationProperties rabbitMQListenerSimpleConfigurationProperties,
                                 RabbitMQListenerSimpleRetryConfigurationProperties rabbitMQListenerSimpleRetryConfigurationProperties,
                                 RabbitMQListenerQueueProperties exchangeProperties);
+
+    void rabbitConsumerMoreListenerRegister(RabbitMQConsumerConfigurationProperties rabbitMQListenerConfigurationProperties,
+                                            List<RabbitMQConsumerListenerDto> rabbitMQConsumerConfigurationDtoList);
 }

@@ -5,10 +5,12 @@ import com.gl.myparadise.common.consumer.rabbitmq.config.RabbitMQListenerQueuePr
 import com.gl.myparadise.common.consumer.rabbitmq.config.RabbitMQListenerSimpleConfigurationProperties;
 import com.gl.myparadise.common.consumer.rabbitmq.config.RabbitMQListenerSimpleRetryConfigurationProperties;
 import com.gl.myparadise.common.consumer.rabbitmq.constants.RabbitMqConsumerConstants;
+import com.gl.myparadise.common.consumer.rabbitmq.dto.RabbitMQConsumerListenerDto;
 import com.gl.myparadise.common.consumer.rabbitmq.init.RabbitListenerFactoryBuilder;
 import com.gl.myparadise.common.consumer.rabbitmq.init.RabbitMqConsumerBeanFactory;
 
 import com.gl.myparadise.common.consumer.rabbitmq.service.RabbitMqConsumerAPIService;
+import com.gl.myparadise.common.tools.util.ListUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.Queue;
@@ -19,6 +21,8 @@ import org.springframework.amqp.rabbit.listener.api.RabbitListenerErrorHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 
 /**
@@ -52,6 +56,36 @@ public class RabbitMqConsumerAPIServiceImpl implements RabbitMqConsumerAPIServic
         rabbitListenerConnectRegister(rabbitBeanName, rabbitMQListenerSimpleConfigurationProperties, rabbitMQListenerSimpleRetryConfigurationProperties);
 
         rabbitMQConsumerQueuesRegister(exchangeProperties);
+
+    }
+
+    @Override
+    public void rabbitConsumerMoreListenerRegister(RabbitMQConsumerConfigurationProperties rabbitMQListenerConfigurationProperties,
+                                                   List<RabbitMQConsumerListenerDto> rabbitMQConsumerConfigurationDtoList) {
+
+        if(ListUtil.isNotEmpty(rabbitMQConsumerConfigurationDtoList)){
+
+            RabbitAdmin rabbitAdmin = configurableContext.getBean(RabbitMqConsumerConstants.RABBITMQ_CONSUMER_RABBIT_ADMIN_NAME, RabbitAdmin.class);
+
+            if(rabbitAdmin == null){
+
+                rabbitConsumerConnectRegister(rabbitMQListenerConfigurationProperties);
+
+            }
+
+            for (RabbitMQConsumerListenerDto listenPros : rabbitMQConsumerConfigurationDtoList) {
+
+                if (!configurableContext.containsBean(listenPros.getRabbitBeanName())) {
+
+                    rabbitListenerConnectRegister(listenPros.getRabbitBeanName(), listenPros.getRabbitMQListenerSimpleConfigurationProperties(), listenPros.getRabbitMQListenerSimpleRetryConfigurationProperties());
+
+                    rabbitMQConsumerQueuesRegister(listenPros.getRabbitMQListenerQueueProperties());
+
+                }
+
+            }
+
+        }
 
     }
 
