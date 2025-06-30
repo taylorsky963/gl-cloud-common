@@ -4,8 +4,8 @@ import com.gl.myparadise.common.bean.report.fund.MemberFinGatherReport;
 import lombok.*;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.List;
 
 @Getter
 @Setter
@@ -99,5 +99,19 @@ public class UserSync implements Serializable {
     private MemberFinGatherReport funVND;
 
     private MemberFinGatherReport funUSD;
+
+    // ==============================MemberRisk==========================================
+
+    /**
+     * 会员风控等级
+     */
+    private List<String> risk;
+
+    // ==============================MemberKycStatus=====================================
+
+    /**
+     * 会员kyc状态
+     */
+    private String kycStatus;
 
 }
