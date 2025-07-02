@@ -100,6 +100,7 @@ public class MongodbFileService {
             PageResult<T> currentPage;
 
             while (true) {
+                log.info("开始异步导出 save2 {}", mainTraceId);
                 currentPage = method.apply(args);
                 if (isEmpty(currentPage)) {
                     log.info("导出结束:无数据");
