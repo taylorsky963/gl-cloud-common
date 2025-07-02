@@ -13,8 +13,6 @@ public enum ReportEvent {
 
     Withdraw(1001, "提现"),
 
-    Transfer(1002, "转账"),
-
     Betting(1003, "投注"),
 
     Register(1004, "用户注册"),
@@ -22,6 +20,26 @@ public enum ReportEvent {
     Login(1005, "用户登录"),
 
     GameTransfer(1016, "用戶遊戲轉帳紀錄"),
+
+    MemberVip(1017, "用戶VIP上報"),
+
+    BalanceChange(1018, "用户余额变动上报"),
+
+    UserWallet(1019, "用户钱包建立上报"),
+
+    PointChange(1020, "用户积分变动上报"),
+
+    BetFlowChange(1021, "用户流水变动上报"),
+
+    ActivityMemberAward(1022, "活動领奖纪录上报"),
+
+    SeamlessGameTransaction(1023, "单一钱包游戏交易纪录"),
+
+    SeamlessSportTransaction(1024, "单一钱包体育交易纪录"),
+
+    DailyUserBetting(7000, "每日用户投注数据上報"),
+
+    DailyUserRecharge(7001, "每日用户充值数据上報"),
 
     SystemOperationLogReport(6002, "系统操作日志"),
     ;
@@ -40,6 +58,10 @@ public enum ReportEvent {
 
     public int value() {
         return this.value;
+    }
+
+    public String string() {
+        return String.valueOf(this.value);
     }
 
     public String desc() {

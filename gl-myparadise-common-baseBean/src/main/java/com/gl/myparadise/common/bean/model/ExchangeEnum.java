@@ -10,6 +10,8 @@ public enum ExchangeEnum {
     globalReport("global-report-exchange", "全局的事件上报Exchange"),
     globalUser("global-user-exchange", "全局的用户资料上报Exchange"),
     globalSystem("global-system-exchange", "全局的系統资料上报Exchange"),
+    globalFund("fund-exchange", "全局财务相关上报Exchange"),
+    globalActivity("activity-exchange", "全局活动相关上报Exchange"),
 
     ;
 

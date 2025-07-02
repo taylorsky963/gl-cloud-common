@@ -146,6 +146,10 @@ public class RedisClusterConfig extends CachingConfigurerSupport {
         //使用StringRedisSerializer来序列化和反序列化redis的key值
         template.setKeySerializer(new StringRedisSerializer());
 
+        //新增：设置 hash 的 key 和 value 序列化方式
+        template.setHashKeySerializer(new StringRedisSerializer());
+        template.setHashValueSerializer(serializer);
+
         template.afterPropertiesSet();
 
         return template;

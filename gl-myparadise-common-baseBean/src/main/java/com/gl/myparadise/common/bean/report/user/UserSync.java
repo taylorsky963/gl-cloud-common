@@ -1,9 +1,10 @@
 package com.gl.myparadise.common.bean.report.user;
 
+import com.gl.myparadise.common.bean.report.fund.MemberFinGatherReport;
 import lombok.*;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.List;
 
 @Getter
@@ -13,44 +14,104 @@ import java.util.List;
 @AllArgsConstructor
 public class UserSync implements Serializable {
 
-    // ================================ 基本身份信息 ================================
-    private Integer id;
-    private String username;
-    private String nickName;
-    private String reallyName;
-    private Integer sex;
-    private String birthday;
-    private String country;
-    private String coin;
+    private static final long serialVersionUID = 2595682138324529622L;
 
-    // ================================ 聯絡信息 ================================
+    // ================================ memberInfo ================================
+    private Long memberInfoId;
+    private String memberAccount;
+    private String memberPassword;
+    private String memberName;
+    private String iProfilePicture;
     private String email;
-    private String telephone;
-    private String telArea;
+    private String mobileNumber;
+    private String regIpAddr;
+    private String regDevice;
+    private String regResource;
+    private String regClientVersion;
+    private Long agentId;
+    private String agentAccount;
+    private String agentInviteCode;
+    private Timestamp birthdayTime;
+    private String realName;
 
-    // ================================ 賬戶狀態 ================================
-    private Integer status;
-    private String remark;
-    private Integer clientType;
-    private BigDecimal balance;
-    private Integer levelStatus;
-    private Long lastUpdate;
-    private Long logoutTime;
+    // ================================ MemberWebProperty ================================
+    private Long memberStatusId;
 
-    // ================================= VIP =================================
-    private Integer vipLevel;
-    private Long vipLevelTime;
-    private Integer preVipLevel;
+    private String memberStatus;
 
-    // ================================ 註冊 ================================
-    private String registerIp;
-    private Long registerDate;
-    private String registerDomain;
-    private String registerDeviceId;
+    private String emailValid;
 
-    // ================================ 登入 ================================
-    private Long loginTime;
-    private String loginIp;
-    private Integer loginType;
-    private Integer loginClientType;
+    private String mobileValid;
+
+    private Timestamp emailValidTime;
+
+    private Timestamp mobileValidTime;
+
+    private String isDelete;
+
+    private String createUserName;
+
+    private Long createUserId;
+
+    private Timestamp createTime;
+
+    private String updateUserName;
+
+    private Long updateUserId;
+
+    private Timestamp updateTime;
+
+    private String dataPkCode;
+
+    // ================================ memberTpLogin ================================
+    private Long memberTpLoginId;
+
+    private String loginType;
+    private String tpId;
+    private String tpAccount;
+    // ================================ MemberWebProperty ================================
+    /**
+     *  自增id
+     */
+    private Long memberWebPropertyId;
+
+    /**
+     *  注册语言id
+     */
+    private Long regLangInfoId;
+    /**
+     *  注册货币表pkcode
+     */
+    private String regCurDataPkCode;
+    /**
+     *  当前语言id
+     */
+    private Long currLangInfoId;
+    /**
+     *  当前货币表pkcode
+     */
+    private String currCurDataPkCode;
+
+    private MemberFinGatherReport funPHP;
+
+    private MemberFinGatherReport funCNY;
+
+    private MemberFinGatherReport funVND;
+
+    private MemberFinGatherReport funUSD;
+
+    // ==============================MemberRisk==========================================
+
+    /**
+     * 会员风控等级
+     */
+    private List<String> risk;
+
+    // ==============================MemberKycStatus=====================================
+
+    /**
+     * 会员kyc状态
+     */
+    private String kycStatus;
+
 }

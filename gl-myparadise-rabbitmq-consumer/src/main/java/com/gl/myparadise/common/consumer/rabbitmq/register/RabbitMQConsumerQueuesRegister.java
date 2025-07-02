@@ -9,14 +9,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
-import org.springframework.boot.autoconfigure.AutoConfigureAfter;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.bind.Binder;
 import org.springframework.context.EnvironmentAware;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 
+import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +28,7 @@ import java.util.List;
  * @Date 2023-05-26 - 1:04
  */
 @Configuration
-@AutoConfigureAfter(RabbitConsumerConnectRegister.class)
+@ConditionalOnBean(RabbitConsumerConnectRegister.class)
 @ConditionalOnProperty(prefix = RabbitMqConsumerConstants.RABBITMQ_CONSUMER_QUEUES_CONFIG_TAG, name = "auto", havingValue = "true")
 public class RabbitMQConsumerQueuesRegister implements EnvironmentAware {
 
@@ -51,7 +51,7 @@ public class RabbitMQConsumerQueuesRegister implements EnvironmentAware {
 
         binder = Binder.get(environment);
 
-        this.rabbitAdmin = SpringBeanUtils.getBean("rabbitAdmin");
+        this.rabbitAdmin = SpringBeanUtils.getBean(RabbitMqConsumerConstants.RABBITMQ_CONSUMER_RABBIT_ADMIN_NAME);
 
         List<String> quequesNameList
                 = binder.bind((RabbitMqConsumerConstants.RABBITMQ_CONSUMER_QUEUES_CONFIG_TAG + ".names").trim(), List.class).get();
@@ -95,7 +95,7 @@ public class RabbitMQConsumerQueuesRegister implements EnvironmentAware {
         }
     }
 
-    @Bean
+    @PostConstruct
     public void createConsumerQueue() {
 
         try {

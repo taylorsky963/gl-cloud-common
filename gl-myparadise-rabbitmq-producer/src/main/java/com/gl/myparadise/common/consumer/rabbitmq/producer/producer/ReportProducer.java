@@ -1,9 +1,11 @@
 package com.gl.myparadise.common.consumer.rabbitmq.producer.producer;
 
-import com.gl.myparadise.common.bean.model.QueueEnum;
+import com.gl.myparadise.common.bean.model.ExchangeEnum;
 import com.gl.myparadise.common.bean.model.ReportEvent;
+import com.gl.myparadise.common.bean.model.RoutingKeyEnum;
 import com.gl.myparadise.common.bean.rabbitmq.SendRabbitMessageService;
 import com.gl.myparadise.common.bean.report.BaseReport;
+import com.gl.myparadise.common.tools.bean.JsonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,15 +24,53 @@ public class ReportProducer {
     @Autowired
     private SendRabbitMessageService sendRabbitMessageService;
 
-    private final QueueEnum queue = QueueEnum.global_event_save_to_elasticsearch;
-
     public void sendMessage(ReportEvent event, BaseReport report) {
         try {
             this.packMessage(event, report);
-            log.info("事件上报:{},{}", event, report);
-            sendRabbitMessageService.sendDirectMessageNoAck(queue.exchange(), queue.routing(), report.getMsg());
+            log.info("事件上报:{},{}", event, JsonUtil.toJson(report));
+            sendRabbitMessageService.sendDirectMessageNoAck(ExchangeEnum.globalReport.getExchangeName(), getRoutingKey(event).getRoutingKeyName(), report.getMsg());
         } catch (Exception ex) {
             log.error("上报事件数据发生异常", ex);
+        }
+    }
+
+    /**
+     * 根据事件类型获取对应的路由键
+     */
+    private RoutingKeyEnum getRoutingKey(ReportEvent event) {
+        switch (event) {
+            case Login:
+                return RoutingKeyEnum.global_report_user_login;
+            case Register:
+                return RoutingKeyEnum.global_report_user_register;
+            case Betting:
+                return RoutingKeyEnum.global_report_game_betting;
+            case UserWallet:
+                return RoutingKeyEnum.global_report_game_wallet;
+            case SeamlessGameTransaction:
+                return RoutingKeyEnum.global_report_game_seamless_game_transaction;
+            case SeamlessSportTransaction:
+                return RoutingKeyEnum.global_report_game_seamless_sport_transaction;
+            case Recharge:
+                return RoutingKeyEnum.global_report_fund_recharge;
+            case Withdraw:
+                return RoutingKeyEnum.global_report_fund_withdraw;
+            case MemberVip:
+                return RoutingKeyEnum.global_report_member_vip;
+            case DailyUserBetting:
+                return RoutingKeyEnum.global_report_daily_betting;
+            case DailyUserRecharge:
+                return RoutingKeyEnum.global_report_daily_recharge;
+            case BalanceChange:
+                return RoutingKeyEnum.global_report_fund_balance_change;
+            case PointChange:
+                return RoutingKeyEnum.global_report_fund_point_change;
+            case BetFlowChange:
+                return RoutingKeyEnum.global_report_fund_bet_flow_change;
+            case ActivityMemberAward:
+                return RoutingKeyEnum.global_report_activity_member_award;
+            default:
+                throw new IllegalArgumentException("未知的事件类型: " + event);
         }
     }
 

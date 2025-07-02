@@ -25,10 +25,16 @@ public class BettingReport extends BaseReport {
     private BigDecimal betAmount;
     private Integer result;
     private BigDecimal settleAmount;
+    private Date settleTime;
     private Date betTime;
     private String status;
     private BigDecimal betFlow;
     private Date createTime;
     private String detail;
     private String itemData;
+    private String curDataPkCode;
+    private String memberAccount;
+    private Long memberInfoId;
+    private Long agentId;
+    private Object childItemData;
 }

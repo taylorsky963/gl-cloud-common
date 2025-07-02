@@ -2,17 +2,20 @@ package com.gl.myparadise.common.mongo.utils;
 
 import com.gl.myparadise.common.mongo.file.MongoExport;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.context.MessageSource;
 import org.springframework.util.ObjectUtils;
 
 import java.io.ByteArrayOutputStream;
 import java.lang.reflect.Field;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.Locale;
 
 @Slf4j
 public class ExportUtils {
 
-    public static <T> byte[] getExportData(List<T> exportData, boolean isNewDoc) {
+    public static <T> byte[] getExportData(List<T> exportData, boolean isNewDoc, MessageSource messageSource, Locale locale) {
         if (exportData == null || exportData.isEmpty()) {
             return null;
         }
@@ -26,7 +29,7 @@ public class ExportUtils {
                 outputStream.write(new byte[]{(byte) 0xEF, (byte) 0xBB, (byte) 0xBF});
                 // 表头
                 exportElement = exportData.get(0);
-                title = getTitle(exportElement.getClass());
+                title = getTitle(exportElement.getClass(), messageSource, locale);
                 outputStream.write(title.getBytes(StandardCharsets.UTF_8));
                 outputStream.write("\r\n".getBytes(StandardCharsets.UTF_8));
             }
@@ -62,7 +65,7 @@ public class ExportUtils {
     /**
      * 获取要导出数据的表头
      */
-    public static <T> String getTitle(Class<T> classz) {
+    public static <T> String getTitle(Class<T> classz, MessageSource messageSource, Locale locale) {
         StringBuilder titleBuffer = new StringBuilder();
         try {
             Field[] fields = classz.getDeclaredFields();
@@ -72,11 +75,15 @@ public class ExportUtils {
                 if (ObjectUtils.isEmpty(MongoExport)) {
                     continue;
                 }
-                titleBuffer.append(MongoExport.name()).append(",");
+                if (messageSource != null && StringUtils.isNotBlank(MongoExport.name())) {
+                    titleBuffer.append(messageSource.getMessage(MongoExport.name(), null, MongoExport.name(), locale)).append(",");
+                } else {
+                    titleBuffer.append(MongoExport.name()).append(",");
+                }
             }
         } catch (Exception ex) {
             log.error("get export header title error", ex);
         }
-        return titleBuffer.toString();
+        return StringUtils.removeEnd(titleBuffer.toString(), ",");
     }
 }

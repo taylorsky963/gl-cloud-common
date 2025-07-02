@@ -75,13 +75,8 @@ public class BaseWebFormInterceptor extends HandlerInterceptorAdapter {
         logger.debug("BaseWebFormInterceptor myServerName : " + myServerName);
 
         logger.debug("BaseWebFormInterceptor resourcePath : " + resourcePath);
-        MDC.put("traceId", UUID.randomUUID().toString());
+
         return true;
     }
 
-    @Override
-    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-        super.postHandle(request, response, handler, modelAndView);
-        MDC.clear();
-    }
 }

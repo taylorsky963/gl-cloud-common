@@ -2,17 +2,21 @@ package com.gl.myparadise.common.redis.client.service.impl;
 
 import com.gl.myparadise.common.redis.client.properties.RedisClusterProperties;
 import com.gl.myparadise.common.redis.client.service.RedisclientService;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.time.DateFormatUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
+import org.springframework.data.redis.core.Cursor;
+import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ScanOptions;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -22,6 +26,7 @@ import java.util.concurrent.TimeUnit;
  * @Date 2023-05-08 - 16:40
  */
 @Service
+@Slf4j
 public class RedisclientServiceImpl implements RedisclientService {
 
     @Autowired
@@ -37,6 +42,7 @@ public class RedisclientServiceImpl implements RedisclientService {
 
     /**
      * 设置缓存数据
+     *
      * @param key
      * @param value
      * @return
@@ -79,6 +85,7 @@ public class RedisclientServiceImpl implements RedisclientService {
 
     /**
      * 存放缓存数据，设置缓存失效时间
+     *
      * @param key
      * @param value
      * @param timeout 秒
@@ -89,9 +96,9 @@ public class RedisclientServiceImpl implements RedisclientService {
 
         try {
 
-            if(timeout>0){
+            if (timeout > 0) {
 
-                if(value == null){
+                if (value == null) {
 
                     timeout = redisClusterProperties.getNullFlushTime();
 
@@ -99,7 +106,7 @@ public class RedisclientServiceImpl implements RedisclientService {
 
                 redisTemplate.opsForValue().setIfAbsent(key, value, timeout, TimeUnit.SECONDS);
 
-            }else{
+            } else {
 
                 putCacheIfAbsent(key, value);
 
@@ -117,6 +124,7 @@ public class RedisclientServiceImpl implements RedisclientService {
 
     /**
      * 存放缓存数据，设置缓存失效时间
+     *
      * @param key
      * @param value
      * @param timeout 秒
@@ -127,9 +135,9 @@ public class RedisclientServiceImpl implements RedisclientService {
 
         try {
 
-            if(timeout>0){
+            if (timeout > 0) {
 
-                if(value == null){
+                if (value == null) {
 
                     timeout = redisClusterProperties.getNullFlushTime();
 
@@ -137,7 +145,7 @@ public class RedisclientServiceImpl implements RedisclientService {
 
                 redisTemplate.opsForValue().set(key, value, timeout, TimeUnit.SECONDS);
 
-            }else{
+            } else {
 
                 putCache(key, value);
 
@@ -155,6 +163,7 @@ public class RedisclientServiceImpl implements RedisclientService {
 
     /**
      * 获取缓存数据
+     *
      * @param key
      * @return
      */
@@ -167,6 +176,7 @@ public class RedisclientServiceImpl implements RedisclientService {
 
     /**
      * 单独删除缓存
+     *
      * @param key
      */
     @Override
@@ -178,18 +188,19 @@ public class RedisclientServiceImpl implements RedisclientService {
 
     /**
      * 批量删除缓存
+     *
      * @param keyList
      */
     @Override
     public void removeCacheArray(List<String> keyList) {
 
-        if(keyList!=null&&keyList.size()>0){
+        if (keyList != null && keyList.size() > 0) {
 
-            if(keyList.size()==1){
+            if (keyList.size() == 1) {
 
                 removeCache(keyList.get(0));
 
-            }else{
+            } else {
 
                 redisTemplate.delete(keyList);
 
@@ -199,10 +210,11 @@ public class RedisclientServiceImpl implements RedisclientService {
 
     /**
      * 判断key是否存在
+     *
      * @param key 键
      * @return true 存在 false不存在
      */
-    public boolean checkCacheIsExist(String key){
+    public boolean checkCacheIsExist(String key) {
 
         try {
 
@@ -219,16 +231,17 @@ public class RedisclientServiceImpl implements RedisclientService {
 
     /**
      * 设置缓存失效时间
-     * @param key 键
+     *
+     * @param key  键
      * @param time 时间(秒)
      * @return
      */
     @Override
-    public boolean setCacheExpireTime(String key,long time){
+    public boolean setCacheExpireTime(String key, long time) {
 
         try {
 
-            if(time>0){
+            if (time > 0) {
 
                 redisTemplate.expire(key, time, TimeUnit.SECONDS);
 
@@ -247,11 +260,12 @@ public class RedisclientServiceImpl implements RedisclientService {
 
     /**
      * 根据key 获取过期时间
+     *
      * @param key 键 不能为null
      * @return 时间(秒) 返回0代表为永久有效
      */
     @Override
-    public long getCacheExpireTime(String key){
+    public long getCacheExpireTime(String key) {
 
         return redisTemplate.getExpire(key, TimeUnit.SECONDS);
 
@@ -266,6 +280,7 @@ public class RedisclientServiceImpl implements RedisclientService {
 
     /**
      * 讲Key持久化保存
+     *
      * @param key
      * @return
      */
@@ -278,6 +293,7 @@ public class RedisclientServiceImpl implements RedisclientService {
 
     /**
      * 将旧的key设置为value，并且返回旧的key
+     *
      * @param key
      * @param value
      * @return
@@ -291,6 +307,7 @@ public class RedisclientServiceImpl implements RedisclientService {
 
     /**
      * 在原有的值基础上新增字符串到末尾
+     *
      * @param key
      * @param value
      */
@@ -303,10 +320,11 @@ public class RedisclientServiceImpl implements RedisclientService {
 
     /**
      * 如果对应的map集合名称不存在，则添加否则不做修改
+     *
      * @param valueMap
      */
     @Override
-    public boolean multiSetIfAbsent(Map valueMap){
+    public boolean multiSetIfAbsent(Map valueMap) {
 
         return redisTemplate.opsForValue().multiSetIfAbsent(valueMap);
 
@@ -314,11 +332,12 @@ public class RedisclientServiceImpl implements RedisclientService {
 
     /**
      * 获取MAP的值
+     *
      * @param keyList
      * @return
      */
     @Override
-    public Object multiGet(List<String> keyList){
+    public Object multiGet(List<String> keyList) {
 
         return redisTemplate.opsForValue().multiGet(keyList);
 
@@ -326,10 +345,11 @@ public class RedisclientServiceImpl implements RedisclientService {
 
     /**
      * 设置map集合到redis
+     *
      * @param valueMap
      */
     @Override
-    public void multiSet(Map valueMap){
+    public void multiSet(Map valueMap) {
 
         redisTemplate.opsForValue().multiSet(valueMap);
 
@@ -337,15 +357,16 @@ public class RedisclientServiceImpl implements RedisclientService {
 
     /**
      * 存储list
+     *
      * @param key
      * @param valueList
      * @param timeout
      * @return
      */
     @Override
-    public long addListTimeOut(String key, List valueList, long timeout){
+    public long addListTimeOut(String key, List valueList, long timeout) {
 
-        if(valueList == null || valueList.size() < 1){
+        if (valueList == null || valueList.size() < 1) {
 
             return 0;
 
@@ -365,6 +386,7 @@ public class RedisclientServiceImpl implements RedisclientService {
 
     /**
      * 存储list
+     *
      * @param key
      * @param valueList
      * @return
@@ -378,6 +400,7 @@ public class RedisclientServiceImpl implements RedisclientService {
 
     /**
      * 获取list值
+     *
      * @param key
      * @return
      */
@@ -386,13 +409,13 @@ public class RedisclientServiceImpl implements RedisclientService {
 
         long listLength = redisTemplate.opsForList().size(key);
 
-        if(listLength <= 0 || listLength< star){
+        if (listLength <= 0 || listLength < star) {
 
             return null;
 
         }
 
-        if(listLength <= end){
+        if (listLength <= end) {
 
             end = listLength;
 
@@ -405,22 +428,22 @@ public class RedisclientServiceImpl implements RedisclientService {
     @Override
     public void removeList(String key) {
 
-        redisTemplate.opsForList().trim(key,0,-1);
+        redisTemplate.opsForList().trim(key, 0, -1);
 
     }
 
     @Override
     public void removeListByValue(String key, String baseValue, List<String> values) {
 
-        for(int i = 0; i < values.size() ; i ++){
+        for (int i = 0; i < values.size(); i++) {
 
-            if(values.get(i) != null){
+            if (values.get(i) != null) {
 
-                if(baseValue != null){
+                if (baseValue != null) {
 
                     redisTemplate.opsForList().remove(key, 1L, baseValue + values.get(i));
 
-                }else{
+                } else {
 
                     redisTemplate.opsForList().remove(key, 1L, baseValue + values.get(i));
 
@@ -435,15 +458,15 @@ public class RedisclientServiceImpl implements RedisclientService {
     @Override
     public void removeAllListByValue(String key, String baseValue, List<String> values) {
 
-        for(int i = 0; i < values.size() ; i ++){
+        for (int i = 0; i < values.size(); i++) {
 
-            if(values.get(i) != null){
+            if (values.get(i) != null) {
 
-                if(baseValue != null){
+                if (baseValue != null) {
 
                     redisTemplate.opsForList().remove(key, 0L, baseValue + values.get(i));
 
-                }else{
+                } else {
 
                     redisTemplate.opsForList().remove(key, 0L, baseValue + values.get(i));
 
@@ -458,7 +481,7 @@ public class RedisclientServiceImpl implements RedisclientService {
     @Override
     public void deleteByPrex(String prex) {
 
-        String prexKey = prex +"*";
+        String prexKey = prex + "*";
 
         Set<String> keys = redisTemplate.keys(prexKey);
 
@@ -479,7 +502,7 @@ public class RedisclientServiceImpl implements RedisclientService {
         logger.info("cache list isExist key : " + key);
 
 
-        if(listLength > minIndex){
+        if (listLength > minIndex) {
 
             return Boolean.TRUE;
 
@@ -490,15 +513,16 @@ public class RedisclientServiceImpl implements RedisclientService {
 
     /**
      * //putAll方法
+     *
      * @param key
      * @param valueMap
      * @param timeout
      * @return
      */
     @Override
-    public boolean putHashAllMap(String key, Map valueMap, Long timeout){
+    public boolean putHashAllMap(String key, Map valueMap, Long timeout) {
 
-        if(valueMap != null){
+        if (valueMap != null) {
 
             redisTemplate.opsForHash().putAll(key, valueMap);
 
@@ -514,6 +538,7 @@ public class RedisclientServiceImpl implements RedisclientService {
 
     /**
      * //put one方法
+     *
      * @param key
      * @param key
      * @param hashKey
@@ -521,9 +546,9 @@ public class RedisclientServiceImpl implements RedisclientService {
      * @return
      */
     @Override
-    public boolean putHashMap(String key, String hashKey, Object hashValue){
+    public boolean putHashMap(String key, String hashKey, Object hashValue) {
 
-        if(hashValue != null && hashKey != null){
+        if (hashValue != null && hashKey != null) {
 
             redisTemplate.opsForHash().put(key, hashKey, hashValue);
 
@@ -537,14 +562,15 @@ public class RedisclientServiceImpl implements RedisclientService {
 
     /**
      * //delete方法，删除key对应的hash的hashkey及其value
+     *
      * @param key
      * @param hashKey
      * @return
      */
     @Override
-    public boolean removeHashMap(String key, String hashKey){
+    public boolean removeHashMap(String key, String hashKey) {
 
-        if(hashKey != null){
+        if (hashKey != null) {
 
             redisTemplate.opsForHash().delete(key, hashKey);
 
@@ -558,14 +584,15 @@ public class RedisclientServiceImpl implements RedisclientService {
 
     /**
      * get方法，根据key和hashkey找出对应的值
+     *
      * @param key
      * @param hashKey
      * @return
      */
     @Override
-    public Object getHashMapValue(String key, String hashKey){
+    public Object getHashMapValue(String key, String hashKey) {
 
-        if(hashKey != null){
+        if (hashKey != null) {
 
             return redisTemplate.opsForHash().get(key, hashKey);
 
@@ -577,14 +604,15 @@ public class RedisclientServiceImpl implements RedisclientService {
 
     /**
      * //hasKey方法，确定hashkey是否存在
+     *
      * @param key
      * @param hashKey
      * @return
      */
     @Override
-    public boolean checkHashMapKeyisExist(String key, String hashKey){
+    public boolean checkHashMapKeyisExist(String key, String hashKey) {
 
-        if(hashKey != null){
+        if (hashKey != null) {
 
             return redisTemplate.opsForHash().hasKey(key, hashKey);
 
@@ -596,14 +624,15 @@ public class RedisclientServiceImpl implements RedisclientService {
 
     /**
      * //multiGet方法，根据key和多个hashkey找出对应的多个值
+     *
      * @param key
      * @param hashKey
      * @return
      */
     @Override
-    public List getHashMapMultiGet(String key, List<String> hashKey){
+    public List getHashMapMultiGet(String key, List<String> hashKey) {
 
-        if(hashKey != null){
+        if (hashKey != null) {
 
             return redisTemplate.opsForHash().multiGet(key, hashKey);
 
@@ -615,27 +644,218 @@ public class RedisclientServiceImpl implements RedisclientService {
 
     /**
      * keys方法，获取key对应的hash表的所有键值对
+     *
      * @param key
      * @return
      */
     @Override
-    public Map getHashMapAll(String key){
+    public Map getHashMapAll(String key) {
 
-       return redisTemplate.opsForHash().entries(key);
+        return redisTemplate.opsForHash().entries(key);
 
     }
 
 
     /**
      * //keys方法，获取key对应的hash表的大小
+     *
      * @param key
      * @return
      */
     @Override
-    public Long getHashMapSize(String key){
+    public Long getHashMapSize(String key) {
 
         return redisTemplate.opsForHash().size(key);
 
     }
 
+    @Override
+    public String getTradeNo(String prefix) {
+        StringBuilder tradeNo = new StringBuilder(prefix);
+        tradeNo.append(DateFormatUtils.format(new Date(), "yyyyMMddHHmm"));
+        long sequence = redisTemplate.opsForHash().increment("trade_sequence", "count", 1L);
+        tradeNo.append(numToUpperString(sequence, 6));
+        // Reset sequence when it reaches 8 billion
+        if (sequence >= 800000000L) {
+            redisTemplate.opsForHash().put("trade_sequence", "count", 1L);
+        }
+        String orderId = tradeNo.toString();
+        log.info("Generated order number: {}", orderId);
+        return orderId;
+    }
+
+    private final String UPPERCASE_CHAR = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+    private String numToUpperString(long num, int len) {
+        StringBuilder sb = new StringBuilder();
+        while (num > 0) {
+            sb.insert(0, UPPERCASE_CHAR.charAt((int) (num % UPPERCASE_CHAR.length())));
+            num /= UPPERCASE_CHAR.length();
+        }
+        while (sb.length() < len) {
+            sb.insert(0, "0");
+        }
+        return sb.toString();
+    }
+
+    /**
+     * 嘗試獲取具有特定超時時間的分佈式鎖。
+     *
+     * @param lockKey        表示Redis中鎖的鍵
+     * @param timeoutSeconds 鎖的過期時間（秒）
+     * @return 如果成功獲取鎖，則返回true，否則返回false
+     * @throws IllegalArgumentException 如果lockKey為null
+     */
+    @Override
+    public boolean tryLock(String lockKey, long timeoutSeconds) {
+        if (lockKey == null) {
+            throw new IllegalArgumentException("lockKey is null, cannot try to acquire lock");
+        }
+        Boolean lockAcquired = redisTemplate.opsForValue().setIfAbsent(lockKey, "locked");
+        if (lockAcquired == null || !lockAcquired) {
+            log.warn("無法獲取鎖，lockKey: {}，跳過執行", lockKey);
+            return false;
+        }
+        extendLockExpiration(lockKey, timeoutSeconds);
+        log.info("成功獲取鎖，lockKey: {}", lockKey);
+        return true;
+    }
+
+    /**
+     * 延長Redis中現有鎖的過期時間。
+     *
+     * @param lockKey        表示Redis中鎖的鍵
+     * @param timeoutSeconds 新的過期時間（秒）
+     */
+    @Override
+    public void extendLockExpiration(String lockKey, long timeoutSeconds) {
+        if (lockKey == null) {
+            throw new IllegalArgumentException("lockKey is null, cannot try to extendLockExpiration");
+        }
+        if (timeoutSeconds == 0) {
+            throw new IllegalArgumentException("timeoutSeconds is null, cannot try to extendLockExpiration");
+        }
+        Boolean success = redisTemplate.expire(lockKey, timeoutSeconds, TimeUnit.SECONDS);
+        if (success) {
+            log.debug("延長鎖的過期時間，鍵: {}，到 {} 秒", lockKey, timeoutSeconds);
+        } else {
+            log.warn("無法延長鎖的過期時間，鍵: {}", lockKey);
+        }
+    }
+
+    /**
+     * 通過刪除Redis中相關的鍵來釋放分佈式鎖。
+     *
+     * @param lockKey 表示Redis中鎖的鍵
+     * @return 如果成功釋放鎖，則返回true，否則返回false
+     */
+    @Override
+    public boolean releaseLock(String lockKey) {
+        if (lockKey == null) {
+            throw new IllegalArgumentException("lockKey is null, cannot try to delete");
+        }
+        Boolean deleted = redisTemplate.delete(lockKey);
+        if (deleted) {
+            log.info("成功釋放鎖，lockKey: {}", lockKey);
+            return true;
+        } else {
+            log.warn("無法釋放鎖，lockKey: {}，鎖可能不存在", lockKey);
+            return false;
+        }
+    }
+
+    /**
+     * 尝试以原子性方式获取永久锁，直到显式释放。
+     *
+     * @param key   Redis中锁的键
+     * @param value 锁的值（通常为唯一标识）
+     * @return 如果成功获取锁，返回true；否则返回false
+     * @throws IllegalArgumentException 如果key或value为null
+     */
+    @Override
+    public boolean setNxPermanent(String key, String value) {
+        if (key == null || value == null) {
+            throw new IllegalArgumentException("key or value cannot be null");
+        }
+
+        try {
+            Boolean success = redisTemplate.opsForValue().setIfAbsent(key, value);
+            if (success != null && success) {
+                log.info("成功获取永久锁，key: {}, value: {}", key, value);
+                return true;
+            } else {
+                log.warn("无法获取永久锁，key: {}, value: {}", key, value);
+                return false;
+            }
+        } catch (Exception e) {
+            log.error("获取永久锁失败，key: {}, value: {}", key, value, e);
+            return false;
+        }
+    }
+
+    @Override
+    public void pipelineSet(Map<String, String> keyValueMap) {
+        redisTemplate.executePipelined((RedisCallback<Object>) connection -> {
+            StringRedisSerializer stringSerializer = new StringRedisSerializer();
+            for (Map.Entry<String, String> entry : keyValueMap.entrySet()) {
+                byte[] key = stringSerializer.serialize(entry.getKey());
+                byte[] value = stringSerializer.serialize(entry.getValue());
+                connection.stringCommands().set(key, value);
+            }
+            return null;
+        });
+    }
+
+    @Override
+    public Double hIncrByFloat(String key, String hashKey, double increment) {
+        if (key == null || hashKey == null) {
+            log.error("HINCRBYFLOAT 失败，键或字段名为空：key={}, hashKey={}", key, hashKey);
+            throw new IllegalArgumentException("Redis key 或 hashKey 不能为空");
+        }
+        try {
+            Double result = redisTemplate.opsForHash().increment(key, hashKey, increment);
+            return result;
+        } catch (Exception e) {
+            log.error("HINCRBYFLOAT 操作失败，key={}, hashKey={}, 错误：{}", key, hashKey, e.getMessage(), e);
+            throw new RuntimeException("HINCRBYFLOAT 操作失败: " + e.getMessage(), e);
+        }
+    }
+
+
+    /**
+     * 扫描匹配键
+     *
+     * @param pattern 键模式，例如 "game.rtp.stats.*"
+     * @return 匹配的键集合
+     */
+    @Override
+    public Set<String> scanKeysByPattern(String pattern) {
+        Set<String> keys = new HashSet<>();
+        try {
+            redisTemplate.execute((RedisCallback<Void>) connection -> {
+                Cursor<byte[]> cursor = connection.scan(ScanOptions.scanOptions()
+                        .match(pattern)
+                        .count(1000)
+                        .build());
+                StringRedisSerializer stringSerializer = new StringRedisSerializer();
+                while (cursor.hasNext()) {
+                    try {
+                        keys.add(stringSerializer.deserialize(cursor.next()));
+                    } catch (Exception ex) {
+                        log.warn("Failed to deserialize Redis key", ex);
+                    }
+                }
+                try {
+                    cursor.close();
+                } catch (Exception e) {
+                    log.error("Error closing cursor for pattern: {}", pattern, e);
+                }
+                return null;
+            });
+            log.info("Scanned {} keys for pattern: {}", keys.size(), pattern);
+        } catch (Exception e) {
+            log.error("Error scanning keys with pattern: {}", pattern, e);
+        }
+        return keys;
+    }
 }

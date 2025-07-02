@@ -1,6 +1,7 @@
 package com.gl.myparadise.common.server.web.handler;
 
 import com.gl.myparadise.common.bean.model.ServiceRsModel;
+import com.gl.myparadise.common.server.web.annotation.ResponseServerNoAdvice;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.MethodParameter;
@@ -30,6 +31,14 @@ public class GLServerResponseAdvice implements ResponseBodyAdvice<Object> {
         Class<?> classz = methodParameter.getParameterType();
 
         logger.debug("GLServerResponseAdvice  classz name : " + classz.getName());
+
+        if (methodParameter.getDeclaringClass().isAnnotationPresent(ResponseServerNoAdvice.class) ||
+                methodParameter.hasMethodAnnotation(ResponseServerNoAdvice.class)) {
+
+            return false;
+
+        }
+
 
         if(classz.equals(String.class)){
 

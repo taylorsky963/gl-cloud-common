@@ -150,7 +150,7 @@ public class ServiceRsModel<T> implements Serializable {
         return model;
     }
 
-    public static <T> ServiceRsModel<T> fail(ExceptionEnum e) {
+    public static <T> ServiceRsModel<T> fail(BaseErrorInfoInterface e) {
         ServiceRsModel<T> model = new ServiceRsModel<>();
         model.setSuccess(false);
         model.setRsMessages(e.getResponseMsg());

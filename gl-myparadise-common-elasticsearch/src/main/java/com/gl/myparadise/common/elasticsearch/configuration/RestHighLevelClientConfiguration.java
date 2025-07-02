@@ -1,8 +1,14 @@
 package com.gl.myparadise.common.elasticsearch.configuration;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.http.*;
-import org.apache.http.client.methods.HttpEntityEnclosingRequestBase;
+import org.apache.http.HttpEntityEnclosingRequest;
+import org.apache.http.HttpHost;
+import org.apache.http.HttpRequest;
+import org.apache.http.HttpRequestInterceptor;
+import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.client.CredentialsProvider;
+import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.nio.client.HttpAsyncClientBuilder;
 import org.apache.http.util.EntityUtils;
 import org.elasticsearch.client.RestClient;
@@ -25,6 +31,12 @@ public class RestHighLevelClientConfiguration {
 
     @Value("#{'${spring.elasticsearch.rest.uris}'.split(',')}")
     private List<String> server;
+
+    @Value("${spring.elasticsearch.rest.username:els}")
+    private String username;
+
+    @Value("${spring.elasticsearch.rest.password:}")
+    private String password;
 
     private static HttpAsyncClientBuilder customizeHttpClient(HttpAsyncClientBuilder httpClientBuilder) {
         httpClientBuilder.addInterceptorFirst((HttpRequestInterceptor) (request, context) -> search(request));
@@ -64,7 +76,18 @@ public class RestHighLevelClientConfiguration {
                 .stream().map(HttpHost::create)
                 .toArray(HttpHost[]::new);
 
-        RestClientBuilder builder = RestClient.builder(hosts).setHttpClientConfigCallback(RestHighLevelClientConfiguration::customizeHttpClient);
+        final CredentialsProvider credentialsProvider = new BasicCredentialsProvider();
+        if (StringUtils.hasText(username) && StringUtils.hasText(password)) {
+            log.info("Elasticsearch credentials provided, using them for authentication. username: {}", username);
+            credentialsProvider.setCredentials(AuthScope.ANY, new UsernamePasswordCredentials(username, password));
+        } else {
+            log.warn("Elasticsearch credentials not provided, proceeding without authentication. This may cause access issues.");
+        }
+
+        RestClientBuilder builder = RestClient.builder(hosts)
+                .setHttpClientConfigCallback(httpClientBuilder ->
+                        customizeHttpClient(httpClientBuilder)
+                                .setDefaultCredentialsProvider(credentialsProvider));
 
         return new RestHighLevelClient(builder);
     }

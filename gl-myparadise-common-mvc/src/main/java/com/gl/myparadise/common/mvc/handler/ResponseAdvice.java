@@ -16,8 +16,7 @@ import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.gl.myparadise.common.mvc.annotation.ResponseNoAdvice;
 
 /**
  * @author Vincent
@@ -38,6 +37,13 @@ public class ResponseAdvice implements ResponseBodyAdvice<Object> {
         Class<?> classz = methodParameter.getParameterType();
 
         logger.debug("ResponseAdvice  classz name : " + classz.getName());
+
+        if (methodParameter.getDeclaringClass().isAnnotationPresent(ResponseNoAdvice.class) ||
+                methodParameter.hasMethodAnnotation(ResponseNoAdvice.class)) {
+
+            return false;
+
+        }
 
         if(classz.equals(String.class)){
 
