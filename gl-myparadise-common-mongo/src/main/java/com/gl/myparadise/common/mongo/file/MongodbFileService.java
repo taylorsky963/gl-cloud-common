@@ -15,6 +15,7 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.bson.Document;
 import org.bson.types.ObjectId;
+import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
@@ -73,11 +74,13 @@ public class MongodbFileService {
         Locale locale = LocaleContextHolder.getLocale();
         String fileName = StringUtils.trimToEmpty(messageSource.getMessage(rawFileName, null, rawFileName, locale));
         String id = glExportService.startExport(userId, fileName);
-        executor.execute(() -> save(fileName, method, doNext, args, (data) -> defaultExportCallBacker(id, fileName).accept(data), locale));
+        String mainTraceId = MDC.get("traceId") == null ? UUID.randomUUID().toString() : MDC.get("traceId");
+        executor.execute(() -> save(mainTraceId, fileName, method, doNext, args, (data) -> defaultExportCallBacker(id, fileName).accept(data), locale));
     }
 
     @SneakyThrows
     private <T, R> void save(
+            String mainTraceId,
             @NonNull String fileName,
             @NonNull Function<R, PageResult<T>> method,
             @NonNull Function<R, R> doNext,
@@ -85,37 +88,49 @@ public class MongodbFileService {
             @Nullable Consumer<RemainingTimeUtils.ProcessVO> callBacker,
             Locale locale
     ) {
+        MDC.put("traceId", mainTraceId);
         GridFSUploadStream gridFSUploadStream = gridFSBucket.openUploadStream(fileName + ".csv", computeUploadOptionsFor());
-        String objectId = gridFSUploadStream.getObjectId().toString();
-        long startTime = System.nanoTime();
-        int totalDownloadElementCount = 0;
-        invokeNotify(startTime, 100, totalDownloadElementCount, objectId, callBacker, false);
-        PageResult<T> currentPage;
+        try {
+            String objectId = gridFSUploadStream.getObjectId().toString();
+            long startTime = System.nanoTime();
+            int totalDownloadElementCount = 0;
+            invokeNotify(startTime, 100, totalDownloadElementCount, objectId, callBacker, false);
+            PageResult<T> currentPage;
 
-        while (true) {
-            currentPage = method.apply(args);
-            if (isEmpty(currentPage)) {
-                log.info("导出结束:无数据");
-                break;
-            }
-            //安全限制不要拿掉
-            if (totalDownloadElementCount > limit) {
-                log.info("导出结束:最大限制");
-                break;
-            }
-            if (currentPage.getTotal() <= totalDownloadElementCount) {
-                log.info("导出结束:到達total");
-                break;
-            }
-            write(gridFSUploadStream, currentPage.getResult(), totalDownloadElementCount == 0, locale);
-            totalDownloadElementCount = totalDownloadElementCount + currentPage.getResult().size();
+            while (true) {
+                currentPage = method.apply(args);
+                if (isEmpty(currentPage)) {
+                    log.info("导出结束:无数据");
+                    break;
+                }
+                //安全限制不要拿掉
+                if (totalDownloadElementCount > limit) {
+                    log.info("导出结束:最大限制");
+                    break;
+                }
+                if (currentPage.getTotal() <= totalDownloadElementCount) {
+                    log.info("导出结束:到達total");
+                    break;
+                }
+                write(gridFSUploadStream, currentPage.getResult(), totalDownloadElementCount == 0, locale);
+                totalDownloadElementCount = totalDownloadElementCount + currentPage.getResult().size();
 
-            invokeNotify(startTime, currentPage.getTotal(), totalDownloadElementCount, objectId, callBacker, false);
-            args = doNext.apply(args);
+                invokeNotify(startTime, currentPage.getTotal(), totalDownloadElementCount, objectId, callBacker, false);
+                args = doNext.apply(args);
+            }
+            invokeNotify(startTime, currentPage.getTotal(), totalDownloadElementCount, objectId, callBacker, true);
+
+        } catch (Exception ex) {
+            log.error("异步导出失败", ex);
+        } finally {
+            try {
+                gridFSUploadStream.flush();
+                gridFSUploadStream.close();
+            } catch (Exception ex) {
+                log.error("gridFSUploadStream", ex);
+            }
+            MDC.remove("traceId");
         }
-        invokeNotify(startTime, currentPage.getTotal(), totalDownloadElementCount, objectId, callBacker, true);
-        gridFSUploadStream.flush();
-        gridFSUploadStream.close();
     }
 
     private <T> boolean isEmpty(PageResult<T> currentPage) {
