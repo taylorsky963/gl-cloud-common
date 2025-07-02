@@ -91,8 +91,9 @@ public class MongodbFileService {
     ) {
         MDC.put("traceId", mainTraceId);
         log.info("开始异步导出 save {}", mainTraceId);
-        GridFSUploadStream gridFSUploadStream = gridFSBucket.openUploadStream(fileName + ".csv", computeUploadOptionsFor());
+        GridFSUploadStream gridFSUploadStream = null;
         try {
+            gridFSUploadStream = gridFSBucket.openUploadStream(fileName + ".csv", computeUploadOptionsFor());
             String objectId = gridFSUploadStream.getObjectId().toString();
             long startTime = System.nanoTime();
             int totalDownloadElementCount = 0;
@@ -127,8 +128,10 @@ public class MongodbFileService {
             log.error("异步导出失败", ex);
         } finally {
             try {
-                gridFSUploadStream.flush();
-                gridFSUploadStream.close();
+                if (gridFSUploadStream != null) {
+                    gridFSUploadStream.flush();
+                    gridFSUploadStream.close();
+                }
             } catch (Exception ex) {
                 log.error("gridFSUploadStream", ex);
             }
