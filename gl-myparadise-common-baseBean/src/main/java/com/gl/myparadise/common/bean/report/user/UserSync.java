@@ -4,6 +4,7 @@ import com.gl.myparadise.common.bean.report.fund.MemberFinGatherReport;
 import lombok.*;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -114,4 +115,9 @@ public class UserSync implements Serializable {
      */
     private String kycStatus;
 
+    /**
+     * 會員積分 vip等級
+     */
+    private Integer vipLevel;
+    private BigDecimal point;
 }
