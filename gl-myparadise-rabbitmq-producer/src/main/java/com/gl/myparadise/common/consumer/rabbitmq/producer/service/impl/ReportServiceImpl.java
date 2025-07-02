@@ -82,6 +82,11 @@ public class ReportServiceImpl implements ReportService {
     public void memberVipReport(MemberVipReport report) {
         report.set("uuid", report.getMemberInfoId());
         reportProducer.sendMessage(ReportEvent.MemberVip, report);
+        //上報gluser
+        UserSync userSyncReport = new UserSync();
+        userSyncReport.setMemberInfoId(report.getMemberInfoId());
+        userSyncReport.setVipLevel(report.getVip());
+        userSync(userSyncReport);
     }
 
     @Override
@@ -104,6 +109,12 @@ public class ReportServiceImpl implements ReportService {
     public void pointChangeReport(PointChangeReport report) {
         report.set("uuid", report.getDataPkCode());
         reportProducer.sendMessage(ReportEvent.PointChange, report);
+
+        //上報gluser
+        UserSync userSyncReport = new UserSync();
+        userSyncReport.setMemberInfoId(report.getMemberInfoId());
+        userSyncReport.setPoint(report.getAfterPoint());
+        userSync(userSyncReport);
     }
 
     @Override
