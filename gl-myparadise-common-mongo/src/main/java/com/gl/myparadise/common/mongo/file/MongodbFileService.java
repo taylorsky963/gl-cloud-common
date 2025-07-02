@@ -75,6 +75,7 @@ public class MongodbFileService {
         String fileName = StringUtils.trimToEmpty(messageSource.getMessage(rawFileName, null, rawFileName, locale));
         String id = glExportService.startExport(userId, fileName);
         String mainTraceId = MDC.get("traceId") == null ? UUID.randomUUID().toString() : MDC.get("traceId");
+        log.info("开始异步导出 {}", mainTraceId);
         executor.execute(() -> save(mainTraceId, fileName, method, doNext, args, (data) -> defaultExportCallBacker(id, fileName).accept(data), locale));
     }
 
@@ -89,6 +90,7 @@ public class MongodbFileService {
             Locale locale
     ) {
         MDC.put("traceId", mainTraceId);
+        log.info("开始异步导出 save {}", mainTraceId);
         GridFSUploadStream gridFSUploadStream = gridFSBucket.openUploadStream(fileName + ".csv", computeUploadOptionsFor());
         try {
             String objectId = gridFSUploadStream.getObjectId().toString();
