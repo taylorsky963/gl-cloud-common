@@ -34,6 +34,12 @@ public class ReportServiceImpl implements ReportService {
     private DefaultProducer defaultProducer;
 
     @Override
+    public void registerReport(UserRegisterReport report) {
+        report.set("uuid", report.getMemberInfoId());
+        reportProducer.sendMessage(ReportEvent.Register, report);
+    }
+
+    @Override
     public void userSync(@NonNull UserSync userSync) {
         log.info("用户上报 {}", JsonUtil.toJson(userSync));
         userProducer.sendMessage(userSync);

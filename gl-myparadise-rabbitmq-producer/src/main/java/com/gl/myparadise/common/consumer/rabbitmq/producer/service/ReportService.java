@@ -11,6 +11,11 @@ import com.gl.myparadise.common.bean.report.user.*;
 public interface ReportService {
 
     /**
+     * 用户注册上报
+     */
+    void registerReport(UserRegisterReport report);
+
+    /**
      * 用户信息同步上报
      */
     void userSync(UserSync report);
