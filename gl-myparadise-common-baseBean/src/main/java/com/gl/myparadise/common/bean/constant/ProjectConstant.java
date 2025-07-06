@@ -13,6 +13,7 @@ public final class ProjectConstant {
         public final static String GL_ACTIVITY_TRANSACTION_LOG = "104";
         public final static String GL_ACTIVITY_REALTIME_REBATE_RECORD = "105";
         public final static String GL_ACTIVITY_REBATE_RECORD = "106";
+        public final static String GL_ACTIVITY_USER_REGISTER_RECORD = "107";
     }
 
     public static final class WebsiteConfigKey {
@@ -215,6 +216,10 @@ public final class ProjectConstant {
              * 时时返水模板
              */
             public final static String REBATE_REALTIME_TEMPLATE = "rebateRealtimeTemplate";
+            /**
+             * 注册优惠模板
+             */
+            public final static String REGISTER_TEMPLATE = "registerTemplate";
         }
 
         public static final class ActivityDataPkCode {
