@@ -75,6 +75,7 @@ public class MongodbFileService {
         String fileName = StringUtils.trimToEmpty(messageSource.getMessage(rawFileName, null, rawFileName, locale));
         String id = glExportService.startExport(userId, fileName);
         String mainTraceId = MDC.get("traceId") == null ? UUID.randomUUID().toString() : MDC.get("traceId");
+        log.info("开始异步导出 {}", mainTraceId);
         executor.execute(() -> save(mainTraceId, fileName, method, doNext, args, (data) -> defaultExportCallBacker(id, fileName).accept(data), locale));
     }
 
@@ -89,8 +90,10 @@ public class MongodbFileService {
             Locale locale
     ) {
         MDC.put("traceId", mainTraceId);
-        GridFSUploadStream gridFSUploadStream = gridFSBucket.openUploadStream(fileName + ".csv", computeUploadOptionsFor());
+        log.info("开始异步导出 save {}", mainTraceId);
+        GridFSUploadStream gridFSUploadStream = null;
         try {
+            gridFSUploadStream = gridFSBucket.openUploadStream(fileName + ".csv", computeUploadOptionsFor());
             String objectId = gridFSUploadStream.getObjectId().toString();
             long startTime = System.nanoTime();
             int totalDownloadElementCount = 0;
@@ -98,6 +101,7 @@ public class MongodbFileService {
             PageResult<T> currentPage;
 
             while (true) {
+                log.info("开始异步导出 save2 {}", mainTraceId);
                 currentPage = method.apply(args);
                 if (isEmpty(currentPage)) {
                     log.info("导出结束:无数据");
@@ -124,8 +128,10 @@ public class MongodbFileService {
             log.error("异步导出失败", ex);
         } finally {
             try {
-                gridFSUploadStream.flush();
-                gridFSUploadStream.close();
+                if (gridFSUploadStream != null) {
+                    gridFSUploadStream.flush();
+                    gridFSUploadStream.close();
+                }
             } catch (Exception ex) {
                 log.error("gridFSUploadStream", ex);
             }

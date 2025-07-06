@@ -29,6 +29,7 @@ public enum BalanceSubTypeEnum {
     VIP_H5_DAILY_POINTS(ProjectConstant.Fund.BalanceType.BONUS, 3009, "VIPh5每日积分"),
     ACT_REALTIME_REBATE_BONUS(ProjectConstant.Fund.BalanceType.BONUS, 3010, "时时返水奖励"),
     ACT_REBATE_BONUS(ProjectConstant.Fund.BalanceType.BONUS, 3011, "返水奖励"),
+    ACT_REGISTER_BONUS(ProjectConstant.Fund.BalanceType.BONUS, 3012, "注册奖励"),
 
     // 人工存入
     MANUAL(ProjectConstant.Fund.BalanceType.MANUAL, 5001, "人工存入"),
