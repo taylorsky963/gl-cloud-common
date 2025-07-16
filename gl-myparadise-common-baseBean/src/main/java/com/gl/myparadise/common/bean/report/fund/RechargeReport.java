@@ -156,4 +156,8 @@ public class RechargeReport extends BaseReport {
      * 修改时间
      */
     private Timestamp updateTime;
+    /**
+     * 充值优惠dataPkCode
+     */
+    private String depositBonusDataPkCode;
 }
