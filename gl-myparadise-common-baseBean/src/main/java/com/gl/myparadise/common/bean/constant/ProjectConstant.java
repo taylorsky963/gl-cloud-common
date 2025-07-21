@@ -220,6 +220,10 @@ public final class ProjectConstant {
              * 注册优惠模板
              */
             public final static String REGISTER_TEMPLATE = "registerTemplate";
+            /**
+             * 每日首充模板
+             */
+            public final static String DAILY_FIRST_RECHARGE_TEMPLATE = "dailyFirstRechargeTemplate";
         }
 
         public static final class ActivityDataPkCode {
