@@ -14,6 +14,7 @@ public final class ProjectConstant {
         public final static String GL_ACTIVITY_REALTIME_REBATE_RECORD = "105";
         public final static String GL_ACTIVITY_REBATE_RECORD = "106";
         public final static String GL_ACTIVITY_USER_REGISTER_RECORD = "107";
+        public final static String GL_ACTIVITY_DAILY_FIRST_RECHARGE_RECORD = "108";
     }
 
     public static final class WebsiteConfigKey {
