@@ -22,9 +22,10 @@ import java.util.Map;
 @Slf4j
 public class GlobalInputValidatorAspect {
 
-    @Pointcut("@annotation(org.springframework.web.bind.annotation.PostMapping) || " +
+    @Pointcut("execution(* com.gl.myparadise.website.*.web.controller..*(..)) && " +
+            "(@annotation(org.springframework.web.bind.annotation.PostMapping) || " +
             "@annotation(org.springframework.web.bind.annotation.GetMapping) || " +
-            "@annotation(org.springframework.web.bind.annotation.RequestMapping)")
+            "@annotation(org.springframework.web.bind.annotation.RequestMapping))")
     public void controllerMethods() {}
 
     @Before("controllerMethods()")
