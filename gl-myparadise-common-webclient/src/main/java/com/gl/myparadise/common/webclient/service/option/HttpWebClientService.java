@@ -20,6 +20,8 @@ public interface HttpWebClientService {
 
     Future<String> sendRequestGetHttpServer(WebClientRequestModel webClientRequestModel);
 
+    Future<String> sendRequestGetHttpNoNoneMatchServer(WebClientRequestModel webClientRequestModel);
+
     Future<String> sendRequestStreamUploadHttpServer(WebClientRequestModel webClientRequestModel, MultipartFile multipartFile);
 
     Future<StreamDownLoadResponseData> sendRequestStreamDownLoadHttpServer(WebClientStreamRequestModel webClientStreamRequestModel);

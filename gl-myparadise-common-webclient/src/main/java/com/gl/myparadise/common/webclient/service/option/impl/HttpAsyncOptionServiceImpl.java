@@ -35,6 +35,35 @@ public class HttpAsyncOptionServiceImpl implements HttpAsyncOptionService {
     private HttpWebClientService httpWebClientService;
 
     /**
+     * http reques post 有header方法封装
+     * @param uri
+     * @param data
+     * @param rsDataClass
+     * @return
+     */
+    @Override
+    public ServiceRsModel<Object> sendRequestPostHttpServer(String webClientBeanName, String threadPoolBeanName, String uri, Object data, Map<String, String> hearderMap, Class rsDataClass){
+
+        try{
+
+
+            Future<String> rsFuture = httpWebClientService.sendRequestPostHttpServer(buildWebClientRequestModelToData(webClientBeanName, threadPoolBeanName, uri, data, hearderMap));
+
+            String rsJason = rsFuture.get();
+
+            return HttpResponseStatusUtils.buildHttpResponseBean(rsJason, rsDataClass);
+
+        } catch (Exception e) {
+
+            log.error("sendRequestPostHttpServer ia error",e);
+
+        }
+
+        return new ServiceRsModel().error();
+
+    }
+
+    /**
      * http reques post 方法封装
      * @param uri
      * @param data
@@ -47,7 +76,7 @@ public class HttpAsyncOptionServiceImpl implements HttpAsyncOptionService {
         try{
 
 
-            Future<String> rsFuture = httpWebClientService.sendRequestPostHttpServer(buildWebClientRequestModelToData(webClientBeanName, threadPoolBeanName, uri, data));
+            Future<String> rsFuture = httpWebClientService.sendRequestPostHttpServer(buildWebClientRequestModelToData(webClientBeanName, threadPoolBeanName, uri, data, null));
 
             String rsJason = rsFuture.get();
 
@@ -68,7 +97,7 @@ public class HttpAsyncOptionServiceImpl implements HttpAsyncOptionService {
         try{
 
 
-            Future<String> rsFuture = httpWebClientService.sendRequestPostFormHttpServer(buildWebClientRequestModelToDataMap(webClientBeanName, threadPoolBeanName, uri, data,true));
+            Future<String> rsFuture = httpWebClientService.sendRequestPostFormHttpServer(buildWebClientRequestModelToDataMap(webClientBeanName, threadPoolBeanName, uri, data, null,true));
 
             String rsJason = rsFuture.get();
 
@@ -96,7 +125,7 @@ public class HttpAsyncOptionServiceImpl implements HttpAsyncOptionService {
         try{
 
 
-            Future<String> rsFuture = httpWebClientService.sendRequestPutHttpServer(buildWebClientRequestModelToData(webClientBeanName, threadPoolBeanName, uri, data));
+            Future<String> rsFuture = httpWebClientService.sendRequestPutHttpServer(buildWebClientRequestModelToData(webClientBeanName, threadPoolBeanName, uri, data, null));
 
             String rsJason = rsFuture.get();
 
@@ -125,7 +154,7 @@ public class HttpAsyncOptionServiceImpl implements HttpAsyncOptionService {
 
         try{
 
-            Future<String> rsFuture = httpWebClientService.sendRequestPutHttpServer(buildWebClientRequestModelToData(webClientBeanName, threadPoolBeanName, uri, data));
+            Future<String> rsFuture = httpWebClientService.sendRequestPutHttpServer(buildWebClientRequestModelToData(webClientBeanName, threadPoolBeanName, uri, data, null));
 
             String rsJason = rsFuture.get();
 
@@ -153,7 +182,7 @@ public class HttpAsyncOptionServiceImpl implements HttpAsyncOptionService {
 
         try{
 
-            Future<String> rsFuture = httpWebClientService.sendRequestGetHttpServer(buildWebClientRequestModelToDataMap(webClientBeanName, threadPoolBeanName, uri, data, true));
+            Future<String> rsFuture = httpWebClientService.sendRequestGetHttpServer(buildWebClientRequestModelToDataMap(webClientBeanName, threadPoolBeanName, uri, data, null,true));
 
             String rsJason = rsFuture.get();
 
@@ -181,7 +210,7 @@ public class HttpAsyncOptionServiceImpl implements HttpAsyncOptionService {
 
         try{
 
-            Future<String> rsFuture = httpWebClientService.sendRequestGetHttpServer(buildWebClientRequestModelToDataMap(webClientBeanName, threadPoolBeanName, uri, data, false));
+            Future<String> rsFuture = httpWebClientService.sendRequestGetHttpServer(buildWebClientRequestModelToDataMap(webClientBeanName, threadPoolBeanName, uri, data, null,false));
 
             String rsJason = rsFuture.get();
 
@@ -198,6 +227,33 @@ public class HttpAsyncOptionServiceImpl implements HttpAsyncOptionService {
     }
 
     /**
+     * http reques get 返回值 不封装
+     * @param uri
+     * @param data
+     * @return
+     */
+    @Override
+    public ServiceRsModel<String> sendRequestGetHttpResponseStringServer(String webClientBeanName, String threadPoolBeanName, String uri, Object data){
+
+        try{
+
+            Future<String> rsFuture = httpWebClientService.sendRequestGetHttpNoNoneMatchServer(buildWebClientRequestModelToDataMap(webClientBeanName, threadPoolBeanName, uri, data, null,false));
+
+            String rsJason = rsFuture.get();
+
+            return new ServiceRsModel<String>().setRsData(rsJason);
+
+        } catch (Exception e) {
+
+            log.error("sendRequestGetHttpServer ia error",e);
+
+        }
+
+        return new ServiceRsModel<String>().error();
+
+    }
+
+    /**
      * http reques get 方法封装
      * @param uri
      * @param data
@@ -209,7 +265,7 @@ public class HttpAsyncOptionServiceImpl implements HttpAsyncOptionService {
 
         try{
 
-            Future<String> rsFuture = httpWebClientService.sendRequestGetHttpServer(buildWebClientRequestModelToDataMap(webClientBeanName, threadPoolBeanName, uri, data, true));
+            Future<String> rsFuture = httpWebClientService.sendRequestGetHttpServer(buildWebClientRequestModelToDataMap(webClientBeanName, threadPoolBeanName, uri, data, null,true));
 
             String rsJason = rsFuture.get();
 
@@ -238,7 +294,7 @@ public class HttpAsyncOptionServiceImpl implements HttpAsyncOptionService {
 
         try{
 
-            Future<String> rsFuture = httpWebClientService.sendRequestGetHttpServer(buildWebClientRequestModelToDataMap(webClientBeanName, threadPoolBeanName, uri, data, false));
+            Future<String> rsFuture = httpWebClientService.sendRequestGetHttpServer(buildWebClientRequestModelToDataMap(webClientBeanName, threadPoolBeanName, uri, data, null,false));
 
             String rsJason = rsFuture.get();
 
@@ -266,7 +322,7 @@ public class HttpAsyncOptionServiceImpl implements HttpAsyncOptionService {
 
         try{
 
-            Future<String> rsFuture = httpWebClientService.sendRequestPostHttpServer(buildWebClientRequestModelToData(webClientBeanName, threadPoolBeanName, uri, data));
+            Future<String> rsFuture = httpWebClientService.sendRequestPostHttpServer(buildWebClientRequestModelToData(webClientBeanName, threadPoolBeanName, uri, data, null));
 
             String rsJason = rsFuture.get();
 
@@ -294,7 +350,7 @@ public class HttpAsyncOptionServiceImpl implements HttpAsyncOptionService {
 
         try{
 
-            Future<String> rsFuture = httpWebClientService.sendRequestGetMultiValueMapHttpServer(buildWebClientRequestModelToDataMap(webClientBeanName, threadPoolBeanName, uri, data, true));
+            Future<String> rsFuture = httpWebClientService.sendRequestGetMultiValueMapHttpServer(buildWebClientRequestModelToDataMap(webClientBeanName, threadPoolBeanName, uri, data, null,true));
 
             String rsJason = rsFuture.get();
 
@@ -322,7 +378,7 @@ public class HttpAsyncOptionServiceImpl implements HttpAsyncOptionService {
 
         try{
 
-            Future<String> rsFuture = httpWebClientService.sendRequestGetMultiValueMapHttpServer(buildWebClientRequestModelToDataMap(webClientBeanName, threadPoolBeanName, uri, data, false));
+            Future<String> rsFuture = httpWebClientService.sendRequestGetMultiValueMapHttpServer(buildWebClientRequestModelToDataMap(webClientBeanName, threadPoolBeanName, uri, data, null,false));
 
             String rsJason = rsFuture.get();
 
@@ -355,7 +411,7 @@ public class HttpAsyncOptionServiceImpl implements HttpAsyncOptionService {
 
             buildWebClientRequestModel(webClientRequestModel, webClientBeanName, threadPoolBeanName, uri);
 
-            webClientRequestModel.setHttpHeaderMap(bulidHttpHeaderMap(streamUploadRequestModel));
+//            webClientRequestModel.setHttpHeaderMap(bulidHttpHeaderMap(streamUploadRequestModel));
 
             Future<String> rsFuture = httpWebClientService.sendRequestStreamUploadHttpServer(webClientRequestModel, streamUploadRequestModel.getMultipartFile());
 
@@ -393,7 +449,7 @@ public class HttpAsyncOptionServiceImpl implements HttpAsyncOptionService {
 
             webClientStreamRequestModel.setMediaName(streamDownLoadRequestModel.getMediaName());
 
-            webClientStreamRequestModel.setHttpHeaderMap(bulidHttpHeaderMap(streamDownLoadRequestModel));
+//            webClientStreamRequestModel.setHttpHeaderMap(bulidHttpHeaderMap(streamDownLoadRequestModel));
 
             Future<StreamDownLoadResponseData> rsFuture = httpWebClientService.sendRequestStreamDownLoadHttpServer(webClientStreamRequestModel);
 
@@ -431,7 +487,7 @@ public class HttpAsyncOptionServiceImpl implements HttpAsyncOptionService {
 
         try{
 
-            Future<String> rsFuture = httpWebClientService.sendRequestDeleteHttpServer(buildWebClientRequestModelToData(webClientBeanName, threadPoolBeanName, uri, data));
+            Future<String> rsFuture = httpWebClientService.sendRequestDeleteHttpServer(buildWebClientRequestModelToData(webClientBeanName, threadPoolBeanName, uri, data, null));
 
             String rsJason = rsFuture.get();
 
@@ -453,7 +509,7 @@ public class HttpAsyncOptionServiceImpl implements HttpAsyncOptionService {
      * @param data
      * @return
      */
-    private Map<String, String> bulidHttpHeaderMap(Object data){
+    private Map<String, String> bulidHttpHeaderMap(Map<String, String> data){
 
 //        if(data instanceof MatrixRequestModel) {
 //
@@ -471,7 +527,15 @@ public class HttpAsyncOptionServiceImpl implements HttpAsyncOptionService {
 //
 //        }
 
-        return new HashMap<String, String>();
+        if(data != null){
+
+            return  data;
+
+        }else{
+
+            return new HashMap<String, String>();
+
+        }
 
     }
 
@@ -486,7 +550,7 @@ public class HttpAsyncOptionServiceImpl implements HttpAsyncOptionService {
 
     }
 
-    private WebClientRequestModel buildWebClientRequestModelToData(String webClientBeanName, String threadPoolBeanName, String uri, Object data){
+    private WebClientRequestModel buildWebClientRequestModelToData(String webClientBeanName, String threadPoolBeanName, String uri, Object data, Map<String, String> headerMap){
 
         WebClientRequestModel webClientRequestModel = new WebClientRequestModel();
 
@@ -494,13 +558,13 @@ public class HttpAsyncOptionServiceImpl implements HttpAsyncOptionService {
 
         webClientRequestModel.setData(GJonUtilNamingPolicy.toJson(data));
 
-        webClientRequestModel.setHttpHeaderMap(bulidHttpHeaderMap(data));
+        webClientRequestModel.setHttpHeaderMap(bulidHttpHeaderMap(headerMap));
 
         return webClientRequestModel;
     }
 
 
-    private WebClientRequestModel buildWebClientRequestModelToDataMap(String webClientBeanName, String threadPoolBeanName, String uri, Object data, boolean isParent) throws IllegalAccessException {
+    private WebClientRequestModel buildWebClientRequestModelToDataMap(String webClientBeanName, String threadPoolBeanName, String uri, Object data, Map<String, String> headerMap, boolean isParent) throws IllegalAccessException {
 
         WebClientRequestModel webClientRequestModel = new WebClientRequestModel();
 
@@ -524,7 +588,7 @@ public class HttpAsyncOptionServiceImpl implements HttpAsyncOptionService {
 
         buildWebClientRequestModel(webClientRequestModel, webClientBeanName, threadPoolBeanName, uri);
 
-        webClientRequestModel.setHttpHeaderMap(bulidHttpHeaderMap(data));
+        webClientRequestModel.setHttpHeaderMap(bulidHttpHeaderMap(headerMap));
 
         return webClientRequestModel;
 

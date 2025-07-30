@@ -4,8 +4,12 @@ import com.gl.myparadise.common.bean.model.ServiceRsModel;
 import com.gl.myparadise.common.webclient.model.request.stream.StreamDownLoadRequestModel;
 import com.gl.myparadise.common.webclient.model.request.stream.StreamUploadRequestModel;
 
+import java.util.Map;
+
 public interface HttpAsyncOptionService {
 
+
+    ServiceRsModel<Object> sendRequestPostHttpServer(String webClientBeanName, String threadPoolBeanName, String uri, Object data, Map<String, String> hearderMap, Class rsDataClass);
 
     ServiceRsModel<Object> sendRequestPostHttpServer(String webClientBeanName, String threadPoolBeanName, String uri, Object data, Class rsDataClass);
 
@@ -18,6 +22,8 @@ public interface HttpAsyncOptionService {
     ServiceRsModel<Object> sendRequestGetHttpServerAllParams(String webClientBeanName, String threadPoolBeanName, String uri, Object data, Class rsDataClass);
 
     ServiceRsModel<Object> sendRequestGetHttpServer(String webClientBeanName, String threadPoolBeanName, String uri, Object data, Class rsDataClass);
+
+    ServiceRsModel<String> sendRequestGetHttpResponseStringServer(String webClientBeanName, String threadPoolBeanName, String uri, Object data);
 
     ServiceRsModel<?> sendRequestGetHttpServerForAllTypeAllParams(String webClientBeanName, String threadPoolBeanName, String uri, Object data, Class rsDataClass);
 

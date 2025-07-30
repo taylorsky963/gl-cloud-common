@@ -299,6 +299,53 @@ public class HttpWebClientServiceImpl implements HttpWebClientService {
 
     }
 
+    @Override
+    public Future<String> sendRequestGetHttpNoNoneMatchServer(WebClientRequestModel webClientRequestModel) {
+
+        log.debug("sendRequestGetHttpServer start is : " + webClientRequestModel.getPath());
+
+        return getExecutorService(webClientRequestModel.getThreadPoolBeanName()).submit(() -> {
+
+            try {
+
+                return getWebClient(webClientRequestModel.getWebClientBeanName()).get().uri(uriBuilder -> uriBuilder
+                                .path(webClientRequestModel.getPath())
+                                .build(webClientRequestModel.getDataMap()))
+                        .headers(buildHttpHeaders(webClientRequestModel.getHttpHeaderMap()))
+                        .acceptCharset(StandardCharsets.UTF_8)
+//                        .ifModifiedSince(ZonedDateTime.now())
+//                        .ifNoneMatch("*")
+                        .retrieve()
+                        .onStatus(HttpStatus::is5xxServerError, response -> {
+
+                            return bulidResponseError(response);
+
+                        })
+                        .onStatus(HttpStatus::is4xxClientError, response -> {
+
+                            return bulidResponseError(response);
+
+                        })
+                        .bodyToMono(String.class)
+                        .retryWhen(getClientRetry(webClientRequestModel.getWebClientBeanName())).block();
+
+            } catch (Exception e) {
+
+                log.error("sendRequestGetHttpServer data is : " + GJonUtil.toJson(webClientRequestModel.getDataMap()));
+
+                log.error("sendRequestGetHttpServer is error path : " + webClientRequestModel.getPath(), e);
+
+                return e.getMessage();
+
+            } finally {
+
+                log.debug("sendRequestGetHttpServer end : " + webClientRequestModel.getPath());
+
+            }
+
+        });
+
+    }
     /**
      * @param webClientRequestModel
      * @param multipartFile
