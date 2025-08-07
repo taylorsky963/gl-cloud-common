@@ -230,6 +230,10 @@ public final class ProjectConstant {
              * 充值优惠模板
              */
             public final static String RECHARGE_TEMPLATE = "rechargeTemplate";
+            /**
+             * 登入充值优惠模板
+             */
+            public final static String LOGIN_RECHARGE_TEMPLATE = "loginRechargeTemplate";
         }
 
         public static final class ActivityDataPkCode {
