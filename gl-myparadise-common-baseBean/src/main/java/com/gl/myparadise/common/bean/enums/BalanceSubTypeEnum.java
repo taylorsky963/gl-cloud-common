@@ -32,6 +32,7 @@ public enum BalanceSubTypeEnum {
     ACT_REGISTER_BONUS(ProjectConstant.Fund.BalanceType.BONUS, 3012, "注册奖励"),
     ACT_RECHARGE_BONUS(ProjectConstant.Fund.BalanceType.BONUS, 3013, "存款优惠"),
     ACT_DAILY_FIRST_RECHARGE_BONUS(ProjectConstant.Fund.BalanceType.BONUS, 3014, "每日首存优惠"),
+    ACT_LOGIN_RECHARGE_BONUS(ProjectConstant.Fund.BalanceType.BONUS, 3015, "登入充值抽獎優惠"),
 
     // 人工存入
     MANUAL(ProjectConstant.Fund.BalanceType.MANUAL, 5001, "人工存入"),
