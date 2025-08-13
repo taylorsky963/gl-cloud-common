@@ -30,6 +30,8 @@ public enum BalanceSubTypeEnum {
     ACT_REALTIME_REBATE_BONUS(ProjectConstant.Fund.BalanceType.BONUS, 3010, "时时返水奖励"),
     ACT_REBATE_BONUS(ProjectConstant.Fund.BalanceType.BONUS, 3011, "返水奖励"),
     ACT_REGISTER_BONUS(ProjectConstant.Fund.BalanceType.BONUS, 3012, "注册奖励"),
+    ACT_RECHARGE_BONUS(ProjectConstant.Fund.BalanceType.BONUS, 3013, "存款优惠"),
+    ACT_DAILY_FIRST_RECHARGE_BONUS(ProjectConstant.Fund.BalanceType.BONUS, 3014, "每日首存优惠"),
 
     // 人工存入
     MANUAL(ProjectConstant.Fund.BalanceType.MANUAL, 5001, "人工存入"),
