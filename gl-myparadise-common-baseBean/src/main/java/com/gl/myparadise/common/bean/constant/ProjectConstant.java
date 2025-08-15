@@ -232,7 +232,7 @@ public final class ProjectConstant {
              */
             public final static String RECHARGE_TEMPLATE = "rechargeTemplate";
             /**
-             * 登入充值优惠模板
+             * 登入充值抽奖模板
              */
             public final static String LOGIN_RECHARGE_TEMPLATE = "loginRechargeTemplate";
         }
