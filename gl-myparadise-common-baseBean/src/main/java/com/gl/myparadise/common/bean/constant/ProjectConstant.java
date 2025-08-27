@@ -16,6 +16,7 @@ public final class ProjectConstant {
         public final static String GL_ACTIVITY_USER_REGISTER_RECORD = "107";
         public final static String GL_ACTIVITY_DAILY_FIRST_RECHARGE_RECORD = "108";
         public final static String GL_ACTIVITY_RECHARGE_RECORD = "109";
+        public final static String GL_ACTIVITY_LOGIN_RECHARGE_PENDING_RECORD = "110";
     }
 
     public static final class WebsiteConfigKey {
@@ -230,6 +231,10 @@ public final class ProjectConstant {
              * 充值优惠模板
              */
             public final static String RECHARGE_TEMPLATE = "rechargeTemplate";
+            /**
+             * 登入充值抽奖模板
+             */
+            public final static String LOGIN_RECHARGE_TEMPLATE = "loginRechargeTemplate";
         }
 
         public static final class ActivityDataPkCode {
