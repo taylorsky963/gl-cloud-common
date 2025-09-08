@@ -32,6 +32,7 @@ public class BettingReport extends BaseReport {
     private Date betTime;
     private String status;
     private BigDecimal betFlow;
+    private BigDecimal refundAmount;
     private Date createTime;
     private String detail;
     private String itemData;
