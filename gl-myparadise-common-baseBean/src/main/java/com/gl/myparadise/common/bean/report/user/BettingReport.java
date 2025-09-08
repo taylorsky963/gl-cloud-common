@@ -21,6 +21,9 @@ public class BettingReport extends BaseReport {
     private String platformCode;
     private String gameType;
     private String gameCode;
+    private String sportsName;
+    private String leagueName;
+    private String eventName;
     private String gameName;
     private BigDecimal betAmount;
     private Integer result;
@@ -29,6 +32,7 @@ public class BettingReport extends BaseReport {
     private Date betTime;
     private String status;
     private BigDecimal betFlow;
+    private BigDecimal refundAmount;
     private Date createTime;
     private String detail;
     private String itemData;
