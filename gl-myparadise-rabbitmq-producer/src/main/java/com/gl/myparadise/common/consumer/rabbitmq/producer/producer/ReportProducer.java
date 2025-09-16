@@ -5,10 +5,12 @@ import com.gl.myparadise.common.bean.model.ReportEvent;
 import com.gl.myparadise.common.bean.model.RoutingKeyEnum;
 import com.gl.myparadise.common.bean.rabbitmq.SendRabbitMessageService;
 import com.gl.myparadise.common.bean.report.BaseReport;
+import com.gl.myparadise.common.consumer.rabbitmq.producer.service.ReportRetryService;
 import com.gl.myparadise.common.tools.bean.JsonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Field;
@@ -24,6 +26,10 @@ public class ReportProducer {
     @Autowired
     private SendRabbitMessageService sendRabbitMessageService;
 
+    @Autowired
+    @Lazy
+    private ReportRetryService reportRetryService;
+
     public void sendMessage(ReportEvent event, BaseReport report) {
         try {
             this.packMessage(event, report);
@@ -31,6 +37,7 @@ public class ReportProducer {
             sendRabbitMessageService.sendDirectMessageNoAck(ExchangeEnum.globalReport.getExchangeName(), getRoutingKey(event).getRoutingKeyName(), report.getMsg());
         } catch (Exception ex) {
             log.error("上报事件数据发生异常", ex);
+            reportRetryService.reportRetry(event, report);
         }
     }
 
