@@ -64,6 +64,10 @@ public class UserSync implements Serializable {
 
     private String dataPkCode;
 
+    private Timestamp lastLoginTime;
+
+    private Timestamp lastBettingTime;
+
     // ================================ memberTpLogin ================================
     private Long memberTpLoginId;
 
