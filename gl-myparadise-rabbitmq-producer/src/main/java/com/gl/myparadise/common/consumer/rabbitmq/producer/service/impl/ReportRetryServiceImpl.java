@@ -222,7 +222,7 @@ public class ReportRetryServiceImpl implements ReportRetryService {
         List<ReportLogRecord> pendingReports = getPendingReports();
 
         if (pendingReports.isEmpty()) {
-            log.debug("没有待处理的任务");
+            log.info("没有待处理的任务");
             return;
         }
 
