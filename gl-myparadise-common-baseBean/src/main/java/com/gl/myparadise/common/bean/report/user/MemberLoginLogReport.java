@@ -75,5 +75,10 @@ public class MemberLoginLogReport extends BaseReport {
      */
     private String agentAccount;
 
+    /**
+     * 是否是app
+     */
+    private String isApp;
+
 
 }
