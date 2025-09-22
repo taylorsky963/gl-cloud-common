@@ -65,8 +65,14 @@ public class MemberLoginLogReport extends BaseReport {
      */
     private String loginDomain;
 
+    /**
+     * 会员所属代理id
+     */
     private Long agentId;
 
+    /**
+     * 会员所属代理账号
+     */
     private String agentAccount;
 
 
