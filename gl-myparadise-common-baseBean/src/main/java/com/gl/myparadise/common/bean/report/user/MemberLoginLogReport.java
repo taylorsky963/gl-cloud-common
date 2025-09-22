@@ -1,5 +1,6 @@
 package com.gl.myparadise.common.bean.report.user;
 
+import com.gl.myparadise.common.bean.report.BaseReport;
 import lombok.*;
 
 import java.io.Serializable;
@@ -10,7 +11,7 @@ import java.sql.Timestamp;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class MemberLoginLogReport implements Serializable {
+public class MemberLoginLogReport extends BaseReport {
 
     private static final long serialVersionUID = 5766952470363745793L;
 
