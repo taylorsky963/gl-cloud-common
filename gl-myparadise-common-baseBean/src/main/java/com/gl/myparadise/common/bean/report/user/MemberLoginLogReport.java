@@ -65,5 +65,9 @@ public class MemberLoginLogReport extends BaseReport {
      */
     private String loginDomain;
 
+    private Long agentId;
+
+    private String agentAccount;
+
 
 }
