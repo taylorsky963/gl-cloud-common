@@ -60,5 +60,10 @@ public class MemberLoginLogReport extends BaseReport {
      */
     private String deviceId;
 
+    /**
+     * 登录域名
+     */
+    private String loginDomain;
+
 
 }
