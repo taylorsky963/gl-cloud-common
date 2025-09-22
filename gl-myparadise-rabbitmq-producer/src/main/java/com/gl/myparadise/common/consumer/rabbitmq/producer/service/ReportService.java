@@ -99,4 +99,9 @@ public interface ReportService {
      * 单一钱包体育交易纪录
      */
     void seamlessSportTransactionReport(SeamlessSportTransactionReport report);
+
+    /**
+     * 会员登入上报
+     */
+    void memberLoginLogReport(MemberLoginLogReport report);
 }

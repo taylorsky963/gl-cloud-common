@@ -11,6 +11,7 @@ public class RoutingKeyConstant {
     public final static String GLOBAL_REPORT_USER_LOGIN = "global-report-user-login";
     public final static String GLOBAL_REPORT_USER_REGISTER = "global-report-user-register";
     public final static String GLOBAL_REPORT_MEMBER_VIP = "global-report-member-vip";
+    public final static String GLOBAL_REPORT_MEMBER_LOGIN_LOG = "global-report-member-login-log";
 
     // 遊戲相關事件
     public final static String GLOBAL_REPORT_GAME_BETTING = "global-report-game-betting";

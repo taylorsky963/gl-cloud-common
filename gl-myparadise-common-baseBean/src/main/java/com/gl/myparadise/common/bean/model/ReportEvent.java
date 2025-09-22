@@ -37,6 +37,8 @@ public enum ReportEvent {
 
     SeamlessSportTransaction(1024, "单一钱包体育交易纪录"),
 
+    MemberLoginLogReport(1025, "会员登入日志"),
+
     DailyUserBetting(7000, "每日用户投注数据上報"),
 
     DailyUserRecharge(7001, "每日用户充值数据上報"),
