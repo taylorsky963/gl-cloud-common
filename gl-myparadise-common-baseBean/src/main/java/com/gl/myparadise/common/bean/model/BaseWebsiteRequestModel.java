@@ -72,4 +72,17 @@ public class BaseWebsiteRequestModel extends BaseEntity {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private String langDataPkCode;
 
+    /**
+     * 设备q渠道：例如：Android PWA
+     * Android APP
+     * Android H5
+     * iOS PWA APP
+     * iOS PWA
+     * iOS H5
+     * WEB
+     * OTHERS
+     */
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private String deviceChannel;
+
 }
