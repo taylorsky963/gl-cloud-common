@@ -18,6 +18,7 @@ public enum RoutingKeyEnum {
     global_report_user_login(RoutingKeyConstant.GLOBAL_REPORT_USER_LOGIN, "用户登录事件"),
     global_report_user_register(RoutingKeyConstant.GLOBAL_REPORT_USER_REGISTER, "用户注册事件"),
     global_report_member_vip(RoutingKeyConstant.GLOBAL_REPORT_MEMBER_VIP, "会员VIP事件"),
+    global_report_member_login_log(RoutingKeyConstant.GLOBAL_REPORT_MEMBER_LOGIN_LOG, "会员登入事件"),
     
     // 遊戲相關事件
     global_report_game_betting(RoutingKeyConstant.GLOBAL_REPORT_GAME_BETTING, "游戏投注事件"),
