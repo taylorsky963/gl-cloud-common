@@ -47,7 +47,7 @@ import java.util.function.Function;
 @Service
 @Slf4j
 public class MongodbFileService {
-    final Integer limit = 10000;
+    final Integer limit = 100000000;
     @Autowired
     private GridFsTemplate gridFsTemplate;
     @Autowired
