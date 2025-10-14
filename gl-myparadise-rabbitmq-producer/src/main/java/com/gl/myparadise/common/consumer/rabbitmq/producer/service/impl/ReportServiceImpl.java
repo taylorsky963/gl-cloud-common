@@ -64,6 +64,12 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
+    public void fundDiversionReport(FundBaseReport report) {
+        report.setTimestamp(System.currentTimeMillis());
+        defaultProducer.sendFundDiversionReport(report);
+    }
+
+    @Override
     public void activityReport(ActivityBaseReport report) {
         defaultProducer.sendActivity(report);
     }
