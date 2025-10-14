@@ -17,6 +17,8 @@ public enum QueueEnum {
 
     global_fund(ExchangeEnum.globalFund, RoutingKeyEnum.global_fund_routing_key, QueueConstant.GLOBAL_FUND, "全局财务相关上报"),
 
+    global_fund_diversion(ExchangeEnum.globalFundDiversion, RoutingKeyEnum.global_fund_diversion_routing_key, QueueConstant.GLOBAL_FUND_DIVERSION, "全局财务相关分流发放上报"),
+
     global_activity(ExchangeEnum.globalActivity, RoutingKeyEnum.global_activity_routing_key, QueueConstant.GLOBAL_ACTIVITY, "全局财务相关上报"),
 
     ;

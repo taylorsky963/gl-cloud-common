@@ -36,6 +36,11 @@ public interface ReportService {
     void fundReport(FundBaseReport report);
 
     /**
+     * 财务分流相关上报
+     */
+    void fundDiversionReport(FundBaseReport report);
+
+    /**
      * 活动上报
      */
     void activityReport(ActivityBaseReport report);
