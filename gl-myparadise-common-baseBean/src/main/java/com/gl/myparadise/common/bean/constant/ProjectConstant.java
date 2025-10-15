@@ -17,6 +17,9 @@ public final class ProjectConstant {
         public final static String GL_ACTIVITY_DAILY_FIRST_RECHARGE_RECORD = "108";
         public final static String GL_ACTIVITY_RECHARGE_RECORD = "109";
         public final static String GL_ACTIVITY_LOGIN_RECHARGE_PENDING_RECORD = "110";
+        public final static String GL_ACTIVITY_REDEMPTION_CODE = "111";
+        public final static String GL_ACTIVITY_REDEMPTION_CODE_BATCH = "112";
+        public final static String GL_ACTIVITY_REDEMPTION_CODE_DETAIL = "113";
     }
 
     public static final class WebsiteConfigKey {
