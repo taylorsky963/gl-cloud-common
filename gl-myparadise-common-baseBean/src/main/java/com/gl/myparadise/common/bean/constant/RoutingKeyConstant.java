@@ -5,6 +5,7 @@ public class RoutingKeyConstant {
     public final static String GLOBAL_USER_OTHER_ROUTING_KEY = "global-user-other-route-key";
     public final static String GLOBAL_SYSTEM_OPERATION_LOG_ROUTING_KEY = "global-system-operation-log-route-key";
     public final static String GLOBAL_FUND_ROUTING_KEY = "global-fund-routing-key";
+    public final static String GLOBAL_FUND_DIVERSION_ROUTING_KEY = "global-fund-diversion-routing-key";
     public final static String GLOBAL_ACTIVITY_ROUTING_KEY = "global-activity-routing-key";
 
     // 用戶相關事件

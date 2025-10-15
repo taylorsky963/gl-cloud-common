@@ -12,6 +12,7 @@ public enum RoutingKeyEnum {
     global_user_other_routing_key(RoutingKeyConstant.GLOBAL_USER_OTHER_ROUTING_KEY, "全局用户其他路由键"),
     global_system_operation_log_routing_key(RoutingKeyConstant.GLOBAL_SYSTEM_OPERATION_LOG_ROUTING_KEY, "全局系统操作日志路由键"),
     global_fund_routing_key(RoutingKeyConstant.GLOBAL_FUND_ROUTING_KEY, "全局财务路由键"),
+    global_fund_diversion_routing_key(RoutingKeyConstant.GLOBAL_FUND_DIVERSION_ROUTING_KEY, "全局财务分流路由键"),
     global_activity_routing_key(RoutingKeyConstant.GLOBAL_ACTIVITY_ROUTING_KEY, "全局活动路由键"),
     
     // 用戶相關事件

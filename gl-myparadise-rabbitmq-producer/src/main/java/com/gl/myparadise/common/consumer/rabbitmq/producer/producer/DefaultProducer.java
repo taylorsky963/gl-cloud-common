@@ -20,6 +20,7 @@ public class DefaultProducer {
 
     private final QueueEnum logQueue = QueueEnum.global_system_operation_save_to_elasticsearch;
     private final QueueEnum fundQueue = QueueEnum.global_fund;
+    private final QueueEnum fundDiversionQueue = QueueEnum.global_fund_diversion;
     private final QueueEnum activityQueue = QueueEnum.global_activity;
 
     public void systemOperationReport(SystemOperationLogReport report) {
@@ -32,6 +33,10 @@ public class DefaultProducer {
 
     public void sendFundReport(FundBaseReport report) throws AmqpException {
         sendRabbitMessageService.sendDirectMessageNoAck(fundQueue.exchange(), fundQueue.routing(), report);
+    }
+
+    public void sendFundDiversionReport(FundBaseReport report) throws AmqpException {
+        sendRabbitMessageService.sendDirectMessageNoAck(fundDiversionQueue.exchange(), fundDiversionQueue.routing(), report);
     }
 
     public void sendActivity(ActivityBaseReport report) {
