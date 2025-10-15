@@ -51,6 +51,11 @@ public enum BalanceSubTypeEnum {
     POINT_CASH_EXCHANGE(ProjectConstant.Fund.BalanceType.POINT, 7001, "积分兑换現金"),
     POINT_CARGO_EXCHANGE(ProjectConstant.Fund.BalanceType.POINT, 7002, "积分兑换實物"),
 
+    //參與券
+    VIP_UPGRADE_TICKET(ProjectConstant.Fund.BalanceType.TICKET, 8001, "VIP升级參與券"),
+    ACT_MANUAL_TICKET(ProjectConstant.Fund.BalanceType.TICKET, 8002, "人工存入參與券"),
+    ACT_SPIN_TICKET(ProjectConstant.Fund.BalanceType.TICKET, 8003, "再來一次參與券"),
+
     ;
 
     private final Integer transactionTyp;
@@ -59,6 +64,7 @@ public enum BalanceSubTypeEnum {
 
     private final String desc;
 
+    
     private static final Map<Integer, BalanceSubTypeEnum> SUB_TYPE_MAP = new HashMap<>();
 
     static {

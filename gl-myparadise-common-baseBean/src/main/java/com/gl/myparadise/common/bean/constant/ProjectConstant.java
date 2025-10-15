@@ -125,6 +125,11 @@ public final class ProjectConstant {
              * 活动奖励类型：积分奖励
              */
             public final static int ACTIVITY_POINT = 15;
+
+            /**
+             * 活动奖励类型：大轉盤參與券
+             */
+            public final static int LUCKY_SPIN_TICKET = 16;
         }
 
         public static final class AwardStatus {
@@ -324,6 +329,11 @@ public final class ProjectConstant {
              * 帐变资金类型： 积分兑换
              */
             public final static int POINT = 7;
+
+            /**
+             * 帐变资金类型： 參與券
+             */
+            public final static int TICKET = 8;
         }
 
         public static final class TransIo { // transactionType
