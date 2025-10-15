@@ -235,6 +235,11 @@ public final class ProjectConstant {
              * 登入充值抽奖模板
              */
             public final static String LOGIN_RECHARGE_TEMPLATE = "loginRechargeTemplate";
+
+            /**
+             * 大轉盤模板
+             */
+            public final static String LUCKY_SPIN_TEMPLATE = "luckySpinTemplate";
         }
 
         public static final class ActivityDataPkCode {
