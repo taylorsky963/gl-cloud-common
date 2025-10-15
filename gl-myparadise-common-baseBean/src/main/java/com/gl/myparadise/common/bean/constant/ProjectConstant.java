@@ -246,10 +246,6 @@ public final class ProjectConstant {
              * VIP
              */
             public final static String VIP = "102ACTIVITYVIPCODE99999";
-            /**
-             * 兑换码优惠
-             */
-            public final static String REDEMPTION_CODE = "102ACTIVITYCODE99998";
 
         }
 
