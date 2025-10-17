@@ -17,6 +17,7 @@ import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 
+import javax.annotation.PostConstruct;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.time.ZoneOffset;
@@ -45,7 +46,12 @@ public abstract class ElasticsearchBaseDao {
     @Autowired
     private RestHighLevelClient rawEsClient;
 
-    public EsClient esClient = new EsClient(rawEsClient);
+    public EsClient esClient;
+
+    @PostConstruct
+    public void init() {
+        this.esClient = new EsClient(rawEsClient);
+    }
 
     public boolean success(SearchResponse response) {
         if (response.status().getStatus() != 200) {
