@@ -43,7 +43,9 @@ public abstract class ElasticsearchBaseDao {
     public ZoneOffset timeZone = ZoneOffset.ofHours(8);
 
     @Autowired
-    public RestHighLevelClient esClient;
+    private RestHighLevelClient rawEsClient;
+
+    public EsClient esClient = new EsClient(rawEsClient);
 
     public boolean success(SearchResponse response) {
         if (response.status().getStatus() != 200) {
