@@ -151,4 +151,20 @@ public class WithdrawReport extends BaseReport {
      * 系统返回的数据唯一id
      */
     private String dataPkCode;
+    /**
+     * 前台会员点击下单时间
+     */
+    private Timestamp clickCreateOrderTime;
+    /**
+     * 服务端接到下单请求的时间
+     */
+    private Timestamp receiveServerTime;
+    /**
+     * 财务操作出款的时间
+     */
+    private Timestamp financialOperatorTime;
+    /**
+     * 三方回调请求的时间
+     */
+    private Timestamp externalReceiveTime;
 }

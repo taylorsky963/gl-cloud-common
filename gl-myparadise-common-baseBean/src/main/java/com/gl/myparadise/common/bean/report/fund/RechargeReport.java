@@ -160,4 +160,18 @@ public class RechargeReport extends BaseReport {
      * 充值优惠dataPkCode
      */
     private String depositBonusDataPkCode;
+    //会员点击下单时间
+    private Timestamp clickTime;
+    //系统接到创建订单请求时间
+    private Timestamp receiveTime;
+    //请求三方返回下单时间
+    private Timestamp tpTime;
+    //前端接到下单时间
+    private Timestamp tpReceiveTime;
+    //用户点go的时间
+    private Timestamp goClickTime;
+    /**
+     * 支付渠道描述
+     */
+    private String paymentChannelDes;
 }
