@@ -79,6 +79,10 @@ public class MemberLoginLogReport extends BaseReport {
      * 是否是app用户
      */
     private Integer isApp;
-
+    /**
+     * 登录时使用的代理ID（用于统计激活用户）
+     * 激活用户定义：所有通过该代理链接登录的用户
+     */
+    private Long loginAgentId;
 
 }
