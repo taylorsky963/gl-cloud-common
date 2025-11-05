@@ -68,6 +68,8 @@ public class UserSync implements Serializable {
 
     private Timestamp lastBettingTime;
 
+    private String loginChannel;
+
     // ================================ memberTpLogin ================================
     private Long memberTpLoginId;
 
