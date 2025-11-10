@@ -32,5 +32,6 @@ public class SeamlessGameTransactionReport extends BaseReport {
     private Date endTime; //交易結束時間
     private String status; //success 只有成功
     private String currencyCode; //平台幣種編號
+    private Long agentId;
     private List<Map<String,Object>> itemData = new ArrayList<>();  //放注單交易信息
 }
