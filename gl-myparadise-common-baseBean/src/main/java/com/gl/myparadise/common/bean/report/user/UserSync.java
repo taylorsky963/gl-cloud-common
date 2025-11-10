@@ -35,6 +35,26 @@ public class UserSync implements Serializable {
     private Timestamp birthdayTime;
     private String realName;
 
+    /**
+     * 手机供应商
+     */
+    private String mobileProvider;
+
+    /**
+     * 注册国家
+     */
+    private String registerCountry;
+
+    /**
+     * 注册省份
+     */
+    private String registerProvince;
+
+    /**
+     * 注册城市
+     */
+    private String registerCity;
+
     // ================================ MemberWebProperty ================================
     private Long memberStatusId;
 
