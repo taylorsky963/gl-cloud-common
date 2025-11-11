@@ -135,6 +135,11 @@ public final class ProjectConstant {
             public final static int LUCKY_SPIN_TICKET = 16;
         }
 
+        public static final class ReceiveMode {
+            public final static int AUTO = 0;
+            public final static int MANUAL = 1;
+        }
+
         public static final class AwardStatus {
             /**
              * 状态：不可用
