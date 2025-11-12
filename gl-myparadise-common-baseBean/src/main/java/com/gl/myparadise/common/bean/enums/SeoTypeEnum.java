@@ -7,9 +7,9 @@ import java.util.Objects;
  * SEO 页面类型枚举。
  */
 public enum SeoTypeEnum {
-    ARTICLE_DETAIL(2, "文章详情"),
-    ARTICLE_CATEGORY(1, "文章分类"),
-    ARTICLE_TAG(4, "文章标签");
+    ARTICLE_DETAIL(1, "文章详情"),
+    ARTICLE_CATEGORY(2, "文章分类"),
+    ARTICLE_TAG(3, "文章标签");
 
 
     private final int code;
