@@ -44,28 +44,28 @@ public class RestHighLevelClientConfiguration {
     }
 
     private static void search(HttpRequest request) {
-        if ("/_cluster/health/".equals(request.getRequestLine().getUri())) {
-            return;
-        }
-
-        String url = Optional.of(request.getRequestLine().getUri())
-                .map(data -> StringUtils.split(data, "?"))
-                .map(data -> data[0])
-                .orElse(request.getRequestLine().getUri());
-
-        if (request instanceof HttpEntityEnclosingRequest) {
-            HttpEntityEnclosingRequest entityRequest = (HttpEntityEnclosingRequest) request;
-            try {
-                if (entityRequest.getEntity() != null) {
-                    String requestBody = EntityUtils.toString(entityRequest.getEntity());
-                    log.info("Elasticsearch Request - URI: {}, Query: {}", url, requestBody);
-                }
-            } catch (IOException e) {
-                log.error("Failed to parse Elasticsearch request body", e);
-            }
-        } else {
-            log.info("Elasticsearch Request - URI: {}, Query: {}", url, "No body");
-        }
+//        if ("/_cluster/health/".equals(request.getRequestLine().getUri())) {
+//            return;
+//        }
+//
+//        String url = Optional.of(request.getRequestLine().getUri())
+//                .map(data -> StringUtils.split(data, "?"))
+//                .map(data -> data[0])
+//                .orElse(request.getRequestLine().getUri());
+//
+//        if (request instanceof HttpEntityEnclosingRequest) {
+//            HttpEntityEnclosingRequest entityRequest = (HttpEntityEnclosingRequest) request;
+//            try {
+//                if (entityRequest.getEntity() != null) {
+//                    String requestBody = EntityUtils.toString(entityRequest.getEntity());
+//                    log.info("Elasticsearch Request - URI: {}, Query: {}", url, requestBody);
+//                }
+//            } catch (IOException e) {
+//                log.error("Failed to parse Elasticsearch request body", e);
+//            }
+//        } else {
+//            log.info("Elasticsearch Request - URI: {}, Query: {}", url, "No body");
+//        }
     }
 
     @Bean(destroyMethod = "close")
