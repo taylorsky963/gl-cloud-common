@@ -54,6 +54,7 @@ public enum BalanceSubTypeEnum {
     POINT_CASH_EXCHANGE(ProjectConstant.Fund.BalanceType.POINT, 7001, "积分兑换現金"),
     POINT_CARGO_EXCHANGE(ProjectConstant.Fund.BalanceType.POINT, 7002, "积分兑换實物"),
     POINT_EXPIRED_DEDUCTION(ProjectConstant.Fund.BalanceType.POINT, 7003, "积分過期扣除"),
+    POINT_VOUCHER_EXCHANGE(ProjectConstant.Fund.BalanceType.POINT, 7004, "积分兑换票券"),
 
     //參與券
     VIP_UPGRADE_TICKET(ProjectConstant.Fund.BalanceType.TICKET, 8001, "VIP升级參與券"),
