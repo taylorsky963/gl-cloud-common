@@ -59,6 +59,7 @@ public enum BalanceSubTypeEnum {
     VIP_UPGRADE_TICKET(ProjectConstant.Fund.BalanceType.TICKET, 8001, "VIP升级參與券"),
     ACT_MANUAL_TICKET(ProjectConstant.Fund.BalanceType.TICKET, 8002, "人工存入參與券"),
     ACT_SPIN_TICKET(ProjectConstant.Fund.BalanceType.TICKET, 8003, "再來一次參與券"),
+    ACT_REWARD_TICKET(ProjectConstant.Fund.BalanceType.TICKET, 8004, "活動派發參與券"),
 
     ;
 
