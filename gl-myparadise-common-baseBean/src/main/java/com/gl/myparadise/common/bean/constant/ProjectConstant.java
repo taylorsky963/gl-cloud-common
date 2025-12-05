@@ -253,6 +253,11 @@ public final class ProjectConstant {
              * 大轉盤模板
              */
             public final static String LUCKY_SPIN_TEMPLATE = "luckySpinTemplate";
+
+            /**
+             * 笔笔存优惠模板
+             */
+            public final static String EVERY_RECHARGE_TEMPLATE = "everyRechargeTemplate";
         }
 
         public static final class ActivityDataPkCode {
