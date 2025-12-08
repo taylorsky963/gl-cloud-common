@@ -10,7 +10,10 @@ import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
 import org.elasticsearch.search.aggregations.Aggregation;
 import org.elasticsearch.search.aggregations.Aggregations;
+import org.elasticsearch.search.aggregations.metrics.Avg;
 import org.elasticsearch.search.aggregations.metrics.Cardinality;
+import org.elasticsearch.search.aggregations.metrics.Max;
+import org.elasticsearch.search.aggregations.metrics.Min;
 import org.elasticsearch.search.aggregations.metrics.Sum;
 import org.elasticsearch.search.aggregations.metrics.ValueCount;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
@@ -177,7 +180,7 @@ public abstract class ElasticsearchBaseDao {
                 } else if (type == BigDecimal.class) {
                     return (V) new BigDecimal(String.valueOf(value));
                 }
-            }else if (aggregation instanceof Cardinality) {
+            } else if (aggregation instanceof Cardinality) {
                 long value = ((Cardinality) aggregation).getValue();
                 if (type == Integer.class) {
                     return (V) Integer.valueOf((int) value);
@@ -185,6 +188,48 @@ public abstract class ElasticsearchBaseDao {
                     return (V) Long.valueOf(value);
                 } else if (type == BigDecimal.class) {
                     return (V) new BigDecimal(String.valueOf(value));
+                }
+            } else if (aggregation instanceof Max) {
+                double value = ((Max) aggregation).getValue();
+                if (Double.isInfinite(value) || Double.isNaN(value)) {
+                    return defaultVal;
+                }
+                if (type == BigDecimal.class) {
+                    return (V) BigDecimal.valueOf(value);
+                } else if (type == Double.class) {
+                    return (V) Double.valueOf(value);
+                } else if (type == Integer.class) {
+                    return (V) Integer.valueOf((int) value);
+                } else if (type == Long.class) {
+                    return (V) Long.valueOf((long) value);
+                }
+            } else if (aggregation instanceof Min) {
+                double value = ((Min) aggregation).getValue();
+                if (Double.isInfinite(value) || Double.isNaN(value)) {
+                    return defaultVal;
+                }
+                if (type == BigDecimal.class) {
+                    return (V) BigDecimal.valueOf(value);
+                } else if (type == Double.class) {
+                    return (V) Double.valueOf(value);
+                } else if (type == Integer.class) {
+                    return (V) Integer.valueOf((int) value);
+                } else if (type == Long.class) {
+                    return (V) Long.valueOf((long) value);
+                }
+            } else if (aggregation instanceof Avg) {
+                double value = ((Avg) aggregation).getValue();
+                if (Double.isInfinite(value) || Double.isNaN(value)) {
+                    return defaultVal;
+                }
+                if (type == BigDecimal.class) {
+                    return (V) BigDecimal.valueOf(value);
+                } else if (type == Double.class) {
+                    return (V) Double.valueOf(value);
+                } else if (type == Integer.class) {
+                    return (V) Integer.valueOf((int) value);
+                } else if (type == Long.class) {
+                    return (V) Long.valueOf((long) value);
                 }
             }
 
