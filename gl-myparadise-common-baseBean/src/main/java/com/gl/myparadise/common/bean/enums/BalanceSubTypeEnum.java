@@ -36,6 +36,7 @@ public enum BalanceSubTypeEnum {
     ACT_LOGIN_RECHARGE_RECHARGE_BONUS(ProjectConstant.Fund.BalanceType.BONUS, 3016, "充值"),
     ACT_REDEMPTION_CODE_BONUS(ProjectConstant.Fund.BalanceType.BONUS, 3017, "兑换码优惠"),
     ACT_LUCKY_SPIN_BONUS(ProjectConstant.Fund.BalanceType.BONUS, 3018, "大转盘奖励"),
+    ACT_EVERY_RECHARGE_BONUS(ProjectConstant.Fund.BalanceType.BONUS, 3019, "笔笔存款"),
 
 
     // 人工存入
@@ -57,9 +58,10 @@ public enum BalanceSubTypeEnum {
     POINT_VOUCHER_EXCHANGE(ProjectConstant.Fund.BalanceType.POINT, 7004, "积分兑换票券"),
 
     //參與券
-    VIP_UPGRADE_TICKET(ProjectConstant.Fund.BalanceType.TICKET, 8001, "VIP升级參與券"),
+    VIP_REWARD_TICKET(ProjectConstant.Fund.BalanceType.TICKET, 8001, "VIP派發參與券"),
     ACT_MANUAL_TICKET(ProjectConstant.Fund.BalanceType.TICKET, 8002, "人工存入參與券"),
     ACT_SPIN_TICKET(ProjectConstant.Fund.BalanceType.TICKET, 8003, "再來一次參與券"),
+    ACT_REWARD_TICKET(ProjectConstant.Fund.BalanceType.TICKET, 8004, "活動派發參與券"),
 
     ;
 

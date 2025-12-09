@@ -135,6 +135,11 @@ public final class ProjectConstant {
             public final static int LUCKY_SPIN_TICKET = 16;
         }
 
+        public static final class ReceiveMode {
+            public final static int AUTO = 0;
+            public final static int MANUAL = 1;
+        }
+
         public static final class AwardStatus {
             /**
              * 状态：不可用
@@ -248,6 +253,11 @@ public final class ProjectConstant {
              * 大轉盤模板
              */
             public final static String LUCKY_SPIN_TEMPLATE = "luckySpinTemplate";
+
+            /**
+             * 笔笔存优惠模板
+             */
+            public final static String EVERY_RECHARGE_TEMPLATE = "everyRechargeTemplate";
         }
 
         public static final class ActivityDataPkCode {
