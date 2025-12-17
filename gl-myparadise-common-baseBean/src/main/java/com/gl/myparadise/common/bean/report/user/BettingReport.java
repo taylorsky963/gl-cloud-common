@@ -41,4 +41,5 @@ public class BettingReport extends BaseReport {
     private Long memberInfoId;
     private Long agentId;
     private Object childItemData;
+    private Integer settleVersion;
 }
