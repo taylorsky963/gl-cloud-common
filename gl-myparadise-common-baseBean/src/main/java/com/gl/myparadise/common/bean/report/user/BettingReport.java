@@ -42,4 +42,5 @@ public class BettingReport extends BaseReport {
     private Long agentId;
     private Object childItemData;
     private Integer settleVersion;
+    private Object settlementHistory;  // 二次結算歷史記錄列表
 }
