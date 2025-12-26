@@ -258,6 +258,11 @@ public final class ProjectConstant {
              * 笔笔存优惠模板
              */
             public final static String EVERY_RECHARGE_TEMPLATE = "everyRechargeTemplate";
+
+            /**
+             * 邀请好友模板
+             */
+            public final static String INVITE_TEMPLATE = "inviteTemplate";
         }
 
         public static final class ActivityDataPkCode {
