@@ -37,6 +37,8 @@ public enum BalanceSubTypeEnum {
     ACT_REDEMPTION_CODE_BONUS(ProjectConstant.Fund.BalanceType.BONUS, 3017, "兑换码优惠"),
     ACT_LUCKY_SPIN_BONUS(ProjectConstant.Fund.BalanceType.BONUS, 3018, "大转盘奖励"),
     ACT_EVERY_RECHARGE_BONUS(ProjectConstant.Fund.BalanceType.BONUS, 3019, "笔笔存款"),
+    ACT_INVITE_BONUS(ProjectConstant.Fund.BalanceType.BONUS, 3020, "邀请好友奖励"),
+    ACT_INVITE_ACHIEVEMENT_BONUS(ProjectConstant.Fund.BalanceType.BONUS, 3021, "邀请好友成就奖励"),
 
 
     // 人工存入

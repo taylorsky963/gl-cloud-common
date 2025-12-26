@@ -20,6 +20,8 @@ public final class ProjectConstant {
         public final static String GL_ACTIVITY_REDEMPTION_CODE = "111";
         public final static String GL_ACTIVITY_REDEMPTION_CODE_BATCH = "112";
         public final static String GL_ACTIVITY_REDEMPTION_CODE_DETAIL = "113";
+        public final static String GL_ACTIVITY_INVITE_RECORD = "114";
+        public final static String GL_ACTIVITY_INVITE_ACHIEVEMENT_RECORD = "115";
     }
 
     public static final class WebsiteConfigKey {
