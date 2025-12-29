@@ -35,6 +35,9 @@ public class UserSync implements Serializable {
     private Timestamp birthdayTime;
     private String realName;
 
+    private Long inviterId;
+    private String inviterMemberAccount;
+
     /**
      * 手机供应商
      */
