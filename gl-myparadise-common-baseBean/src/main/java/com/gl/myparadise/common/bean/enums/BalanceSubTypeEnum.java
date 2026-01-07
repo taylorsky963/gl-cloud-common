@@ -40,7 +40,8 @@ public enum BalanceSubTypeEnum {
     ACT_INVITE_BONUS(ProjectConstant.Fund.BalanceType.BONUS, 3020, "邀请奖励"),
     ACT_INVITE_ACHIEVEMENT_BONUS(ProjectConstant.Fund.BalanceType.BONUS, 3021, "成就奖励"),
     ACT_INVITEE_BONUS(ProjectConstant.Fund.BalanceType.BONUS, 3022, "被邀請人奖励"),
-    ACT_CHICK_TREASURE_BOX_BONUS(ProjectConstant.Fund.BalanceType.BONUS, 3024, "签到活动宝箱奖励"),
+    ACT_CHICK_TREASURE_BOX_BONUS(ProjectConstant.Fund.BalanceType.BONUS, 3024, "宝箱奖励"),
+    ACT_CHICK_CHECKIN_BONUS(ProjectConstant.Fund.BalanceType.BONUS, 3025, "签到奖励"),
 
     // 人工存入
     MANUAL(ProjectConstant.Fund.BalanceType.MANUAL, 5001, "人工存入"),
