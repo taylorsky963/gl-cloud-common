@@ -177,11 +177,24 @@ public class MongodbFileService {
     }
 
     private GridFsResource getById(String id) {
+        // MongoDB 查询文件元数据
+        long mongoQueryStart = System.currentTimeMillis();
         GridFSFile gridFSFile = gridFsTemplate.findOne(Query.query(Criteria.where("_id").is(id)));
+        long mongoQueryTime = System.currentTimeMillis() - mongoQueryStart;
+        log.info("MongoDB 查询文件元数据完成 - id: {}, 耗时: {}ms", id, mongoQueryTime);
+
         if (Objects.isNull(gridFSFile)) {
+            log.warn("MongoDB 未找到文件 - id: {}, 查询耗时: {}ms", id, mongoQueryTime);
             return null;
         }
+
+        // MongoDB 打开下载流
+        long mongoStreamStart = System.currentTimeMillis();
         GridFSDownloadStream downloadStream = gridFSBucket.openDownloadStream(Objects.requireNonNull(gridFSFile).getObjectId());
+        long mongoStreamTime = System.currentTimeMillis() - mongoStreamStart;
+        log.info("MongoDB 打开下载流完成 - id: {}, 耗时: {}ms, 文件大小: {} bytes",
+                id, mongoStreamTime, gridFSFile.getLength());
+
         return new GridFsResource(gridFSFile, downloadStream);
     }
 
@@ -227,22 +240,118 @@ public class MongodbFileService {
     }
 
     public void loadFile(String id, HttpServletResponse response) {
+        long startTime = System.currentTimeMillis();
+        log.info("loadFile 开始, id: {}", id);
+
         if (id.contains(".")) {
             id = id.split("\\.")[0];
         }
+
+        long queryStartTime = System.currentTimeMillis();
         GridFsResource gridFsResource = getById(id);
+        long queryTime = System.currentTimeMillis() - queryStartTime;
+
         if (Objects.isNull(gridFsResource)) {
+            log.warn("loadFile 文件不存在, id: {}, 查询耗时: {}ms", id, queryTime);
             return;
         }
-        try (InputStream inputStream = gridFsResource.getInputStream(); OutputStream outputStream = response.getOutputStream()) {
-            response.setContentType(gridFsResource.getContentType());
+
+        try {
             String fileName = gridFsResource.getFilename();
+            String contentType = gridFsResource.getContentType();
+            long contentLength = gridFsResource.contentLength();
+
+            log.info("loadFile 文件信息 - id: {}, 文件名: {}, 文件类型: {}, 文件大小: {} bytes ({} MB), 查询耗时: {}ms",
+                    id, fileName, contentType, contentLength,
+                    contentLength > 0 ? String.format("%.2f", contentLength / 1024.0 / 1024.0) : "未知",
+                    queryTime);
+
+            long headerStartTime = System.currentTimeMillis();
+            response.setContentType(contentType);
             String encodedFileName = URLEncoder.encode(fileName, StandardCharsets.UTF_8.toString()).replace("+", "%20");
             response.setHeader("content-disposition", "attachment; filename*=" + encodedFileName);
-            IOUtils.copy(inputStream, outputStream);
-            outputStream.flush();
+            long headerTime = System.currentTimeMillis() - headerStartTime;
+            log.info("loadFile 设置响应头完成, id: {}, 耗时: {}ms", id, headerTime);
+
+            // 获取输入流（可能触发 MongoDB 首次读取）
+            long getInputStreamStart = System.currentTimeMillis();
+            InputStream inputStream = null;
+            OutputStream outputStream = null;
+            try {
+                inputStream = gridFsResource.getInputStream();
+                long getInputStreamTime = System.currentTimeMillis() - getInputStreamStart;
+                log.info("MongoDB 获取输入流完成 - id: {}, 耗时: {}ms", id, getInputStreamTime);
+
+                // 获取输出流
+                long getOutputStreamStart = System.currentTimeMillis();
+                outputStream = response.getOutputStream();
+                long getOutputStreamTime = System.currentTimeMillis() - getOutputStreamStart;
+                log.info("获取响应输出流完成 - id: {}, 耗时: {}ms", id, getOutputStreamTime);
+
+                // 记录第一次读取的耗时（MongoDB 首次读取通常最慢）
+                long firstReadStart = System.currentTimeMillis();
+                byte[] firstBuffer = new byte[8192];
+                int firstBytesRead = inputStream.read(firstBuffer);
+                long firstReadTime = System.currentTimeMillis() - firstReadStart;
+                log.info("MongoDB 首次读取数据 - id: {}, 读取字节数: {} bytes, 耗时: {}ms",
+                        id, firstBytesRead > 0 ? firstBytesRead : 0, firstReadTime);
+
+                long transferStartTime = System.currentTimeMillis();
+                long totalBytesTransferred = 0;
+
+                // 如果第一次读取有数据，先写入
+                if (firstBytesRead > 0) {
+                    outputStream.write(firstBuffer, 0, firstBytesRead);
+                    totalBytesTransferred += firstBytesRead;
+                }
+
+                // 继续读取剩余数据
+                byte[] buffer = new byte[16384]; // 16KB 缓冲区
+                int bytesRead;
+                int readCount = 1; // 第一次已经读取了
+                long slowReadCount = 0; // 记录慢读取次数（>100ms）
+
+                while ((bytesRead = inputStream.read(buffer)) != -1) {
+                    long readStart = System.currentTimeMillis();
+                    outputStream.write(buffer, 0, bytesRead);
+                    long readTime = System.currentTimeMillis() - readStart;
+                    totalBytesTransferred += bytesRead;
+                    readCount++;
+
+                    // 记录慢读取
+                    if (readTime > 100) {
+                        slowReadCount++;
+                        log.warn("MongoDB 慢读取检测 - id: {}, 第{}次读取, 字节数: {} bytes, 耗时: {}ms",
+                                id, readCount, bytesRead, readTime);
+                    }
+                }
+
+                outputStream.flush();
+                long transferTime = System.currentTimeMillis() - transferStartTime;
+                long totalTime = System.currentTimeMillis() - startTime;
+
+                log.info("loadFile 传输完成 - id: {}, 总传输字节数: {} bytes, 读取次数: {}, 慢读取次数: {}, 传输耗时: {}ms, 总耗时: {}ms, 平均速度: {} KB/s",
+                        id, totalBytesTransferred, readCount, slowReadCount, transferTime, totalTime,
+                        transferTime > 0 ? String.format("%.2f", totalBytesTransferred / 1024.0 / (transferTime / 1000.0)) : "0");
+            } finally {
+                if (inputStream != null) {
+                    try {
+                        inputStream.close();
+                    } catch (Exception e) {
+                        log.error("关闭输入流异常", e);
+                    }
+                }
+                if (outputStream != null) {
+                    try {
+                        outputStream.close();
+                    } catch (Exception e) {
+                        log.error("关闭输出流异常", e);
+                    }
+                }
+            }
         } catch (Exception ex) {
-            log.error("loadFile", ex);
+            long totalTime = System.currentTimeMillis() - startTime;
+            log.error("loadFile 异常, id: {}, 总耗时: {}ms", id, totalTime, ex);
             return;
         }
     }
