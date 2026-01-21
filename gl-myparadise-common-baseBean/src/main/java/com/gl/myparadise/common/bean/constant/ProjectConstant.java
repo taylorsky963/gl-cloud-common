@@ -17,6 +17,7 @@ public final class ProjectConstant {
         public final static String GL_ACTIVITY_DAILY_FIRST_RECHARGE_RECORD = "108";
         public final static String GL_ACTIVITY_RECHARGE_RECORD = "109";
         public final static String GL_ACTIVITY_LOGIN_RECHARGE_PENDING_RECORD = "110";
+        public final static String GL_ACTIVITY_USER_INFO_BINDING_RECORD = "114";
         public final static String GL_ACTIVITY_REDEMPTION_CODE = "111";
         public final static String GL_ACTIVITY_REDEMPTION_CODE_BATCH = "112";
         public final static String GL_ACTIVITY_REDEMPTION_CODE_DETAIL = "113";
@@ -265,6 +266,11 @@ public final class ProjectConstant {
              * 邀请好友模板
              */
             public final static String INVITE_TEMPLATE = "inviteTemplate";
+
+            /**
+             * 信息绑定优惠模板
+             */
+            public final static String INFO_BINDING_TEMPLATE = "infoBindingTemplate";
         }
 
         public static final class ActivityDataPkCode {
