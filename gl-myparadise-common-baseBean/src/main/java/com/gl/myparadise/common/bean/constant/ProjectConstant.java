@@ -136,6 +136,11 @@ public final class ProjectConstant {
              * 活动奖励类型：大轉盤參與券
              */
             public final static int LUCKY_SPIN_TICKET = 16;
+
+            /**
+             * 活动奖励类型：推进货币（燃油）
+             */
+            public final static int PROPULSION_CURRENCY = 17;
         }
 
         public static final class ReceiveMode {
@@ -361,6 +366,11 @@ public final class ProjectConstant {
              * 帐变资金类型： 參與券
              */
             public final static int TICKET = 8;
+
+            /**
+             * 帐变资金类型： 推進貨幣 (燃油)
+             */
+            public final static int FUEL = 9;
         }
 
         public static final class TransIo { // transactionType
