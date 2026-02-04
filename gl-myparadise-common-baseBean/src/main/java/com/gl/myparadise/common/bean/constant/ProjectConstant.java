@@ -285,6 +285,8 @@ public final class ProjectConstant {
              */
             public final static String VIP = "102ACTIVITYVIPCODE99999";
 
+            public final static String JEEPNEY = "102ACTJPJPJPCODE99999";
+
         }
 
         /**
