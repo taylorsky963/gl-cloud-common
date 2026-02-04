@@ -74,6 +74,8 @@ public enum BalanceSubTypeEnum {
 
     ACT_RECHARGE_FUEL(ProjectConstant.Fund.BalanceType.FUEL, 9001, "充值加油"),
     ACT_INVITE_FUEL(ProjectConstant.Fund.BalanceType.FUEL, 9002, "邀请加油"),
+    ACT_JEEPNEY_ENTER_REWARD(ProjectConstant.Fund.BalanceType.BONUS, 9003, "入场奖励"),
+    ACT_JEEPNEY_STAGE_REWARD(ProjectConstant.Fund.BalanceType.BONUS, 9004, "关卡奖励"),
 
     ;
 
