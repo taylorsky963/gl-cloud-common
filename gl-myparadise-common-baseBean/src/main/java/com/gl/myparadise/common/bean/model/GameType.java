@@ -11,6 +11,7 @@ public enum GameType {
     LOTTERY("4", "彩票"),
     FISH("5", "捕鱼"),
     CHESS("6", "棋牌"),
+    MINIGAME("8", "小游戏"),
     XLIVE("9", "竞猜"),
     ESPORTS("10", "电竞"),
     UNKNOWN("0", "未知");
