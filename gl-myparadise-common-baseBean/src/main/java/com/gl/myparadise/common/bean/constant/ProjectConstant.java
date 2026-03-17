@@ -271,6 +271,11 @@ public final class ProjectConstant {
              * 信息绑定优惠模板
              */
             public final static String INFO_BINDING_TEMPLATE = "infoBindingTemplate";
+
+            /**
+             * 新返水优惠模板
+             */
+            public final static String NEW_REBATE_TEMPLATE = "newRebateTemplate";
         }
 
         public static final class ActivityDataPkCode {
