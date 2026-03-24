@@ -12,4 +12,6 @@ public class QueueConstant {
 
     public final static String EVENT_DATE_COLLECTION = "global-event-date-collection";
     public final static String EVENT_DISPSET_COLLECTION = "global-event-dispset-collection";
+
+    public final static String GLOBAL_EVENT_BATCH_SAVE_TO_ELASTICSEARCH = "global-event-batch-save-to-elasticsearch";
 }

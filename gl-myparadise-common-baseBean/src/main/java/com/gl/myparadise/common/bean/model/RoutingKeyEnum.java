@@ -40,6 +40,9 @@ public enum RoutingKeyEnum {
 
     // 活动相关事件
     global_report_activity_member_award(RoutingKeyConstant.GLOBAL_REPORT_ACTIVITY_MEMBER_AWARD, "流水变动事件"),
+
+    // 批次事件
+    global_event_batch_routing_key(RoutingKeyConstant.GLOBAL_EVENT_BATCH_ROUTING_KEY, "全局事件批次路由鍵"),
     ;
 
     private final String routingKeyName;
