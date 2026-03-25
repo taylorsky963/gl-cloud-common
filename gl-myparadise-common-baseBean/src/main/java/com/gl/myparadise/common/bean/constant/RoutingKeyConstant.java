@@ -33,4 +33,7 @@ public class RoutingKeyConstant {
 
     // 活动相关事件
     public final static String GLOBAL_REPORT_ACTIVITY_MEMBER_AWARD = "global-report-activity-member-award";
+
+    // 批次事件
+    public final static String GLOBAL_EVENT_BATCH_ROUTING_KEY = "global-event-batch-route-key";
 } 
