@@ -8,12 +8,19 @@ import com.gl.myparadise.common.bean.report.fund.WithdrawReport;
 import com.gl.myparadise.common.bean.report.system.SystemOperationLogReport;
 import com.gl.myparadise.common.bean.report.user.*;
 
+import java.util.List;
+
 public interface ReportService {
 
     /**
      * 用户注册上报
      */
     void registerReport(UserRegisterReport report);
+
+    /**
+     * 用户批次注册上报
+     */
+    void registerReportBatch(List<UserRegisterReport> reports);
 
     /**
      * 用户信息同步上报
