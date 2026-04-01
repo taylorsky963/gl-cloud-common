@@ -23,6 +23,7 @@ public final class ProjectConstant {
         public final static String GL_ACTIVITY_REDEMPTION_CODE_DETAIL = "113";
         public final static String GL_ACTIVITY_INVITE_RECORD = "114";
         public final static String GL_ACTIVITY_INVITE_ACHIEVEMENT_RECORD = "115";
+        public final static String GL_ACTIVITY_FIRST_DEPOSIT_RECORD = "117";
     }
 
     public static final class WebsiteConfigKey {
@@ -271,6 +272,11 @@ public final class ProjectConstant {
              * 信息绑定优惠模板
              */
             public final static String INFO_BINDING_TEMPLATE = "infoBindingTemplate";
+
+            /**
+             * 首存优惠模板
+             */
+            public final static String FIRST_DEPOSIT_TEMPLATE = "firstDepositTemplate";
         }
 
         public static final class ActivityDataPkCode {
