@@ -44,6 +44,7 @@ public enum BalanceSubTypeEnum {
     ACT_CHICK_TREASURE_BOX_BONUS(ProjectConstant.Fund.BalanceType.BONUS, 3024, "宝箱奖励"),
     ACT_CHICK_CHECKIN_BONUS(ProjectConstant.Fund.BalanceType.BONUS, 3025, "签到奖励"),
     ACT_RED_PACKET_RAIN_BONUS(ProjectConstant.Fund.BalanceType.BONUS, 3026, "红包雨奖励"),
+    ACT_FIRST_DEPOSIT_BONUS(ProjectConstant.Fund.BalanceType.BONUS, 3030, "首存优惠"),
 
 
     // 人工存入
