@@ -277,6 +277,11 @@ public final class ProjectConstant {
              * 首存优惠模板
              */
             public final static String FIRST_DEPOSIT_TEMPLATE = "firstDepositTemplate";
+
+            /**
+             * 新返水优惠模板
+             */
+            public final static String NEW_REBATE_TEMPLATE = "newRebateTemplate";
         }
 
         public static final class ActivityDataPkCode {
