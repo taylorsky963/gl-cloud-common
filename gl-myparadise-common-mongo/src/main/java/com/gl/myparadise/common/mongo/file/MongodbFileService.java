@@ -76,12 +76,13 @@ public class MongodbFileService {
         String id = glExportService.startExport(userId, fileName);
         String mainTraceId = MDC.get("traceId") == null ? UUID.randomUUID().toString() : MDC.get("traceId");
         log.info("开始异步导出 {}", mainTraceId);
-        executor.execute(() -> save(mainTraceId, fileName, method, doNext, args, (data) -> defaultExportCallBacker(id, fileName).accept(data), locale));
+        executor.execute(() -> save(mainTraceId, id, fileName, method, doNext, args, (data) -> defaultExportCallBacker(id, fileName).accept(data), locale));
     }
 
     @SneakyThrows
     private <T, R> void save(
             String mainTraceId,
+            @Nullable String exportId,
             @NonNull String fileName,
             @NonNull Function<R, PageResult<T>> method,
             @NonNull Function<R, R> doNext,
@@ -126,6 +127,7 @@ public class MongodbFileService {
 
         } catch (Exception ex) {
             log.error("异步导出失败", ex);
+            glExportService.failExport(exportId);
         } finally {
             try {
                 if (gridFSUploadStream != null) {
