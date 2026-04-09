@@ -319,6 +319,8 @@ public final class ProjectConstant {
         public static final class LockKey {
             public final static String DATA_CURRENCY_CONFIG_KEY = "DATA_CURRENCY_CONFIG_KEY_";
             public final static String DATA_CBO_MAPPING_KEY = "DATA_CBO_MAPPING_KEY_";
+            /** MegaXcess MXGameMapping 缓存 Redis 键前缀 */
+            public final static String DATA_MX_MAPPING_KEY = "DATA_MX_MAPPING_KEY_";
             public final static String DATA_GAMELIST_MAPPING_KEY = "DATA_GAMELIST_MAPPING_KEY_";
             public final static String AGENT_CACHE_KEY_PREFIX = "DATA_AGENT_CONFIG_KEY_";
         }
