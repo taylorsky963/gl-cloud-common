@@ -137,6 +137,11 @@ public final class ProjectConstant {
              * 活动奖励类型：大轉盤參與券
              */
             public final static int LUCKY_SPIN_TICKET = 16;
+
+            /**
+             * 活动奖励类型：宝箱
+             */
+            public final static int TREASURE_BOX = 18;
         }
 
         public static final class ReceiveMode {
