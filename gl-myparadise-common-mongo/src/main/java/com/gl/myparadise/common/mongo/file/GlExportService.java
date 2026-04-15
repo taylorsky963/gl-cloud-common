@@ -66,6 +66,17 @@ public class GlExportService {
         updateById(export);
     }
 
+    public void failExport(String id) {
+        if (ObjectUtils.isEmpty(id)) {
+            return;
+        }
+        GlExport export = new GlExport();
+        export.setId(id);
+        export.setCompleteDate(new Date().getTime());
+        export.setStatus(2);
+        updateById(export);
+    }
+
     public void updateTitle(String id, String title, String time) {
         if (StringUtils.isBlank(id) || StringUtils.isBlank(title)) {
             return;
