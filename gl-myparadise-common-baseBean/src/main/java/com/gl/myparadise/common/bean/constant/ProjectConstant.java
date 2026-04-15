@@ -23,6 +23,7 @@ public final class ProjectConstant {
         public final static String GL_ACTIVITY_REDEMPTION_CODE_DETAIL = "113";
         public final static String GL_ACTIVITY_INVITE_RECORD = "114";
         public final static String GL_ACTIVITY_INVITE_ACHIEVEMENT_RECORD = "115";
+        public final static String GL_ACTIVITY_INFO_BINDING_EXCLUDE_MEMBER = "116";
         public final static String GL_ACTIVITY_FIRST_DEPOSIT_RECORD = "117";
     }
 
