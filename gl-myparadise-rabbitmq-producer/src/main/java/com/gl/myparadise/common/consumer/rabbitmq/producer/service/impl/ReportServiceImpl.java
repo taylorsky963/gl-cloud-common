@@ -18,6 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -38,6 +39,15 @@ public class ReportServiceImpl implements ReportService {
     public void registerReport(UserRegisterReport report) {
         report.set("uuid", report.getMemberInfoId());
         reportProducer.sendMessage(ReportEvent.Register, report);
+    }
+
+    @Override
+    public void registerReportBatch(List<UserRegisterReport> reports) {
+        if (reports == null || reports.isEmpty()) {
+            return;
+        }
+        reports.forEach(r -> r.set("uuid", r.getMemberInfoId()));
+        reportProducer.sendBatchMessage(ReportEvent.Register, reports);
     }
 
     @Override

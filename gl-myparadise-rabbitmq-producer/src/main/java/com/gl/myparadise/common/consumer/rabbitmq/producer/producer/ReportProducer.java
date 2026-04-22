@@ -14,8 +14,10 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -80,6 +82,24 @@ public class ReportProducer {
                 return RoutingKeyEnum.global_report_member_login_log;
             default:
                 throw new IllegalArgumentException("未知的事件类型: " + event);
+        }
+    }
+
+    public void sendBatchMessage(ReportEvent event, List<? extends BaseReport> reports) {
+        try {
+            List<Map<String, Object>> msgList = new ArrayList<>(reports.size());
+            for (BaseReport report : reports) {
+                this.packMessage(event, report);
+                msgList.add(report.getMsg());
+            }
+            log.info("批次事件上报:{}, size:{}", event, msgList.size());
+            sendRabbitMessageService.sendDirectMessageNoAck(
+                    ExchangeEnum.globalReport.getExchangeName(),
+                    RoutingKeyEnum.global_event_batch_routing_key.getRoutingKeyName(),
+                    msgList
+            );
+        } catch (Exception ex) {
+            log.error("批次上報事件數據發生異常", ex);
         }
     }
 

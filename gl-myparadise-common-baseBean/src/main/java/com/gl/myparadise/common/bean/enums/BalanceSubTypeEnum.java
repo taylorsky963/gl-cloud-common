@@ -43,6 +43,11 @@ public enum BalanceSubTypeEnum {
     ACT_INFO_BINDING_BONUS(ProjectConstant.Fund.BalanceType.BONUS, 3023, "信息绑定优惠"),
     ACT_CHICK_TREASURE_BOX_BONUS(ProjectConstant.Fund.BalanceType.BONUS, 3024, "宝箱奖励"),
     ACT_CHICK_CHECKIN_BONUS(ProjectConstant.Fund.BalanceType.BONUS, 3025, "签到奖励"),
+    ACT_TREASURE_BOX_DAILY_GRANT(ProjectConstant.Fund.BalanceType.BONUS, 3027, "每日宝箱派发"),
+    ACT_TREASURE_BOX_OPEN(ProjectConstant.Fund.BalanceType.BONUS, 3028, "开启宝箱彩金"),
+    ACT_RED_PACKET_RAIN_BONUS(ProjectConstant.Fund.BalanceType.BONUS, 3026, "红包雨奖励"),
+    ACT_FIRST_DEPOSIT_BONUS(ProjectConstant.Fund.BalanceType.BONUS, 3030, "首存优惠"),
+    ACT_NEW_REBATE_BONUS(ProjectConstant.Fund.BalanceType.BONUS, 3029, "新返水奖励"),
 
 
     // 人工存入

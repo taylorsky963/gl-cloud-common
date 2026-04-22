@@ -24,6 +24,7 @@ public final class ProjectConstant {
         public final static String GL_ACTIVITY_INVITE_RECORD = "114";
         public final static String GL_ACTIVITY_INVITE_ACHIEVEMENT_RECORD = "115";
         public final static String GL_ACTIVITY_INFO_BINDING_EXCLUDE_MEMBER = "116";
+        public final static String GL_ACTIVITY_FIRST_DEPOSIT_RECORD = "117";
     }
 
     public static final class WebsiteConfigKey {
@@ -137,6 +138,11 @@ public final class ProjectConstant {
              * 活动奖励类型：大轉盤參與券
              */
             public final static int LUCKY_SPIN_TICKET = 16;
+
+            /**
+             * 活动奖励类型：宝箱
+             */
+            public final static int TREASURE_BOX = 18;
         }
 
         public static final class ReceiveMode {
@@ -272,6 +278,16 @@ public final class ProjectConstant {
              * 信息绑定优惠模板
              */
             public final static String INFO_BINDING_TEMPLATE = "infoBindingTemplate";
+
+            /**
+             * 首存优惠模板
+             */
+            public final static String FIRST_DEPOSIT_TEMPLATE = "firstDepositTemplate";
+
+            /**
+             * 新返水优惠模板
+             */
+            public final static String NEW_REBATE_TEMPLATE = "newRebateTemplate";
         }
 
         public static final class ActivityDataPkCode {
@@ -309,6 +325,8 @@ public final class ProjectConstant {
         public static final class LockKey {
             public final static String DATA_CURRENCY_CONFIG_KEY = "DATA_CURRENCY_CONFIG_KEY_";
             public final static String DATA_CBO_MAPPING_KEY = "DATA_CBO_MAPPING_KEY_";
+            /** MegaXcess MXGameMapping 缓存 Redis 键前缀 */
+            public final static String DATA_MX_MAPPING_KEY = "DATA_MX_MAPPING_KEY_";
             public final static String DATA_GAMELIST_MAPPING_KEY = "DATA_GAMELIST_MAPPING_KEY_";
             public final static String AGENT_CACHE_KEY_PREFIX = "DATA_AGENT_CONFIG_KEY_";
         }
