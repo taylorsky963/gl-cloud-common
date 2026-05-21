@@ -60,6 +60,10 @@ public enum BalanceSubTypeEnum {
     // 壞帳清帳
     BAD_DEBT_SETTLE(ProjectConstant.Fund.BalanceType.MANUAL, 5005, "壞帳清帳"),
 
+    // 代理调账（代理后台对名下玩家手工调账；存入消耗代理调账额度，转出不动额度）
+    AGENT_DEPOSIT(ProjectConstant.Fund.BalanceType.MANUAL, 5006, "代理存入"),
+    AGENT_TRANSFER_OUT(ProjectConstant.Fund.BalanceType.MANUAL, 5007, "代理转出"),
+
     // 游戏
     GAME_TRANSFER_IN(ProjectConstant.Fund.BalanceType.GAME, 6001, "游戏转入"),
     GAME_TRANSFER_OUT(ProjectConstant.Fund.BalanceType.GAME, 6002, "游戏转出"),
