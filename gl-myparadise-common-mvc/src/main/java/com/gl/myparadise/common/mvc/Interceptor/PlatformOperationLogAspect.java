@@ -40,6 +40,8 @@ import java.util.regex.Pattern;
  * <ol>
  *     <li>方法上有 {@link com.gl.myparadise.common.mvc.annotation.IgnoreOperationLog} 註解</li>
  *     <li>URL 命中內建黑名單 (heartbeat / actuator / get-logo-url / /log/ 等)</li>
+ *     <li>URL 命中 DB 動態忽略規則 ({@link PlatformOperationLogIgnoreRuleCache}, 由
+ *         {@code platformOperationLogIgnoreRule} 表維護, 帶 TTL 本地快照)</li>
  *     <li>無 uid header (未認證請求)</li>
  * </ol>
  */
@@ -82,6 +84,9 @@ public class PlatformOperationLogAspect {
 
     @Autowired
     private PlatformOperationLogReporter platformOperationLogReporter;
+
+    @Autowired(required = false)
+    private PlatformOperationLogIgnoreRuleCache ignoreRuleCache;
 
     @Value("${spring.application.name:unknown}")
     private String serviceName;
@@ -129,6 +134,10 @@ public class PlatformOperationLogAspect {
         String requestUrl = request.getRequestURI();
 
         if (isUrlIgnored(requestUrl)) {
+            return pjp.proceed();
+        }
+
+        if (ignoreRuleCache != null && ignoreRuleCache.shouldIgnore(request.getMethod(), requestUrl)) {
             return pjp.proceed();
         }
 
