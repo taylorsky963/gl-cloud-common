@@ -50,6 +50,12 @@
             <artifactId>logstash-logback-encoder</artifactId>
             <version>7.3</version>
         </dependency>
+
+        <!-- 提供 @FeignClient (PlatformOperationLogAspect 上報用) -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
