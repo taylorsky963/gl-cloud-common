@@ -154,4 +154,9 @@ public class UserSync implements Serializable {
      */
     private Integer vipLevel;
     private BigDecimal point;
+
+    /**
+     * 监管上报状态：0=未上报，1=上报中
+     */
+    private Integer reportStatus;
 }
