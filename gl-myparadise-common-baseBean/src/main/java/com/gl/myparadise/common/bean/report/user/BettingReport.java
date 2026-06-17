@@ -45,4 +45,5 @@ public class BettingReport extends BaseReport {
     private Object settlementHistory;  // 二次結算歷史記錄列表
     private Object eventExtraInfo;  // 額外的賽事信息、彩票信息
     private Object casinoBetDetails;  // 賭場遊戲詳情列表
+    private String complianceStatus;  // 1=灰产，0或null为合规路线
 }
