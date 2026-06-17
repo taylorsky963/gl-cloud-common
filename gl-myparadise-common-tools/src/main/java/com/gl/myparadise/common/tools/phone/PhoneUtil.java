@@ -130,6 +130,19 @@ public class PhoneUtil {
         return geocoder.getDescriptionForNumber(pn, Locale.CHINESE);
     }
 
+    /**
+     * 菲律宾手机号格式校验（与登录/注册页规则一致）
+     * 规则：09 开头 + 11 位，或 9 开头 + 10 位
+     * @param phone 待校验手机号
+     * @return true=格式合法
+     */
+    public static boolean isValidPhPhone(String phone) {
+        if (phone == null || phone.isEmpty()) {
+            return false;
+        }
+        return phone.matches("^09\\d{9}$") || phone.matches("^9\\d{9}$");
+    }
+
     public static void main(String args[]) throws NumberParseException {
 
         System.out.println(checkPhoneNumber("7788870630",86));
