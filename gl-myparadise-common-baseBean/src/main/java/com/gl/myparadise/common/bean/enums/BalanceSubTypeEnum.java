@@ -48,6 +48,7 @@ public enum BalanceSubTypeEnum {
     ACT_RED_PACKET_RAIN_BONUS(ProjectConstant.Fund.BalanceType.BONUS, 3026, "红包雨奖励"),
     ACT_FIRST_DEPOSIT_BONUS(ProjectConstant.Fund.BalanceType.BONUS, 3030, "首存优惠"),
     ACT_NEW_REBATE_BONUS(ProjectConstant.Fund.BalanceType.BONUS, 3029, "新返水奖励"),
+    ACT_VENDOR_LEADERBOARD_BONUS(ProjectConstant.Fund.BalanceType.BONUS, 3031, "排行榜活动奖励"),
 
 
     // 人工存入
