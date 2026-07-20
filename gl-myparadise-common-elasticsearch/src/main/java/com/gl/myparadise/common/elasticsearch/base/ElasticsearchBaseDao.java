@@ -44,8 +44,6 @@ public abstract class ElasticsearchBaseDao {
     public final static String SEAMLESS_GAME_TRANSACTION = "report-seamless-game-transaction-20";
     public final static String MEMBER_LOGIN_LOG = "report-member-login-log-20";
 
-    public ZoneOffset timeZone = ZoneOffset.ofHours(8);
-
     @Autowired
     private RestHighLevelClient rawEsClient;
 
