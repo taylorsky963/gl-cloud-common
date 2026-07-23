@@ -63,6 +63,24 @@ public class ExportUtils {
     }
 
     /**
+     * 获取「BOM + 表头 + 换行」的字节内容，用于查询结果为空时仍能输出带完整表头的文件
+     */
+    public static byte[] getHeaderData(Class<?> classz, MessageSource messageSource, Locale locale) {
+        try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
+            // BOM标识
+            outputStream.write(new byte[]{(byte) 0xEF, (byte) 0xBB, (byte) 0xBF});
+            // 表头
+            outputStream.write(getTitle(classz, messageSource, locale).getBytes(StandardCharsets.UTF_8));
+            outputStream.write("\r\n".getBytes(StandardCharsets.UTF_8));
+            outputStream.flush();
+            return outputStream.toByteArray();
+        } catch (Exception ex) {
+            log.error("getHeaderData error", ex);
+            return null;
+        }
+    }
+
+    /**
      * 获取要导出数据的表头
      */
     public static <T> String getTitle(Class<T> classz, MessageSource messageSource, Locale locale) {
