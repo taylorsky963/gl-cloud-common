@@ -83,7 +83,7 @@ public class MongodbFileService {
             @NonNull Function<R, PageResult<T>> method,
             @NonNull Function<R, R> doNext,
             @NonNull R args,
-            @Nullable Class<T> exportClass
+            @Nullable Class<? extends T> exportClass
     ) {
         Locale locale = LocaleContextHolder.getLocale();
         String fileName = StringUtils.trimToEmpty(messageSource.getMessage(rawFileName, null, rawFileName, locale));
@@ -103,7 +103,7 @@ public class MongodbFileService {
             @NonNull R args,
             @Nullable Consumer<RemainingTimeUtils.ProcessVO> callBacker,
             Locale locale,
-            @Nullable Class<T> exportClass
+            @Nullable Class<? extends T> exportClass
     ) {
         MDC.put("traceId", mainTraceId);
         log.info("开始异步导出 save {}", mainTraceId);
