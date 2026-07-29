@@ -71,12 +71,26 @@ public class MongodbFileService {
             @NonNull Function<R, R> doNext,
             @NonNull R args
     ) {
+        saveAsync(userId, rawFileName, method, doNext, args, null);
+    }
+
+    /**
+     * @param exportClass 导出行 DTO 的 class；传入后查询结果为空时仍会输出带完整表头的空文件
+     */
+    public <T, R> void saveAsync(
+            @NonNull Long userId,
+            @NonNull String rawFileName,
+            @NonNull Function<R, PageResult<T>> method,
+            @NonNull Function<R, R> doNext,
+            @NonNull R args,
+            @Nullable Class<? extends T> exportClass
+    ) {
         Locale locale = LocaleContextHolder.getLocale();
         String fileName = StringUtils.trimToEmpty(messageSource.getMessage(rawFileName, null, rawFileName, locale));
         String id = glExportService.startExport(userId, fileName);
         String mainTraceId = MDC.get("traceId") == null ? UUID.randomUUID().toString() : MDC.get("traceId");
         log.info("开始异步导出 {}", mainTraceId);
-        executor.execute(() -> save(mainTraceId, id, fileName, method, doNext, args, (data) -> defaultExportCallBacker(id, fileName).accept(data), locale));
+        executor.execute(() -> save(mainTraceId, id, fileName, method, doNext, args, (data) -> defaultExportCallBacker(id, fileName).accept(data), locale, exportClass));
     }
 
     @SneakyThrows
@@ -88,7 +102,8 @@ public class MongodbFileService {
             @NonNull Function<R, R> doNext,
             @NonNull R args,
             @Nullable Consumer<RemainingTimeUtils.ProcessVO> callBacker,
-            Locale locale
+            Locale locale,
+            @Nullable Class<? extends T> exportClass
     ) {
         MDC.put("traceId", mainTraceId);
         log.info("开始异步导出 save {}", mainTraceId);
@@ -123,7 +138,14 @@ public class MongodbFileService {
                 invokeNotify(startTime, currentPage.getTotal(), totalDownloadElementCount, objectId, callBacker, false);
                 args = doNext.apply(args);
             }
-            invokeNotify(startTime, currentPage.getTotal(), totalDownloadElementCount, objectId, callBacker, true);
+            // 查询结果为空时仍输出完整表头，避免下载到全空文件
+            if (totalDownloadElementCount == 0 && exportClass != null) {
+                byte[] headerData = ExportUtils.getHeaderData(exportClass, messageSource, locale);
+                if (headerData != null) {
+                    gridFSUploadStream.write(headerData);
+                }
+            }
+            invokeNotify(startTime, currentPage == null ? 0 : currentPage.getTotal(), totalDownloadElementCount, objectId, callBacker, true);
 
         } catch (Exception ex) {
             log.error("异步导出失败", ex);
