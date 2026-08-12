@@ -62,6 +62,12 @@ public class GLServerResponseAdvice implements ResponseBodyAdvice<Object> {
                                   ServerHttpRequest serverHttpRequest,
                                   ServerHttpResponse serverHttpResponse) {
 
+        if (object == null) {
+
+            return new ServiceRsModel().setRsData(null);
+
+        }
+
         if(object.getClass().equals(ServiceRsModel.class)){
 
             return object;
