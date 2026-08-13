@@ -16,13 +16,11 @@ public class MailAddressPattern {
 
 
     //多人邮件地址以;分割，;结尾
-    private static final String REGEX_EMAIL_MULTI = "^([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,};(([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,};)*$";
-
+    private static final String REGEX_EMAIL_MULTI = "^([a-z0-9A-Z_+]+[-.]?)+[a-z0-9A-Z_+]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,};(([a-z0-9A-Z_+]+[-.]?)+[a-z0-9A-Z_+]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,};)*$";
     /**
-     * 正则表达式：验证单个邮箱（允许英文大小写字母、数字、下划线、英文句号、以及中划线组成）
+     * 正则表达式：验证单个邮箱（允许英文大小写字母、数字、下划线、+号，英文句号、以及中划线组成）
      */
-    private static final String REGEX_EMAIL = "^([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$";
-
+    private static final String REGEX_EMAIL = "^([a-z0-9A-Z_+]+[-.]?)+[a-z0-9A-Z_+]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$";
 
     public static boolean isEmail(String email) {
         // return Pattern.matches(REGEX_EMAIL, email);
