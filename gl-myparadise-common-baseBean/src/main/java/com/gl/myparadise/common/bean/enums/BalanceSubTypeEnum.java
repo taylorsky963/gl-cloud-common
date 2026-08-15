@@ -49,6 +49,9 @@ public enum BalanceSubTypeEnum {
     ACT_FIRST_DEPOSIT_BONUS(ProjectConstant.Fund.BalanceType.BONUS, 3030, "首存优惠"),
     ACT_NEW_REBATE_BONUS(ProjectConstant.Fund.BalanceType.BONUS, 3029, "新返水奖励"),
     ACT_VENDOR_LEADERBOARD_BONUS(ProjectConstant.Fund.BalanceType.BONUS, 3031, "排行榜活动奖励"),
+    ACT_INVITE_DEPOSIT_REBATE_BONUS(ProjectConstant.Fund.BalanceType.BONUS, 3032, "邀请充值返佣"),
+    ACT_INVITE_BET_REBATE_BONUS(ProjectConstant.Fund.BalanceType.BONUS, 3033, "邀请投注返佣"),
+    ACT_INVITE_WINLOSS_REBATE_BONUS(ProjectConstant.Fund.BalanceType.BONUS, 3034, "邀请输赢返佣"),
 
 
     // 人工存入
