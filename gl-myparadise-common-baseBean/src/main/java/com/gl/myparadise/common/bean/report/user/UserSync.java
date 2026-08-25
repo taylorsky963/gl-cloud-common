@@ -38,6 +38,11 @@ public class UserSync implements Serializable {
     private Long inviterId;
     private String inviterMemberAccount;
 
+    /** 顶级好友（邀请链链首）会员ID，与 memberInfo 同名字段反射拷贝 */
+    private Long rootInviterId;
+    /** 相对链首的层级：链首=0，一级好友=1 */
+    private Integer inviterDepth;
+
     /**
      * 手机供应商
      */
