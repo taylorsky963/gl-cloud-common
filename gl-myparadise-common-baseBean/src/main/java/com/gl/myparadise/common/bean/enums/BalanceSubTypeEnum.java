@@ -84,6 +84,13 @@ public enum BalanceSubTypeEnum {
     ACT_SPIN_TICKET(ProjectConstant.Fund.BalanceType.TICKET, 8003, "再來一次參與券"),
     ACT_REWARD_TICKET(ProjectConstant.Fund.BalanceType.TICKET, 8004, "活動派發參與券"),
 
+
+    ACT_RECHARGE_FUEL(ProjectConstant.Fund.BalanceType.FUEL, 9001, "充值加油"),
+    ACT_INVITE_FUEL(ProjectConstant.Fund.BalanceType.FUEL, 9002, "邀请加油"),
+    ACT_JEEPNEY_ENTER_REWARD(ProjectConstant.Fund.BalanceType.BONUS, 9003, "入场奖励"),
+    ACT_JEEPNEY_STAGE_REWARD(ProjectConstant.Fund.BalanceType.BONUS, 9004, "闯关奖励"),
+    ACT_EXCHANGE_FUEL(ProjectConstant.Fund.BalanceType.FUEL, 9005, "积分兑换推进货币"),
+
     ;
 
     private final Integer transactionTyp;
