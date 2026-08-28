@@ -58,6 +58,11 @@ public class UserSync implements Serializable {
      */
     private String registerCity;
 
+    /**
+     * 用户来源类型 0:正常用户 1:线下
+     */
+    private String userSourceType;
+
     // ================================ MemberWebProperty ================================
     private Long memberStatusId;
 
@@ -149,4 +154,9 @@ public class UserSync implements Serializable {
      */
     private Integer vipLevel;
     private BigDecimal point;
+
+    /**
+     * 监管上报状态：0=未上报，1=上报中
+     */
+    private Integer reportStatus;
 }

@@ -43,6 +43,15 @@ public enum BalanceSubTypeEnum {
     ACT_INFO_BINDING_BONUS(ProjectConstant.Fund.BalanceType.BONUS, 3023, "信息绑定优惠"),
     ACT_CHICK_TREASURE_BOX_BONUS(ProjectConstant.Fund.BalanceType.BONUS, 3024, "宝箱奖励"),
     ACT_CHICK_CHECKIN_BONUS(ProjectConstant.Fund.BalanceType.BONUS, 3025, "签到奖励"),
+    ACT_TREASURE_BOX_DAILY_GRANT(ProjectConstant.Fund.BalanceType.BONUS, 3027, "每日宝箱派发"),
+    ACT_TREASURE_BOX_OPEN(ProjectConstant.Fund.BalanceType.BONUS, 3028, "开启宝箱彩金"),
+    ACT_RED_PACKET_RAIN_BONUS(ProjectConstant.Fund.BalanceType.BONUS, 3026, "红包雨奖励"),
+    ACT_FIRST_DEPOSIT_BONUS(ProjectConstant.Fund.BalanceType.BONUS, 3030, "首存优惠"),
+    ACT_NEW_REBATE_BONUS(ProjectConstant.Fund.BalanceType.BONUS, 3029, "新返水奖励"),
+    ACT_VENDOR_LEADERBOARD_BONUS(ProjectConstant.Fund.BalanceType.BONUS, 3031, "排行榜活动奖励"),
+    ACT_INVITE_DEPOSIT_REBATE_BONUS(ProjectConstant.Fund.BalanceType.BONUS, 3032, "邀请充值返佣"),
+    ACT_INVITE_BET_REBATE_BONUS(ProjectConstant.Fund.BalanceType.BONUS, 3033, "邀请投注返佣"),
+    ACT_INVITE_WINLOSS_REBATE_BONUS(ProjectConstant.Fund.BalanceType.BONUS, 3034, "邀请输赢返佣"),
 
 
     // 人工存入
@@ -54,6 +63,10 @@ public enum BalanceSubTypeEnum {
     MANUAL_OUT_NOMEMO(ProjectConstant.Fund.BalanceType.MANUAL, 5004, "人工转出 不计提款订单"),
     // 壞帳清帳
     BAD_DEBT_SETTLE(ProjectConstant.Fund.BalanceType.MANUAL, 5005, "壞帳清帳"),
+
+    // 代理调账（代理后台对名下玩家手工调账；存入消耗代理调账额度，转出不动额度）
+    AGENT_DEPOSIT(ProjectConstant.Fund.BalanceType.MANUAL, 5006, "代理存入"),
+    AGENT_TRANSFER_OUT(ProjectConstant.Fund.BalanceType.MANUAL, 5007, "代理转出"),
 
     // 游戏
     GAME_TRANSFER_IN(ProjectConstant.Fund.BalanceType.GAME, 6001, "游戏转入"),
