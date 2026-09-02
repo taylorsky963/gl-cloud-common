@@ -140,6 +140,11 @@ public final class ProjectConstant {
             public final static int LUCKY_SPIN_TICKET = 16;
 
             /**
+             * 活动奖励类型：推进货币（燃油）
+             */
+            public final static int PROPULSION_CURRENCY = 17;
+
+            /**
              * 活动奖励类型：宝箱
              */
             public final static int TREASURE_BOX = 18;
@@ -297,6 +302,8 @@ public final class ProjectConstant {
              */
             public final static String VIP = "102ACTIVITYVIPCODE99999";
 
+            public final static String JEEPNEY = "102ACTJPJPJPCODE99999";
+
         }
 
         /**
@@ -380,6 +387,11 @@ public final class ProjectConstant {
              * 帐变资金类型： 參與券
              */
             public final static int TICKET = 8;
+
+            /**
+             * 帐变资金类型： 推進貨幣 (燃油)
+             */
+            public final static int FUEL = 9;
         }
 
         public static final class TransIo { // transactionType
