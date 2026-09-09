@@ -19,6 +19,7 @@ import org.elasticsearch.index.reindex.DeleteByQueryRequest;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -32,7 +33,36 @@ public class EsClient {
             request.source().trackTotalHits(true);
             log.info("✅ Auto-enabled trackTotalHits for request: {}", request.indices());
         }
-        return client.search(request, options);
+        SearchResponse response = client.search(request, options);
+        warnIfAggregationsMissing(request, response);
+        return response;
+    }
+
+    /**
+     * 请求带了聚合、却因「目标索引全不存在」拿不到 aggregations 时告警。
+     *
+     * <p>ES 在目标索引一个都不存在时（配合 ignoreUnavailable / allowNoIndices 的 lenient 选项不报错）
+     * 返回 {@code _shards.total=0} 且响应里<b>没有 aggregations 节点</b>，{@code getAggregations()} 为 null；
+     * 而只要有 ≥1 个目标索引存在（即使查询 0 命中）就一定有 aggregations（0 桶）。</p>
+     *
+     * <p>调用方若直接 {@code getAggregations().get(name)} 链式取值会 NPE，且异常常被上层
+     * catch 成「无数据」，把真实原因（索引缺失）盖掉。这里统一打一条带索引名的告警便于定位。
+     * 本方法只做日志、不改变返回值与任何行为。</p>
+     */
+    private void warnIfAggregationsMissing(SearchRequest request, SearchResponse response) {
+        try {
+            if (response == null || request.source() == null || request.source().aggregations() == null) {
+                return;
+            }
+            if (response.getAggregations() == null) {
+                log.warn("⚠️ ES 请求了聚合但响应无 aggregations（勿直接链式取聚合，请判空）: totalShards={}, indices={}"
+                                + (response.getTotalShards() == 0 ? "，原因：目标索引全不存在" : ""),
+                        response.getTotalShards(), Arrays.toString(request.indices()));
+            }
+        } catch (Exception e) {
+            // 纯诊断日志，任何异常都不允许影响查询结果
+            log.debug("ES aggregations 缺失检查异常", e);
+        }
     }
 
     public IndexResponse index(IndexRequest request, RequestOptions options) throws IOException {
