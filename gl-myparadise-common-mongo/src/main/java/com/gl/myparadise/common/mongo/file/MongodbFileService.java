@@ -41,6 +41,9 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -90,12 +93,67 @@ public class MongodbFileService {
         String id = glExportService.startExport(userId, fileName);
         String mainTraceId = MDC.get("traceId") == null ? UUID.randomUUID().toString() : MDC.get("traceId");
         log.info("开始异步导出 {}", mainTraceId);
-        executor.execute(() -> save(mainTraceId, id, fileName, method, doNext, args, (data) -> defaultExportCallBacker(id, fileName).accept(data), locale, exportClass));
+        executor.execute(() -> save(mainTraceId, userId, id, fileName, method, doNext, args, (data) -> defaultExportCallBacker(id, fileName).accept(data), locale, exportClass, null));
     }
 
+    /**
+     * 分片导出：每满 rowsPerFile 行关闭当前 CSV 并另开一个，每片各自一条下载中心记录（title 带 _partN）。
+     * 分页游标由 method/doNext 自行维护（如 ES search_after），本方法只负责切檔。
+     */
+    public <T, R> void saveAsyncSharded(
+            @NonNull Long userId,
+            @NonNull String rawFileName,
+            @NonNull Function<R, PageResult<T>> method,
+            @NonNull Function<R, R> doNext,
+            @NonNull R args,
+            @Nullable Class<? extends T> exportClass,
+            int rowsPerFile,
+            @Nullable Runnable onFinish
+    ) {
+        if (rowsPerFile <= 0) {
+            throw new IllegalArgumentException("rowsPerFile must be positive: " + rowsPerFile);
+        }
+        Locale locale = LocaleContextHolder.getLocale();
+        String fileName = StringUtils.trimToEmpty(messageSource.getMessage(rawFileName, null, rawFileName, locale));
+        // 首片先不带 _part1；只有真的切出第 2 片时才把首片改名（见 save 里的切檔分支）
+        String id = glExportService.startExport(userId, fileName);
+        String mainTraceId = MDC.get("traceId") == null ? UUID.randomUUID().toString() : MDC.get("traceId");
+        log.info("开始异步分片导出 {} rowsPerFile={}", mainTraceId, rowsPerFile);
+        // 大导出可能跑数十分钟，不进共用 asyncExecutor：它是 CallerRunsPolicy，塞满时会把整个导出跑在 Tomcat 请求线程上
+        shardedExportExecutor.execute(() -> {
+            try {
+                save(mainTraceId, userId, id, fileName, method, doNext, args, (data) -> defaultExportCallBacker(id, fileName).accept(data), locale, exportClass, rowsPerFile);
+            } finally {
+                if (onFinish != null) {
+                    try {
+                        onFinish.run();
+                    } catch (Exception ex) {
+                        log.error("分片导出 onFinish 失败", ex);
+                    }
+                }
+            }
+        });
+    }
+
+    // ponytail: 固定 2 线程 + 无界队列，多余的大导出排队而非拒绝；量大再改成可配置
+    private final ExecutorService shardedExportExecutor = Executors.newFixedThreadPool(2, runnable -> {
+        Thread thread = new Thread(runnable, "shardedExport-" + SHARDED_THREAD_SEQ.incrementAndGet());
+        thread.setDaemon(true);
+        return thread;
+    });
+    private static final AtomicInteger SHARDED_THREAD_SEQ = new AtomicInteger();
+
+    private static String partFileName(String fileName, int part) {
+        return fileName + "_part" + part;
+    }
+
+    /**
+     * @param rowsPerFile null = 单文件（原行为）；>0 = 每满该行数切一个新 CSV + 新下载中心记录
+     */
     @SneakyThrows
     private <T, R> void save(
             String mainTraceId,
+            @NonNull Long userId,
             @Nullable String exportId,
             @NonNull String fileName,
             @NonNull Function<R, PageResult<T>> method,
@@ -103,16 +161,21 @@ public class MongodbFileService {
             @NonNull R args,
             @Nullable Consumer<RemainingTimeUtils.ProcessVO> callBacker,
             Locale locale,
-            @Nullable Class<? extends T> exportClass
+            @Nullable Class<? extends T> exportClass,
+            @Nullable Integer rowsPerFile
     ) {
         MDC.put("traceId", mainTraceId);
         log.info("开始异步导出 save {}", mainTraceId);
         GridFSUploadStream gridFSUploadStream = null;
         try {
-            gridFSUploadStream = gridFSBucket.openUploadStream(fileName + ".csv", computeUploadOptionsFor());
+            boolean sharded = rowsPerFile != null;
+            int part = 1;
+            String currentTitle = fileName;
+            gridFSUploadStream = gridFSBucket.openUploadStream(currentTitle + ".csv", computeUploadOptionsFor());
             String objectId = gridFSUploadStream.getObjectId().toString();
             long startTime = System.nanoTime();
             int totalDownloadElementCount = 0;
+            int rowsInCurrentFile = 0;
             invokeNotify(startTime, 100, totalDownloadElementCount, objectId, callBacker, false);
             PageResult<T> currentPage;
 
@@ -132,8 +195,41 @@ public class MongodbFileService {
                     log.info("导出结束:到達total");
                     break;
                 }
-                write(gridFSUploadStream, currentPage.getResult(), totalDownloadElementCount == 0, locale);
-                totalDownloadElementCount = totalDownloadElementCount + currentPage.getResult().size();
+                List<T> rows = currentPage.getResult();
+                int offset = 0;
+                while (offset < rows.size()) {
+                    // 分片模式：还有行要写而当前片已满 → 先收掉当前片、开下一片。只在有行可写时切，不会产生空尾片
+                    if (sharded && rowsInCurrentFile >= rowsPerFile) {
+                        gridFSUploadStream.flush();
+                        gridFSUploadStream.close();
+                        if (part == 1) {
+                            // 确定有第 2 片了，首片补上 _part1（GridFS 文件名要 close 后才存在，才能 rename）
+                            currentTitle = partFileName(fileName, 1);
+                            gridFSBucket.rename(new ObjectId(objectId), currentTitle + ".csv");
+                        }
+                        glExportService.completeExport(exportId, objectId, currentTitle);
+                        log.info("分片导出完成 part={} rows={} total={}", part, rowsInCurrentFile, totalDownloadElementCount);
+                        // 已完成的片不该再被 catch 里的 failExport 改成失败；新片建好前先清掉
+                        exportId = null;
+
+                        part++;
+                        currentTitle = partFileName(fileName, part);
+                        exportId = glExportService.startExport(userId, currentTitle);
+                        gridFSUploadStream = gridFSBucket.openUploadStream(currentTitle + ".csv", computeUploadOptionsFor());
+                        objectId = gridFSUploadStream.getObjectId().toString();
+                        rowsInCurrentFile = 0;
+                        // 后续分片改由各自的 exportId 更新进度/完成
+                        final String partExportId = exportId;
+                        final String partTitle = currentTitle;
+                        callBacker = (data) -> defaultExportCallBacker(partExportId, partTitle).accept(data);
+                    }
+                    // 单文件模式一次写完；分片模式只写到本片剩余容量
+                    int chunkEnd = sharded ? Math.min(rows.size(), offset + rowsPerFile - rowsInCurrentFile) : rows.size();
+                    write(gridFSUploadStream, rows.subList(offset, chunkEnd), rowsInCurrentFile == 0, locale);
+                    rowsInCurrentFile += chunkEnd - offset;
+                    totalDownloadElementCount += chunkEnd - offset;
+                    offset = chunkEnd;
+                }
 
                 invokeNotify(startTime, currentPage.getTotal(), totalDownloadElementCount, objectId, callBacker, false);
                 args = doNext.apply(args);
