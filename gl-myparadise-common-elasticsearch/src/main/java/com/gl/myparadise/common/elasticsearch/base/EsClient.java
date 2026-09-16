@@ -31,7 +31,8 @@ public class EsClient {
     public SearchResponse search(SearchRequest request, RequestOptions options) throws IOException {
         if (request.source() != null) {
             request.source().trackTotalHits(true);
-            log.info("✅ Auto-enabled trackTotalHits for request: {}", request.indices());
+            // 每次 search 一条，高频任务下单服务每小时上万条，只在排查时才需要，故用 debug
+            log.debug("Auto-enabled trackTotalHits for request: {}", Arrays.toString(request.indices()));
         }
         SearchResponse response = client.search(request, options);
         warnIfAggregationsMissing(request, response);
