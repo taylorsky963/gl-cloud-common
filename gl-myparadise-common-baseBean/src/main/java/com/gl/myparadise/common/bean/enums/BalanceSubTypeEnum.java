@@ -52,6 +52,7 @@ public enum BalanceSubTypeEnum {
     ACT_INVITE_DEPOSIT_REBATE_BONUS(ProjectConstant.Fund.BalanceType.BONUS, 3032, "邀请充值返佣"),
     ACT_INVITE_BET_REBATE_BONUS(ProjectConstant.Fund.BalanceType.BONUS, 3033, "邀请投注返佣"),
     ACT_INVITE_WINLOSS_REBATE_BONUS(ProjectConstant.Fund.BalanceType.BONUS, 3034, "邀请输赢返佣"),
+    ACT_INVITE_SETTLE_BONUS(ProjectConstant.Fund.BalanceType.BONUS, 3035, "邀请NGR返佣"),
 
 
     // 人工存入
